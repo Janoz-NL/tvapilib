@@ -49,18 +49,7 @@ public class UrlSupplier extends XmlParsingObject {
 	public UrlSupplier(String apiKey) throws ParserConfigurationException,
 			SAXException, IOException {
 		this.apiKey = apiKey;
-		mirrors = new HashMap<MirrorType, List<String>>();
-		for (MirrorType type : MirrorType.values()) {
-			mirrors.put(type, new ArrayList<String>());
-		}
-		Node node = fetchFeed("http://thetvdb.com/api/" + apiKey
-				+ "/mirrors.xml");
-		for (Node mirrorNode : new ChildIterator(getChildNodeByName(node,
-				"mirrors"))) {
-			if ("mirror".equalsIgnoreCase(mirrorNode.getNodeName())) {
-				procesMirror(mirrorNode);
-			}
-		}
+		initMirrors();
 	}
 
 	/**
@@ -90,6 +79,22 @@ public class UrlSupplier extends XmlParsingObject {
 		return getBannerUrl().append(filename).toString();
 	}
 
+	
+	private void initMirrors() throws ParserConfigurationException,
+			SAXException, IOException {
+		mirrors = new HashMap<MirrorType, List<String>>();
+		for (MirrorType type : MirrorType.values()) {
+			mirrors.put(type, new ArrayList<String>());
+		}
+		Node node = fetchFeed(getMirrorUrl());
+		for (Node mirrorNode : new ChildIterator(getChildNodeByName(node,
+				"mirrors"))) {
+			if ("mirror".equalsIgnoreCase(mirrorNode.getNodeName())) {
+				procesMirror(mirrorNode);
+			}
+		}		
+	}
+	
 	private void procesMirror(Node mirror) {
 		String url = null;
 		int typemask = 0;
@@ -126,7 +131,7 @@ public class UrlSupplier extends XmlParsingObject {
 		return candidates.get(rand.nextInt(candidates.size()));
 	}
 
-	private enum MirrorType {
+	enum MirrorType {
 		XML(1), BANNER(2), ZIP(4);
 
 		int mask;
@@ -139,4 +144,21 @@ public class UrlSupplier extends XmlParsingObject {
 			return 0 != (i & mask);
 		}
 	}
+	
+	/* * * Below is for test purposes. * * */
+	
+	/*
+	 * Package accessible so it can be mocked. 
+	 */
+	String getMirrorUrl() {
+		return "http://thetvdb.com/api/"+apiKey+"/mirrors.xml";
+	}
+	
+	/*
+	 * Constructor so class can be instantiated without initializing mirrordata.
+	 */
+	UrlSupplier(){
+		//Added for test purposes..
+	}
+	
 }

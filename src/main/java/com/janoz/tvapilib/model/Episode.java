@@ -15,7 +15,7 @@
  ******************************************************************************/
 package com.janoz.tvapilib.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * @author Gijs de Vries aka Janoz

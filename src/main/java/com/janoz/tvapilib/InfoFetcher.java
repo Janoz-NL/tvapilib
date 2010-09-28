@@ -21,6 +21,8 @@ import java.util.Properties;
 
 import com.janoz.tvapilib.bierdopje.Bierdopje;
 import com.janoz.tvapilib.bierdopje.impl.BierdopjeImpl;
+import com.janoz.tvapilib.lockstockmods.LockStockMods;
+import com.janoz.tvapilib.lockstockmods.impl.LockStockModsImpl;
 import com.janoz.tvapilib.model.Episode;
 import com.janoz.tvapilib.model.Show;
 import com.janoz.tvapilib.model.Subtitle;
@@ -54,6 +56,8 @@ public class InfoFetcher {
 			System.out.println(subtitle.getDownloadUrl());
 
 		}
+		LockStockMods lockStockMods = new LockStockModsImpl();
+		System.out.println(lockStockMods.getClearLogoURL(164301));
 
 	}
 }

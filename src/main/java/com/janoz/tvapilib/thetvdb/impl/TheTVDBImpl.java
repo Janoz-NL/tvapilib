@@ -43,7 +43,7 @@ public class TheTVDBImpl extends XmlParsingObject implements TheTVDB {
 	private static final Logger LOG = Logger.getLogger(TheTVDBImpl.class);
 
 	private UrlSupplier urlSupplier;
-
+	
 	/**
 	 * @param apiKey
 	 * @throws ParserConfigurationException
@@ -131,5 +131,16 @@ public class TheTVDBImpl extends XmlParsingObject implements TheTVDB {
 			LOG.warn("Unable to retreive date from '" + src + "'.", e);
 			return null;
 		}
+	}
+	
+	
+	/* * * Below is for test purposes. * * */
+	
+	/*
+	 * Constructor so class can be instantiated without initializing UrlSupplier.
+	 */
+	@SuppressWarnings("unused")
+	private TheTVDBImpl(){
+		//Added for test purposes..
 	}
 }
