@@ -45,13 +45,20 @@ public class LockStockModsImpl extends XmlParsingObject implements LockStockMods
 
 	@Override
 	public String getClearLogoURL(int showId) throws ParserConfigurationException, SAXException, IOException {
-		Document doc = fetchFeed("http://www.lockstockmods.net/logos/getlogo.php?id="+showId);
+		Document doc = fetchFeed(getUrl(showId));
 		Node node = getChildNodeByName(doc, "logos","logo");
 		if (node == null) {
 			return null;
 		} else {
 			return node.getAttributes().getNamedItem("url").getTextContent();
 		}
+	}
+	
+	/*
+	 * Package accessible so it can be mocked for test purposes.
+	 */
+	String getUrl(int showId) {
+		return "http://www.lockstockmods.net/logos/getlogo.php?id="+showId;
 	}
 
 }
