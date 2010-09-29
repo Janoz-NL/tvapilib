@@ -23,7 +23,7 @@
   
   
   <description>Java library for accessing TvShow? information from various sources.</description>
-  <url>tvapilib.googlecode.com</url>
+  <url>http://tvapilib.googlecode.com</url>
   <build>
 		<plugins>
 			<plugin>
@@ -31,15 +31,9 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.2</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>${javaVersion}</source>
+					<target>${javaVersion}</target>
 				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>com.google.code.maven-license-plugin</groupId>
-				<artifactId>maven-license-plugin</artifactId>
-				<version>1.4.0</version>
 			</plugin>
 		</plugins>
 	</build>
@@ -63,6 +57,27 @@
   		<scope>test</scope>
   	</dependency>
   </dependencies>
+  <reporting>
+  	<plugins>
+  		<plugin>
+  			<groupId>org.apache.maven.plugins</groupId>
+  			<artifactId>maven-pmd-plugin</artifactId>
+  			<version>2.5</version>
+			<configuration>
+				<targetJdk>${javaVersion}</targetJdk>
+			</configuration>
+  		</plugin>
+  		<plugin>
+  			<groupId>org.codehaus.mojo</groupId>
+  			<artifactId>findbugs-maven-plugin</artifactId>
+  			<version>2.3.1</version>
+  		</plugin>
+  	</plugins>
+  </reporting>
+  <properties>
+  	<javaVersion>1.6</javaVersion>
+  	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
   
 
 </project>

@@ -36,8 +36,9 @@ import com.janoz.tvapilib.support.XmlParsingObject;
  */
 public class UrlSupplier extends XmlParsingObject {
 
-	private String apiKey;
 	private static Random rand = new Random();
+
+	private String apiKey;
 	private Map<MirrorType, List<String>> mirrors;
 
 	/**
@@ -134,7 +135,7 @@ public class UrlSupplier extends XmlParsingObject {
 	enum MirrorType {
 		XML(1), BANNER(2), ZIP(4);
 
-		int mask;
+		private int mask;
 
 		MirrorType(int mask) {
 			this.mask = mask;
@@ -148,16 +149,17 @@ public class UrlSupplier extends XmlParsingObject {
 	/* * * Below is for test purposes. * * */
 	
 	/*
-	 * Package accessible so it can be mocked. 
+	 * Package accessible so it can be mocked even though t causes a 
+	 * major violation in Sonar.
 	 */
-	String getMirrorUrl() {
+	String getMirrorUrl() { //NOSONAR
 		return "http://thetvdb.com/api/"+apiKey+"/mirrors.xml";
 	}
 	
 	/*
 	 * Constructor so class can be instantiated without initializing mirrordata.
 	 */
-	UrlSupplier(){
+	UrlSupplier(){ //NOSONAR
 		//Added for test purposes..
 	}
 	

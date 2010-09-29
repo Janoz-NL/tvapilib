@@ -40,7 +40,7 @@ public interface LockStockMods {
 	 * @throws SAXException 
 	 * @throws ParserConfigurationException 
 	 */
-	public boolean addClearLogo(Show show) throws ParserConfigurationException, SAXException, IOException;
+	boolean addClearLogo(Show show) throws ParserConfigurationException, SAXException, IOException;
 	
 	/**
 	 * @param showId TheTVDB ID of the show 
@@ -49,5 +49,5 @@ public interface LockStockMods {
 	 * @throws SAXException 
 	 * @throws ParserConfigurationException 
 	 */
-	public String getClearLogoURL(int showId) throws ParserConfigurationException, SAXException, IOException;
+	String getClearLogoURL(int showId) throws ParserConfigurationException, SAXException, IOException;
 }

@@ -140,7 +140,7 @@ public class TheTVDBImpl extends XmlParsingObject implements TheTVDB {
 	 * Constructor so class can be instantiated without initializing UrlSupplier.
 	 */
 	@SuppressWarnings("unused")
-	private TheTVDBImpl(){
+	private TheTVDBImpl(){  //NOSONAR
 		//Added for test purposes..
 	}
 }

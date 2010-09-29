@@ -58,8 +58,9 @@ public abstract class XmlParsingObject {
 	 * @return
 	 */
 	protected Node getChildNodeByName(Node parent, String... name) {
-		if (name.length == 0)
+		if (name.length == 0) {
 			return parent;
+		}
 		NodeList children = parent.getChildNodes();
 		for (int i = 0; i < children.getLength(); i++) {
 			if (name[0].equalsIgnoreCase(children.item(i).getNodeName())) {
@@ -70,10 +71,10 @@ public abstract class XmlParsingObject {
 		return null;
 	}
 
-	protected class ChildIterator implements Iterable<Node>, Iterator<Node> {
+	protected static class ChildIterator implements Iterable<Node>, Iterator<Node> {
 
-		int i = 0;
-		NodeList items;
+		private int i = 0;
+		private NodeList items;
 
 		public ChildIterator(Node node) {
 			items = node.getChildNodes();
