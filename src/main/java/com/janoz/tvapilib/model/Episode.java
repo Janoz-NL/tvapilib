@@ -106,14 +106,14 @@ public class Episode {
 	 * @return The date this episode was first aired.
 	 */
 	public Date getAired() {
-		return aired;
+		return (aired == null) ? null : (Date)aired.clone();
 	}
 
 	/**
 	 * @param aired The date this episode was first aired.
 	 */
 	public void setAired(Date aired) {
-		this.aired = aired;
+		this.aired = (aired == null) ? null : (Date)aired.clone();
 	}
 
 	/**

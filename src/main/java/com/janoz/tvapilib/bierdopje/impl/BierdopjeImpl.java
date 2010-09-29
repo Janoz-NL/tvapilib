@@ -61,13 +61,8 @@ public class BierdopjeImpl extends XmlParsingObject implements Bierdopje {
 	@Override
 	public List<Subtitle> getAllSubsFor(Episode episode)
 			throws ParserConfigurationException, SAXException, IOException {
-		StringBuilder sb = new StringBuilder("http://api.bierdopje.com/")
-				.append(apiKey).append("/GetAllSubsFor/")
-				.append(episode.getShow().getId()).append("/")
-				.append(episode.getSeason()).append("/")
-				.append(episode.getEpisode()).append("/nl/true");
 
-		Document doc = fetchFeed(sb.toString());
+		Document doc = fetchFeed(constructGetAllSubsForUrl(episode));
 
 		Node node = getChildNodeByName(doc.getFirstChild(), "response");
 		node = getChildNodeByName(node, "results");
@@ -92,5 +87,14 @@ public class BierdopjeImpl extends XmlParsingObject implements Bierdopje {
 			}
 		}
 		return subtitles;
+	}
+	
+	String constructGetAllSubsForUrl(Episode episode) {
+		StringBuilder sb = new StringBuilder("http://api.bierdopje.com/")
+				.append(apiKey).append("/GetAllSubsFor/")
+				.append(episode.getShow().getId()).append("/")
+				.append(episode.getSeason()).append("/")
+				.append(episode.getEpisode()).append("/nl/true");
+		return sb.toString();
 	}
 }
