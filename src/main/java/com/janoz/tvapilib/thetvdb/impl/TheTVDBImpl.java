@@ -24,7 +24,6 @@ import java.text.SimpleDateFormat;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.log4j.Logger;
-import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
@@ -57,7 +56,7 @@ public class TheTVDBImpl extends XmlParsingObject implements TheTVDB {
 
 	@Override
 	public Show getShow(int showId) throws ParserConfigurationException,
-			SAXException, IOException, DOMException, ParseException {
+			SAXException, IOException, ParseException {
 		Document doc = fetchFeed(urlSupplier.getBaseShowUrl(showId).toString());
 		return parseShow(getChildNodeByName(doc, "data", "series"));
 	}
@@ -65,7 +64,7 @@ public class TheTVDBImpl extends XmlParsingObject implements TheTVDB {
 	@Override
 	public Episode getEpisode(int showId, int season, int episode)
 			throws ParserConfigurationException, SAXException, IOException,
-			DOMException, ParseException {
+			ParseException {
 		Show show = new Show();
 		show.setId(showId);
 		return getEpisode(show, season, episode);
@@ -74,13 +73,13 @@ public class TheTVDBImpl extends XmlParsingObject implements TheTVDB {
 	@Override
 	public Episode getEpisode(Show show, int season, int episode)
 			throws ParserConfigurationException, SAXException, IOException,
-			DOMException, ParseException {
+			ParseException {
 		Document doc = fetchFeed(urlSupplier.getBaseEpisodeUrl(show.getId(),
 				season, episode).toString());
 		return parseEpisode(getChildNodeByName(doc, "data", "episode"), show);
 	}
 
-	private Show parseShow(Node showNode) throws DOMException {
+	private Show parseShow(Node showNode) {
 		Show show = new Show();
 		for (Node node : new ChildIterator(showNode)) {
 			if ("SeriesID".equalsIgnoreCase(node.getNodeName())) {
@@ -98,8 +97,7 @@ public class TheTVDBImpl extends XmlParsingObject implements TheTVDB {
 		return show;
 	}
 
-	private Episode parseEpisode(Node episodeNode, Show show)
-			throws DOMException {
+	private Episode parseEpisode(Node episodeNode, Show show) {
 		Episode episode = new Episode();
 		episode.setShow(show);
 		for (Node node : new ChildIterator(episodeNode)) {

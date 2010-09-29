@@ -20,7 +20,6 @@ import java.text.ParseException;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.w3c.dom.DOMException;
 import org.xml.sax.SAXException;
 
 import com.janoz.tvapilib.model.Episode;
@@ -42,7 +41,7 @@ public interface TheTVDB {
 	 * @throws ParseException
 	 */
 	Show getShow(int showId) throws ParserConfigurationException, SAXException,
-			IOException, DOMException, ParseException;
+			IOException, ParseException;
 
 	/**
 	 * @param showId TheTVDB id of the requested show.
@@ -60,7 +59,7 @@ public interface TheTVDB {
 	 */
 	Episode getEpisode(int showId, int season, int episode)
 			throws ParserConfigurationException, SAXException, IOException,
-			DOMException, ParseException;
+			ParseException;
 
 	/**
 	 * @param show Show. Only the ID is used, but the show is also injected into the returned episode
@@ -75,6 +74,6 @@ public interface TheTVDB {
 	 */
 	Episode getEpisode(Show show, int season, int episode)
 			throws ParserConfigurationException, SAXException, IOException,
-			DOMException, ParseException;
+			ParseException;
 
 }
