@@ -16,6 +16,8 @@
 package com.janoz.tvapilib.lockstockmods.impl;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -24,6 +26,9 @@ import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 import com.janoz.tvapilib.lockstockmods.LockStockMods;
+import com.janoz.tvapilib.lockstockmods.impl.parsers.LogoParser;
+import com.janoz.tvapilib.model.Fanart;
+import com.janoz.tvapilib.model.FanartType;
 import com.janoz.tvapilib.model.Show;
 import com.janoz.tvapilib.support.XmlParsingObject;
 
@@ -34,24 +39,15 @@ import com.janoz.tvapilib.support.XmlParsingObject;
 public class LockStockModsImpl extends XmlParsingObject implements LockStockMods {
 
 	@Override
-	public boolean addClearLogo(Show show) throws ParserConfigurationException, SAXException, IOException {
-		String url = getClearLogoURL(show.getId());
-		if (url != null) {
-			show.setLogoUrl(url);
-			return true;
-		}
-		return false;
+	public void addClearLogos(Show show) {
+		show.setLogos(getClearLogos(show.getId()));
 	}
 
 	@Override
-	public String getClearLogoURL(int showId) throws ParserConfigurationException, SAXException, IOException {
-		Document doc = fetchFeed(getUrl(showId));
-		Node node = getChildNodeByName(doc, "logos","logo");
-		if (node == null) {
-			return null;
-		} else {
-			return node.getAttributes().getNamedItem("url").getTextContent();
-		}
+	public List<Fanart> getClearLogos(int showId) {
+		LogoParser parser = new LogoParser();
+		parse(parser, getUrl(showId));
+		return parser.getResult();
 	}
 	
 	/*

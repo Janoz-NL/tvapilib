@@ -15,17 +15,13 @@
  ******************************************************************************/
 package com.janoz.tvapilib.thetvdb.impl;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.w3c.dom.Node;
-import org.xml.sax.SAXException;
 
 import com.janoz.tvapilib.support.XmlParsingObject;
 
@@ -43,12 +39,9 @@ public class UrlSupplier extends XmlParsingObject {
 
 	/**
 	 * @param apiKey TheTVDB api-key.
-	 * @throws ParserConfigurationException
-	 * @throws SAXException
-	 * @throws IOException
+
 	 */
-	public UrlSupplier(String apiKey) throws ParserConfigurationException,
-			SAXException, IOException {
+	public UrlSupplier(String apiKey) {
 		this.apiKey = apiKey;
 		initMirrors();
 	}
@@ -81,8 +74,7 @@ public class UrlSupplier extends XmlParsingObject {
 	}
 
 	
-	private void initMirrors() throws ParserConfigurationException,
-			SAXException, IOException {
+	private void initMirrors() {
 		mirrors = new HashMap<MirrorType, List<String>>();
 		for (MirrorType type : MirrorType.values()) {
 			mirrors.put(type, new ArrayList<String>());

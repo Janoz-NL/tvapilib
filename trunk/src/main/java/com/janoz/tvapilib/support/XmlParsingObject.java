@@ -16,6 +16,7 @@
 package com.janoz.tvapilib.support;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.Iterator;
 
@@ -26,7 +27,10 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.XMLReaderFactory;
 
 /**
  * @author Gijs de Vries aka Janoz
@@ -34,17 +38,42 @@ import org.xml.sax.SAXException;
  */
 public abstract class XmlParsingObject {
 
+
+	/* SAX IMPLEMENTATION */
+	
+	protected void parse(AbstractSaxParser parser,String uri) {
+		try {
+			InputSource input = new InputSource(new URL(uri).openStream());
+			XMLReader reader = XMLReaderFactory.createXMLReader(); 
+			reader.setContentHandler(parser);
+			reader.parse(input);
+		} catch (SAXException e) {
+			throw new TvException("Error parsing document.",e);
+		} catch (IOException e) {
+			throw new TvException("Error communicating.",e);
+		}
+	}
+	
+	/* DOM IMPLEMENTATION */
+
 	private final Object builderSemaphore = new Object();
 
-	protected Document fetchFeed(String uri)
-			throws ParserConfigurationException, SAXException, IOException {
+	protected Document fetchFeed(String uri) {
 		Document result = null;
-		synchronized (builderSemaphore) {
-			DocumentBuilderFactory factory = DocumentBuilderFactory
-					.newInstance();
-			factory.setValidating(false);
-			DocumentBuilder builder = factory.newDocumentBuilder();
-			result = builder.parse(uri);
+		try {
+			synchronized (builderSemaphore) {
+				DocumentBuilderFactory factory = DocumentBuilderFactory
+						.newInstance();
+				factory.setValidating(false);
+				DocumentBuilder builder = factory.newDocumentBuilder();
+				result = builder.parse(uri);
+			}
+		} catch (SAXException saxe) {
+			throw new TvException("",saxe);
+		} catch (IOException ioe) {
+			throw new TvException("",ioe);
+		} catch (ParserConfigurationException pce) {
+			throw new TvException("", pce);
 		}
 		return result;
 	}

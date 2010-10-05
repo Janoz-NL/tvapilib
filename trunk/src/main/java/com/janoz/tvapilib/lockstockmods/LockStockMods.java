@@ -16,11 +16,13 @@
 package com.janoz.tvapilib.lockstockmods;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
+import com.janoz.tvapilib.model.Fanart;
 import com.janoz.tvapilib.model.Show;
 
 /**
@@ -35,19 +37,13 @@ public interface LockStockMods {
 	/**
 	 * 
 	 * @param show The show to add the logo to.
-	 * @return true if a logo was found and added to the show.
-	 * @throws IOException 
-	 * @throws SAXException 
-	 * @throws ParserConfigurationException 
+	 * 
 	 */
-	boolean addClearLogo(Show show) throws ParserConfigurationException, SAXException, IOException;
+	void addClearLogos(Show show);
 	
 	/**
 	 * @param showId TheTVDB ID of the show 
-	 * @return URL to the clearlogo or null if non available
-	 * @throws IOException 
-	 * @throws SAXException 
-	 * @throws ParserConfigurationException 
+	 * @return A list of clearlogos.
 	 */
-	String getClearLogoURL(int showId) throws ParserConfigurationException, SAXException, IOException;
+	List<Fanart> getClearLogos(int showId);
 }

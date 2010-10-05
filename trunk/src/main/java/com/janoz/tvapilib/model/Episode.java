@@ -21,127 +21,79 @@ import java.util.Date;
  * @author Gijs de Vries aka Janoz
  *
  */
-public class Episode {
+public class Episode implements Comparable<Episode>  {
 
 	private int id;
-	private Show show;
+	private Season season;
 	private int episode;
-	private int season;
 	private String title;
 	private Date aired;
 	private String description;
 	private String thumbUrl;
 
-	/**
-	 * @return TheTVDB id of this episode.
-	 */
 	public int getId() {
 		return id;
 	}
 
-	/**
-	 * @param id TheTVDB id of this episode.
-	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
-	/**
-	 * @return The show this episode belongs to.
-	 */
-	public Show getShow() {
-		return show;
-	}
-
-	/**
-	 * @param show The show this episode belongs to.
-	 */
-	public void setShow(Show show) {
-		this.show = show;
-	}
-
-	/**
-	 * @return The episode number.
-	 */
 	public int getEpisode() {
 		return episode;
 	}
 
-	/**
-	 * @param episode The episode number.
-	 */
 	public void setEpisode(int episode) {
 		this.episode = episode;
 	}
 
-	/**
-	 * @return The season number.
-	 */
-	public int getSeason() {
+	public Season getSeason() {
 		return season;
 	}
 
-	/**
-	 * @param season The season number.
-	 */
-	public void setSeason(int season) {
+	public void setSeason(Season season) {
 		this.season = season;
 	}
 
-	/**
-	 * @return The title of this episode.
-	 */
 	public String getTitle() {
 		return title;
 	}
 
-	/**
-	 * @param title The Title of this episode.
-	 */
 	public void setTitle(String title) {
 		this.title = title;
 	}
 
-	/**
-	 * @return The date this episode was first aired.
-	 */
 	public Date getAired() {
 		return (aired == null) ? null : (Date)aired.clone();
 	}
 
-	/**
-	 * @param aired The date this episode was first aired.
-	 */
 	public void setAired(Date aired) {
 		this.aired = (aired == null) ? null : (Date)aired.clone();
 	}
 
-	/**
-	 * @return The description of this episode.
-	 */
 	public String getDescription() {
 		return description;
 	}
 
-	/**
-	 * @param description The description of this episode.
-	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
-	/**
-	 * @return URL to the thumbnail of this episode.
-	 */
 	public String getThumbUrl() {
 		return thumbUrl;
 	}
 
-	/**
-	 * @param thumbUrl URL to the thumbnail of this episode.
-	 */
 	public void setThumbUrl(String thumbUrl) {
 		this.thumbUrl = thumbUrl;
+	}
+
+	@Override
+	public int compareTo(Episode other) {
+		int i = this.season.compareTo(other.season);
+		if (i != 0) {
+			return i;
+		}
+		return this.episode - other.episode; 
 	}
 
 }
