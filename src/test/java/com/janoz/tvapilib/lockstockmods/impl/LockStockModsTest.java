@@ -21,6 +21,8 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.janoz.tvapilib.model.Fanart;
+import com.janoz.tvapilib.model.FanartType;
 import com.janoz.tvapilib.model.Show;
 public class LockStockModsTest {
 	
@@ -40,9 +42,14 @@ public class LockStockModsTest {
 		replay(subject);
 		Show show = new Show();
 		show.setId(164301);
-		assertTrue(subject.addClearLogo(show));
+		subject.addClearLogos(show);
 		verify(subject);
-		assertEquals("http://www.lockstockmods.net/logos/164301/clearart/Nikita-164301.png",show.getLogoUrl());
+		Fanart f = show.getLogos().get(0);
+		assertEquals("http://www.lockstockmods.net/logos/164301/clearart/Nikita-164301.png",f.getUrl());
+		assertEquals(FanartType.LOGO, f.getType());
+		f = show.getLogos().get(1);
+		assertEquals("http://www.lockstockmods.net/logos/164301/clearart/Nikita-164301-2.png",f.getUrl());
+		assertEquals(FanartType.LOGO, f.getType());
 	}
 
 	@Test
@@ -52,10 +59,9 @@ public class LockStockModsTest {
 		replay(subject);
 		Show show = new Show();
 		show.setId(1);
-		show.setLogoUrl("ShouldBeUntouched");
-		assertFalse(subject.addClearLogo(show));
+		subject.addClearLogos(show);
 		verify(subject);
-		assertEquals("ShouldBeUntouched",show.getLogoUrl());
+		assertTrue("ShouldBeUntouched",show.getLogos().isEmpty());
 	}
 
 }

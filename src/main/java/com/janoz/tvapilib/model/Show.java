@@ -15,6 +15,10 @@
  ******************************************************************************/
 package com.janoz.tvapilib.model;
 
+import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 /**
  * @author Gijs de Vries aka Janoz
  *
@@ -23,93 +27,148 @@ public class Show {
 
 	private int id;
 	private String title;
-	private String fanartUrl;
-	private String posterUrl;
-	private String bannerUrl;
-	private String logoUrl;
+//    <Actors>|Maggie Q|Shane West|Lyndsy Fonseca|Aaron Stanford|Melinda Clarke|Xander Berkeley|Ashton Holmes|Tiffany Hines|</Actors>
+	//private List<Actor> actors;
+//    <ContentRating>TV-14</ContentRating>
+//    <FirstAired>2010-09-09</FirstAired>
+//    <Genre>|Action and Adventure|Drama|</Genre>
+//    <IMDB_ID>tt1592154</IMDB_ID>
+//    <Language>en</Language>
+//    <Network>The CW</Network>
+//    <NetworkID></NetworkID>
+//    <Overview>A very long description about Nikita and division.</Overview>
+//    <Rating>9.0</Rating>
+//    <RatingCount>10</RatingCount>
+//    <Runtime>60</Runtime>
+//    <SeriesID>164301</SeriesID>
+//    <SeriesName>Nikita</SeriesName>
+//    <Status>Continuing</Status>
+//    <added>2010-05-20 12:28:55</added>
+//    <addedBy>235</addedBy>
+//    <banner>graphical/164301-g4.jpg</banner>
+//    <fanart>fanart/original/164301-5.jpg</fanart>
+//    <lastupdated>1285704535</lastupdated>
+//    <poster>posters/164301-2.jpg</poster>
+//    <zap2it_id></zap2it_id>
+	
+	private TreeSet<Season> seasons = new TreeSet<Season>();
+	
+	
+	private List<Fanart> fanarts;
+	private List<Fanart> posters;
+	private List<Fanart> banners;
+	private List<Fanart> logos;
+	private List<Fanart> allSeasonPosters;
+	private List<Fanart> allSeasonBanners;
 
-	/**
-	 * @return TheTVDB ID of this show.
-	 */
+
 	public int getId() {
 		return id;
 	}
 
-	/**
-	 * @param showId TheTVDB ID of this show.
-	 */
 	public void setId(int showId) {
 		this.id = showId;
 	}
 
-	/**
-	 * @return The title of this show.
-	 */
 	public String getTitle() {
 		return title;
 	}
 
-	/**
-	 * @param title The title of this show.
-	 */
 	public void setTitle(String title) {
 		this.title = title;
 	}
 
-	/**
-	 * @return URL to the fanart of this show.
-	 */
-	public String getFanartUrl() {
-		return fanartUrl;
+	public Season getSeason(int season) {
+		Season result = new Season();
+		result.setShow(this);
+		result.setSeason(season);
+		if (seasons.contains(result)) {
+			result = seasons.floor(result);
+		} else {
+			seasons.add(result);
+		}
+		return result;
 	}
 
-	/**
-	 * @param fanartUrl URL to the fanart of this show.
-	 */
-	public void setFanartUrl(String fanartUrl) {
-		this.fanartUrl = fanartUrl;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
 	}
 
-	/**
-	 * @return URL to the poster of this show.
-	 */
-	public String getPosterUrl() {
-		return posterUrl;
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Show other = (Show) obj;
+		if (id != other.id)
+			return false;
+		return true;
 	}
 
-	/**
-	 * @param posterUrl URL to the poster of this show.
-	 */
-	public void setPosterUrl(String posterUrl) {
-		this.posterUrl = posterUrl;
+	public TreeSet<Season> getSeasons() {
+		return seasons;
 	}
 
-	/**
-	 * @return URL to the banner of this show.
-	 */
-	public String getBannerUrl() {
-		return bannerUrl;
+	public void setSeasons(TreeSet<Season> seasons) {
+		this.seasons = seasons;
 	}
 
-	/**
-	 * @param bannerUrl URL to the banner of this show.
-	 */
-	public void setBannerUrl(String bannerUrl) {
-		this.bannerUrl = bannerUrl;
+	public List<Fanart> getFanarts() {
+		return fanarts;
 	}
 
-	/**
-	 * @return The Url to the clearLogo.
-	 */
-	public String getLogoUrl() {
-		return logoUrl;
+	public void setFanarts(List<Fanart> fanarts) {
+		this.fanarts = fanarts;
 	}
 
-	/**
-	 * @param logoUrl The Url to the clearLogo.
-	 */
-	public void setLogoUrl(String logoUrl) {
-		this.logoUrl = logoUrl;
+	public List<Fanart> getPosters() {
+		return posters;
 	}
+
+	public void setPosters(List<Fanart> posters) {
+		this.posters = posters;
+	}
+
+	public List<Fanart> getBanners() {
+		return banners;
+	}
+
+	public void setBanners(List<Fanart> banners) {
+		this.banners = banners;
+	}
+
+	public List<Fanart> getLogos() {
+		return logos;
+	}
+
+	public void setLogos(List<Fanart> logos) {
+		this.logos = logos;
+	}
+
+	public List<Fanart> getAllSeasonPosters() {
+		return allSeasonPosters;
+	}
+
+	public void setAllSeasonPosters(List<Fanart> allSeasonPosters) {
+		this.allSeasonPosters = allSeasonPosters;
+	}
+
+	public List<Fanart> getAllSeasonBanners() {
+		return allSeasonBanners;
+	}
+
+	public void setAllSeasonBanners(List<Fanart> allSeasonBanners) {
+		this.allSeasonBanners = allSeasonBanners;
+	}
+	
+	
 	
 }

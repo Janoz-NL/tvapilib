@@ -41,21 +41,13 @@ public interface Bierdopje {
 	 * @param season Season number.
 	 * @param episode Episode number.
 	 * @return A list of subtitles for this episode.
-	 * @throws ParserConfigurationException
-	 * @throws SAXException
-	 * @throws IOException
 	 */
-	List<Subtitle> getAllSubsFor(int showId, int season, int episode)
-			throws ParserConfigurationException, SAXException, IOException;
+	List<Subtitle> getAllSubsFor(int showId, int season, int episode);
 
 	/**
 	 * @param episode The episode for which subtitles are requested
 	 * @return A list of subtitles for this episode.
-	 * @throws ParserConfigurationException
-	 * @throws SAXException
-	 * @throws IOException
 	 */
-	List<Subtitle> getAllSubsFor(Episode episode)
-			throws ParserConfigurationException, SAXException, IOException;
+	List<Subtitle> getAllSubsFor(Episode episode);
 
 }

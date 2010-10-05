@@ -15,18 +15,15 @@
  ******************************************************************************/
 package com.janoz.tvapilib.bierdopje.impl;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
-import org.xml.sax.SAXException;
 
 import com.janoz.tvapilib.bierdopje.Bierdopje;
 import com.janoz.tvapilib.model.Episode;
+import com.janoz.tvapilib.model.Season;
 import com.janoz.tvapilib.model.Show;
 import com.janoz.tvapilib.model.Subtitle;
 import com.janoz.tvapilib.support.XmlParsingObject;
@@ -47,20 +44,20 @@ public class BierdopjeImpl extends XmlParsingObject implements Bierdopje {
 	}
 
 	@Override
-	public List<Subtitle> getAllSubsFor(int showId, int season, int episode)
-			throws ParserConfigurationException, SAXException, IOException {
+	public List<Subtitle> getAllSubsFor(int showId, int season, int episode) {
 		Show show = new Show();
 		show.setId(showId);
+		Season se = new Season();
+		se.setSeason(season);
+		se.setShow(show);
 		Episode ep = new Episode();
-		ep.setSeason(season);
+		ep.setSeason(se);
 		ep.setEpisode(episode);
-		ep.setShow(show);
 		return getAllSubsFor(ep);
 	}
 
 	@Override
-	public List<Subtitle> getAllSubsFor(Episode episode)
-			throws ParserConfigurationException, SAXException, IOException {
+	public List<Subtitle> getAllSubsFor(Episode episode) {
 
 		Document doc = fetchFeed(constructGetAllSubsForUrl(episode));
 
@@ -92,8 +89,8 @@ public class BierdopjeImpl extends XmlParsingObject implements Bierdopje {
 	String constructGetAllSubsForUrl(Episode episode) {
 		StringBuilder sb = new StringBuilder("http://api.bierdopje.com/")
 				.append(apiKey).append("/GetAllSubsFor/")
-				.append(episode.getShow().getId()).append("/")
-				.append(episode.getSeason()).append("/")
+				.append(episode.getSeason().getShow().getId()).append("/")
+				.append(episode.getSeason().getSeason()).append("/")
 				.append(episode.getEpisode()).append("/nl/true");
 		return sb.toString();
 	}

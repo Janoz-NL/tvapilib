@@ -83,12 +83,6 @@ public class TheTVDBTest {
 		expect(urlSupplierMock.getBaseShowUrl(eq(164301))).andReturn(
 				new StringBuilder(
 						this.getClass().getClassLoader().getResource("responses/thetvdb/164301.xml").toString()));
-		expect(urlSupplierMock.getImageUrl(eq("graphical/164301-g4.jpg")))
-			.andReturn("http://aDomain/banner.jpg");
-		expect(urlSupplierMock.getImageUrl(eq("fanart/original/164301-5.jpg")))
-			.andReturn("http://aDomain/fanart.jpg");
-		expect(urlSupplierMock.getImageUrl(eq("posters/164301-2.jpg")))
-			.andReturn("http://aDomain/poster.jpg");
 		replay(urlSupplierMock);
 
 		Show show = subject.getShow(164301);
@@ -98,12 +92,12 @@ public class TheTVDBTest {
 
 	private void assertEpisode164301_1_3(Show show, Episode episode) {
 		if (show == null) {
-			assertEquals(164301,episode.getShow().getId());
+			assertEquals(164301,episode.getSeason().getShow().getId());
 		} else {
-			assertSame(show,episode.getShow());
+			assertSame(show,episode.getSeason().getShow());
 		}
 		assertEquals(2738381,episode.getId());
-		assertEquals(1,episode.getSeason());
+		assertEquals(1,episode.getSeason().getSeason());
 		assertEquals(3,episode.getEpisode());
 		assertEquals("Kill Jill",episode.getTitle());
 		assertEquals(new GregorianCalendar(2010,Calendar.SEPTEMBER,23).getTime(),episode.getAired());
@@ -114,9 +108,7 @@ public class TheTVDBTest {
 	private void assertShow164301(Show show) {
 		assertEquals(164301,show.getId());
 		assertEquals("Nikita",show.getTitle());
-		assertEquals("http://aDomain/fanart.jpg",show.getFanartUrl());
-		assertEquals("http://aDomain/poster.jpg",show.getPosterUrl());
-		assertEquals("http://aDomain/banner.jpg",show.getBannerUrl());
+
 	}
 	
 	

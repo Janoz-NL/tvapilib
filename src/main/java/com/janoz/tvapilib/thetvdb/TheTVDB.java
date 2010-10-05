@@ -15,13 +15,6 @@
  ******************************************************************************/
 package com.janoz.tvapilib.thetvdb;
 
-import java.io.IOException;
-import java.text.ParseException;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
-
 import com.janoz.tvapilib.model.Episode;
 import com.janoz.tvapilib.model.Show;
 
@@ -34,14 +27,8 @@ public interface TheTVDB {
 	/**
 	 * @param showId TheTVDB id of the requested show.
 	 * @return The show or null if the show is not found.
-	 * @throws ParserConfigurationException
-	 * @throws SAXException
-	 * @throws IOException
-	 * @throws DOMException
-	 * @throws ParseException
 	 */
-	Show getShow(int showId) throws ParserConfigurationException, SAXException,
-			IOException, ParseException;
+	Show getShow(int showId);
 
 	/**
 	 * @param showId TheTVDB id of the requested show.
@@ -51,29 +38,15 @@ public interface TheTVDB {
 	 * 			The episode or null if the episode is not known. A new Show object 
 	 * 			containing only the ID will be injected (ie requesting show.getTitle 
 	 * 			will return null)
-	 * @throws ParserConfigurationException
-	 * @throws SAXException
-	 * @throws IOException
-	 * @throws DOMException
-	 * @throws ParseException
 	 */
-	Episode getEpisode(int showId, int season, int episode)
-			throws ParserConfigurationException, SAXException, IOException,
-			ParseException;
+	Episode getEpisode(int showId, int season, int episode);
 
 	/**
 	 * @param show Show. Only the ID is used, but the show is also injected into the returned episode
 	 * @param season Season number.
 	 * @param episode Episode number.
 	 * @return The episode or null if the episode is not known.
-	 * @throws ParserConfigurationException
-	 * @throws SAXException
-	 * @throws IOException
-	 * @throws DOMException
-	 * @throws ParseException
 	 */
-	Episode getEpisode(Show show, int season, int episode)
-			throws ParserConfigurationException, SAXException, IOException,
-			ParseException;
+	Episode getEpisode(Show show, int season, int episode);
 
 }
