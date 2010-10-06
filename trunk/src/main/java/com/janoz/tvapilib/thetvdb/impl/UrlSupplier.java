@@ -15,15 +15,12 @@
  ******************************************************************************/
 package com.janoz.tvapilib.thetvdb.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import org.w3c.dom.Node;
-
 import com.janoz.tvapilib.support.XmlParsingObject;
+import com.janoz.tvapilib.thetvdb.impl.parsers.MirrorParser;
 
 
 /**
@@ -75,36 +72,11 @@ public class UrlSupplier extends XmlParsingObject {
 
 	
 	private void initMirrors() {
-		mirrors = new HashMap<MirrorType, List<String>>();
-		for (MirrorType type : MirrorType.values()) {
-			mirrors.put(type, new ArrayList<String>());
-		}
-		Node node = fetchFeed(getMirrorUrl());
-		for (Node mirrorNode : new ChildIterator(getChildNodeByName(node,
-				"mirrors"))) {
-			if ("mirror".equalsIgnoreCase(mirrorNode.getNodeName())) {
-				procesMirror(mirrorNode);
-			}
-		}		
+		MirrorParser parser = new MirrorParser();
+		parse(parser,openStream(getMirrorUrl()));
+		mirrors = parser.getResult();
 	}
 	
-	private void procesMirror(Node mirror) {
-		String url = null;
-		int typemask = 0;
-		for (Node node : new ChildIterator(mirror)) {
-			if ("typemask".equalsIgnoreCase(node.getNodeName())) {
-				typemask = Integer.parseInt(node.getTextContent());
-			} else if ("mirrorpath".equalsIgnoreCase(node.getNodeName())) {
-				url = node.getTextContent();
-			}
-		}
-		for (MirrorType type : MirrorType.values()) {
-			if (type.matches(typemask)) {
-				mirrors.get(type).add(url);
-			}
-		}
-
-	}
 
 	private StringBuilder getXmlUrl() {
 		StringBuilder sb = new StringBuilder(getMirror(MirrorType.XML));
@@ -124,22 +96,6 @@ public class UrlSupplier extends XmlParsingObject {
 		return candidates.get(rand.nextInt(candidates.size()));
 	}
 
-	enum MirrorType {
-		XML(1), BANNER(2), ZIP(4);
-
-		private int mask;
-
-		MirrorType(int mask) {
-			this.mask = mask;
-		}
-
-		public boolean matches(int i) {
-			return 0 != (i & mask);
-		}
-	}
-	
-	/* * * Below is for test purposes. * * */
-	
 	/*
 	 * Package accessible so it can be mocked even though t causes a 
 	 * major violation in Sonar.

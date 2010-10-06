@@ -15,13 +15,10 @@
  ******************************************************************************/
 package com.janoz.tvapilib.bierdopje.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-
 import com.janoz.tvapilib.bierdopje.Bierdopje;
+import com.janoz.tvapilib.bierdopje.impl.parser.ResponseParser;
 import com.janoz.tvapilib.model.Episode;
 import com.janoz.tvapilib.model.Season;
 import com.janoz.tvapilib.model.Show;
@@ -58,32 +55,9 @@ public class BierdopjeImpl extends XmlParsingObject implements Bierdopje {
 
 	@Override
 	public List<Subtitle> getAllSubsFor(Episode episode) {
-
-		Document doc = fetchFeed(constructGetAllSubsForUrl(episode));
-
-		Node node = getChildNodeByName(doc.getFirstChild(), "response");
-		node = getChildNodeByName(node, "results");
-		return parseSubtitles(node, episode);
-	}
-
-	private List<Subtitle> parseSubtitles(Node node, Episode episode) {
-		List<Subtitle> subtitles = new ArrayList<Subtitle>();
-		for (Node result : new ChildIterator(node)) {
-			if ("result".equalsIgnoreCase(result.getNodeName())) {
-				Subtitle subtitle = new Subtitle();
-				subtitle.setEpisode(episode);
-				for (Node resultChild : new ChildIterator(result)) {
-					if ("filename".equalsIgnoreCase(resultChild.getNodeName())) {
-						subtitle.setFileTitle(resultChild.getTextContent());
-					} else if ("downloadlink".equalsIgnoreCase(resultChild
-							.getNodeName())) {
-						subtitle.setDownloadUrl(resultChild.getTextContent());
-					}
-				}
-				subtitles.add(subtitle);
-			}
-		}
-		return subtitles;
+		ResponseParser parser = new ResponseParser(episode);
+		parse(parser,openStream(constructGetAllSubsForUrl(episode)));
+		return parser.getResult();
 	}
 	
 	String constructGetAllSubsForUrl(Episode episode) {

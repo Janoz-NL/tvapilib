@@ -16,7 +16,6 @@
 package com.janoz.tvapilib.model;
 
 import java.util.List;
-import java.util.SortedSet;
 import java.util.TreeSet;
 
 /**

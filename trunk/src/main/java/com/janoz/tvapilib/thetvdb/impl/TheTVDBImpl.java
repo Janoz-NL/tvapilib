@@ -15,18 +15,7 @@
  ******************************************************************************/
 package com.janoz.tvapilib.thetvdb.impl;
 
-import java.sql.Date;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
-import org.apache.log4j.Logger;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.xml.sax.helpers.XMLReaderFactory;
-
 import com.janoz.tvapilib.model.Episode;
-import com.janoz.tvapilib.model.Season;
 import com.janoz.tvapilib.model.Show;
 import com.janoz.tvapilib.support.XmlParsingObject;
 import com.janoz.tvapilib.thetvdb.TheTVDB;
@@ -39,12 +28,10 @@ import com.janoz.tvapilib.thetvdb.impl.parsers.BaseShowParser;
  */
 public class TheTVDBImpl extends XmlParsingObject implements TheTVDB {
 
-	private static final Logger LOG = Logger.getLogger(TheTVDBImpl.class);
-
 	private UrlSupplier urlSupplier;
 	
 	/**
-	 * @param apiKey
+	 * @param apiKey TVDB Apikey
 	 */
 	public TheTVDBImpl(String apiKey) {
 		urlSupplier = new UrlSupplier(apiKey);
@@ -52,8 +39,9 @@ public class TheTVDBImpl extends XmlParsingObject implements TheTVDB {
 
 	@Override
 	public Show getShow(int showId) {
+		String url = urlSupplier.getBaseShowUrl(showId).toString();
 		BaseShowParser parser = new BaseShowParser();
-		parse(parser,urlSupplier.getBaseShowUrl(showId).toString());
+		parse(parser,openStream(url));
 		return parser.getResult();
 	}
 
@@ -66,9 +54,10 @@ public class TheTVDBImpl extends XmlParsingObject implements TheTVDB {
 
 	@Override
 	public Episode getEpisode(Show show, int season, int episode) {
+		String url = urlSupplier.getBaseEpisodeUrl(show.getId(),
+				season, episode).toString();
 		BaseEpisodeParser parser = new BaseEpisodeParser(show,urlSupplier);
-		parse(parser,urlSupplier.getBaseEpisodeUrl(show.getId(),
-				season, episode).toString());
+		parse(parser,openStream(url));
 		return parser.getResult();
 	}
 	

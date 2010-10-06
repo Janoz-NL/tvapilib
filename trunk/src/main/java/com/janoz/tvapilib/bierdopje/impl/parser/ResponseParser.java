@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.janoz.tvapilib.lockstockmods.impl.parsers;
+package com.janoz.tvapilib.bierdopje.impl.parser;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -21,41 +21,60 @@ import java.util.List;
 
 import org.xml.sax.Attributes;
 
-import com.janoz.tvapilib.model.Fanart;
-import com.janoz.tvapilib.model.FanartType;
+import com.janoz.tvapilib.model.Episode;
+import com.janoz.tvapilib.model.Subtitle;
 import com.janoz.tvapilib.support.AbstractSaxParser;
 
-public class LogoParser extends AbstractSaxParser {
+public class ResponseParser extends AbstractSaxParser{
 
-	List<Fanart> result = new ArrayList<Fanart>();
+	private boolean inSub = false;
+	private SubsParser subsParser = new SubsParser();
+	private Episode episode;
+	private List<Subtitle> result = new ArrayList<Subtitle>();
 
+	public ResponseParser(Episode episode) {
+		this.episode = episode;
+	}
+	
 	@Override
 	public void handleTagStart(LinkedList<String> stack, Attributes attributes) {
-		if (stack.size()==2
-			&& "logos".equals(stack.get(0)) 
-			&& "logo".equals(stack.get(1))) {
-
-			Fanart fanart = new Fanart();
-			fanart.setType(FanartType.LOGO);
-			fanart.setUrl(attributes.getValue("", "url"));
-			result.add(fanart);
+		if (!inSub && stack.size()==4) {
+			if ("bierdopje".equals(stack.get(0)) 
+					&& "response".equals(stack.get(1))
+					&& "results".equals(stack.get(2))
+					&& "result".equals(stack.get(3))) {
+				subsParser.reset();
+				inSub = true;
+			}
 		}
 	}
 
 	@Override
 	public void handleContent(LinkedList<String> stack, String content) {
-		// Do Nothing
-		
+		if (inSub) {
+			subsParser.handleContent(stack.subList(4, stack.size()), content);
+		}
 	}
 
 	@Override
 	public void handleTagEnd(LinkedList<String> stack) {
-		// Do Nothing
-		
+		if (inSub && stack.size()==4) {
+			if ("bierdopje".equals(stack.get(0)) 
+					&& "response".equals(stack.get(1))
+					&& "results".equals(stack.get(2))
+					&& "result".equals(stack.get(3))) {
+				Subtitle sub = subsParser.getResult();
+				sub.setEpisode(episode);
+				result.add(sub);
+				subsParser.reset();
+				inSub = true;
+			}
+		}
 	}
 	
-	public List<Fanart> getResult() {
+	public List<Subtitle> getResult() {
 		return result;
 	}
+	
 
 }
