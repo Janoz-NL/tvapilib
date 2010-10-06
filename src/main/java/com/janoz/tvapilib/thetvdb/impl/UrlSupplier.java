@@ -63,6 +63,14 @@ public class UrlSupplier extends XmlParsingObject {
 	}
 
 	/**
+	 * @param showId TheTVDB show ID
+	 * @return API url for retrieving full show information. 
+	 */
+	public StringBuilder getFullShowUrl(int showId) {
+		return getBaseShowUrl(showId).append("/all/");
+	}
+
+	/**
 	 * @param filename uri of the show or episode artwork. 
 	 * @return Complete url constructed from filename uri and mirrordata.
 	 */

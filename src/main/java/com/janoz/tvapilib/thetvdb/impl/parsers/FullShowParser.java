@@ -19,56 +19,63 @@ import java.util.LinkedList;
 
 import org.xml.sax.Attributes;
 
-import com.janoz.tvapilib.model.Episode;
 import com.janoz.tvapilib.model.Show;
 import com.janoz.tvapilib.support.AbstractSaxParser;
 import com.janoz.tvapilib.thetvdb.impl.UrlSupplier;
 
-public class BaseEpisodeParser extends AbstractSaxParser {
+public class FullShowParser extends AbstractSaxParser {
 
+	private boolean inShow = false;
 	private boolean inEpisode = false;
+	private ShowParser showParser = new ShowParser();
 	private EpisodeParser episodeParser = new EpisodeParser();
-	private Show show;
+	private Show result = null;	
 	
-	
-	
-	public BaseEpisodeParser(Show show, UrlSupplier urlSupplier) {
-		super();
-		this.show = show;
+	public FullShowParser(UrlSupplier urlSupplier) {
 		episodeParser.setUrlSupplier(urlSupplier);
 	}
-
+	
 	@Override
 	public void handleTagStart(LinkedList<String> stack, Attributes attributes) {
-		if (!inEpisode && stack.size()==2) {
-			if ("data".equals(stack.get(0)) 
-					&& "episode".equals(stack.get(1))) {
-				episodeParser.reset(show);
+		if (
+				!inShow 
+				&& !inEpisode 
+				&& stack.size()==2 
+				&&"data".equals(stack.get(0))) {
+			if ("series".equals(stack.get(1))) {
+				inShow = true;
+				result = new Show();
+				showParser.reset(result);
+			} else if ("episode".equals(stack.get(1))) {
 				inEpisode = true;
+				episodeParser.reset(result);
 			}
 		}
-		
 	}
 
 	@Override
 	public void handleContent(LinkedList<String> stack, String content) {
 		if (inEpisode) {
 			episodeParser.handleContent(stack.subList(2, stack.size()), content);
-		}
-	}
-	
-	@Override
-	public void handleTagEnd(LinkedList<String> stack) {
-		if (inEpisode && stack.size()==2) {
-			if ("data".equals(stack.get(0)) 
-					&& "episode".equals(stack.get(1))) {
-				inEpisode = false;
-			}
+		} else if (inShow) {
+			showParser.handleContent(stack.subList(2, stack.size()), content);
 		}
 	}
 
-	public Episode getResult() {
-		return episodeParser.getEpisode();
+	@Override
+	public void handleTagEnd(LinkedList<String> stack) {
+		if (stack.size()==2 && "data".equals(stack.get(0))) {
+			if (inShow && "series".equals(stack.get(1))) {
+				inShow = false;
+			} else if (inEpisode && "episode".equals(stack.get(1))) {
+				inEpisode = false;
+				episodeParser.getEpisode();
+			}
+		}
+	}
+	
+	public Show getResult() {
+		return result;
 	}
 
 }

@@ -34,11 +34,11 @@ public class EpisodeParser {
 	
 	private static final Logger LOG = Logger.getLogger(EpisodeParser.class);
 	
-	Episode episode;
-	Show show;
-	Season season;
-	UrlSupplier urlSupplier;
-	boolean done = false;
+	private Episode episode;
+	private Show show;
+	private Season season;
+	private UrlSupplier urlSupplier;
+	private boolean done = false;
 
 	public void reset(Show show) {
 		this.show = show;
@@ -72,8 +72,8 @@ public class EpisodeParser {
 			if (season == null) {
 				throw new TvException("Parsing incomplete");
 			}
-			season.addEpisode(episode);
 			episode.setSeason(season);
+			season.addEpisode(episode);
 			done=true;
 		}
 		return episode;

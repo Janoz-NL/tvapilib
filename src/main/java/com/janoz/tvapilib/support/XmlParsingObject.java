@@ -48,7 +48,7 @@ public abstract class XmlParsingObject {
 		try {
 			return new URL(url).openStream();
 		} catch (IOException e) {
-			throw new TvException("Unable to open XML data");
+			throw new TvException("Unable to open XML data.",e);
 		}
 	}
 	

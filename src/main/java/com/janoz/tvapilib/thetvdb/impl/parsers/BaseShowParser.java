@@ -24,7 +24,7 @@ import com.janoz.tvapilib.support.AbstractSaxParser;
 
 public class BaseShowParser extends AbstractSaxParser {
 
-	boolean inShow = false;
+	private boolean inShow = false;
 	private ShowParser showParser = new ShowParser();
 	private Show result = null;
 	
