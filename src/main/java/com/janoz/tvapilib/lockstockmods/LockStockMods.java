@@ -15,12 +15,7 @@
  ******************************************************************************/
 package com.janoz.tvapilib.lockstockmods;
 
-import java.io.IOException;
 import java.util.List;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
 
 import com.janoz.tvapilib.model.Fanart;
 import com.janoz.tvapilib.model.Show;

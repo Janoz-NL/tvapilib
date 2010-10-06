@@ -13,21 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.janoz.tvapilib.support;
+package com.janoz.tvapilib.thetvdb.impl;
 
-public class TvException extends RuntimeException {
+public enum MirrorType {
+	XML(1), BANNER(2), ZIP(4);
 
+	private int mask;
 
-	private static final long serialVersionUID = 1L;
-
-	public TvException(String arg0, Throwable arg1) {
-		super(arg0, arg1);
+	MirrorType(int mask) {
+		this.mask = mask;
 	}
 
-	public TvException(String message) {
-		super(message);
+	public boolean matches(int i) {
+		return 0 != (i & mask);
 	}
-	
-	
-
 }

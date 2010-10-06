@@ -13,49 +13,69 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.janoz.tvapilib.lockstockmods.impl.parsers;
+package com.janoz.tvapilib.thetvdb.impl.parsers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.xml.sax.Attributes;
 
-import com.janoz.tvapilib.model.Fanart;
-import com.janoz.tvapilib.model.FanartType;
 import com.janoz.tvapilib.support.AbstractSaxParser;
+import com.janoz.tvapilib.thetvdb.impl.MirrorType;
 
-public class LogoParser extends AbstractSaxParser {
+public class MirrorParser extends AbstractSaxParser{
 
-	List<Fanart> result = new ArrayList<Fanart>();
-
+	private int typemask = 0;
+	private String url = null;
+	private Map<MirrorType, List<String>> mirrors;
+	
+	public MirrorParser() {
+		mirrors = new HashMap<MirrorType, List<String>>();
+		for (MirrorType type : MirrorType.values()) {
+			mirrors.put(type, new ArrayList<String>());
+		}
+	}
+	
 	@Override
 	public void handleTagStart(LinkedList<String> stack, Attributes attributes) {
-		if (stack.size()==2
-			&& "logos".equals(stack.get(0)) 
-			&& "logo".equals(stack.get(1))) {
-
-			Fanart fanart = new Fanart();
-			fanart.setType(FanartType.LOGO);
-			fanart.setUrl(attributes.getValue("", "url"));
-			result.add(fanart);
-		}
+		//do Nothing
 	}
 
 	@Override
 	public void handleContent(LinkedList<String> stack, String content) {
-		// Do Nothing
+		if (stack.size()==3) {
+			if ("mirrors".equals(stack.get(0)) 
+					&& "mirror".equals(stack.get(1))) {
+				if ("typemask".equalsIgnoreCase(stack.get(2))) {
+					typemask = Integer.parseInt(content);
+				} else if ("mirrorpath".equalsIgnoreCase(stack.get(2))) {
+					url = content;
+				}
+			}
+		}		
 		
 	}
 
 	@Override
 	public void handleTagEnd(LinkedList<String> stack) {
-		// Do Nothing
-		
+		if (stack.size()==2
+			&& "mirrors".equals(stack.get(0)) 
+			&& "mirror".equals(stack.get(1))) {
+			for (MirrorType type : MirrorType.values()) {
+				if (type.matches(typemask)) {
+					mirrors.get(type).add(url);
+				}
+			}
+			url = null;
+			typemask = 0;
+		}
 	}
 	
-	public List<Fanart> getResult() {
-		return result;
+	public Map<MirrorType, List<String>> getResult() {
+		return mirrors;
 	}
 
 }

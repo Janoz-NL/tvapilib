@@ -15,20 +15,11 @@
  ******************************************************************************/
 package com.janoz.tvapilib.lockstockmods.impl;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.xml.sax.SAXException;
 
 import com.janoz.tvapilib.lockstockmods.LockStockMods;
 import com.janoz.tvapilib.lockstockmods.impl.parsers.LogoParser;
 import com.janoz.tvapilib.model.Fanart;
-import com.janoz.tvapilib.model.FanartType;
 import com.janoz.tvapilib.model.Show;
 import com.janoz.tvapilib.support.XmlParsingObject;
 
@@ -46,7 +37,7 @@ public class LockStockModsImpl extends XmlParsingObject implements LockStockMods
 	@Override
 	public List<Fanart> getClearLogos(int showId) {
 		LogoParser parser = new LogoParser();
-		parse(parser, getUrl(showId));
+		parse(parser, openStream(getUrl(showId)));
 		return parser.getResult();
 	}
 	

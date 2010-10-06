@@ -13,21 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package com.janoz.tvapilib.support;
+package com.janoz.tvapilib.bierdopje.impl.parser;
 
-public class TvException extends RuntimeException {
+import java.util.List;
 
+import com.janoz.tvapilib.model.Subtitle;
 
-	private static final long serialVersionUID = 1L;
+public class SubsParser {
 
-	public TvException(String arg0, Throwable arg1) {
-		super(arg0, arg1);
-	}
+	private Subtitle subtitle;
 
-	public TvException(String message) {
-		super(message);
+	public void reset() {
+		this.subtitle = new Subtitle();
 	}
 	
+	public void handleContent(List<String> stack, String content){
+		if (stack.size()==1) {
+			if ("filename".equals(stack.get(0))) {
+				subtitle.setFileTitle(content);
+			} else if ("downloadlink".equals(stack.get(0))) {
+				subtitle.setDownloadUrl(content);
+			}
+		}
+	}
 	
+	public Subtitle getResult() {
+		return subtitle;
+	}
 
 }
