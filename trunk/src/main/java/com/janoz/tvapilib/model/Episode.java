@@ -87,6 +87,41 @@ public class Episode implements Comparable<Episode>  {
 		this.thumbUrl = thumbUrl;
 	}
 
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + episode;
+		result = prime * result + ((season == null) ? 0 : season.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Episode other = (Episode) obj;
+		if (episode != other.episode) {
+			return false;
+		}
+		if (season == null) {
+			if (other.season != null) {
+				return false;
+			}
+		} else if (!season.equals(other.season)) {
+			return false;
+		}
+		return true;
+	}
+
 	@Override
 	public int compareTo(Episode other) {
 		int i = this.season.compareTo(other.season);

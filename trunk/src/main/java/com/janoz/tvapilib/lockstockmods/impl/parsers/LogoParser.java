@@ -27,7 +27,7 @@ import com.janoz.tvapilib.support.AbstractSaxParser;
 
 public class LogoParser extends AbstractSaxParser {
 
-	List<Fanart> result = new ArrayList<Fanart>();
+	private List<Fanart> result = new ArrayList<Fanart>();
 
 	@Override
 	public void handleTagStart(LinkedList<String> stack, Attributes attributes) {

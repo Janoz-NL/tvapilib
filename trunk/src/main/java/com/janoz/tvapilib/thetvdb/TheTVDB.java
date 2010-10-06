@@ -31,6 +31,12 @@ public interface TheTVDB {
 	Show getShow(int showId);
 
 	/**
+	 * 
+	 * @param showId TheTVDB id of the requested show.
+	 * @return The show including all known episodes or null if the show is not found.
+	 */
+	Show getFullShow(int showId);
+	/**
 	 * @param showId TheTVDB id of the requested show.
 	 * @param season Season number.
 	 * @param episode Episode number.

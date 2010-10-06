@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-public class Season implements Comparable<Season>{
+public class Season implements Comparable<Season> {
 
 	private int season;
 	private Show show;
@@ -47,6 +47,21 @@ public class Season implements Comparable<Season>{
 	
 	public void addEpisode(Episode episode) {
 		episodes.add(episode);
+	}
+	
+	public Episode getEpisode(int episodeNr) {
+		Episode dummy = new Episode();
+		dummy.setSeason(this);
+		dummy.setEpisode(episodeNr);
+		SortedSet<Episode> tail = episodes.tailSet(dummy);
+		if (!tail.isEmpty() && tail.first().getEpisode() == episodeNr) {
+			return tail.first();
+		} else {
+			return null;
+		}
+	}
+	public int getNrOfEpisodes() {
+		return episodes.size();
 	}
 
 
@@ -77,20 +92,26 @@ public class Season implements Comparable<Season>{
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		Season other = (Season) obj;
-		if (season != other.season)
+		if (season != other.season) {
 			return false;
+		}
 		if (show == null) {
-			if (other.show != null)
+			if (other.show != null) {
 				return false;
-		} else if (!show.equals(other.show))
+			}
+		} else if (!show.equals(other.show)) {
 			return false;
+		}
 		return true;
 	}
 	
