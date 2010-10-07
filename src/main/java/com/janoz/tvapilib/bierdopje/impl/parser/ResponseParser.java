@@ -38,14 +38,9 @@ public class ResponseParser extends AbstractSaxParser{
 	
 	@Override
 	public void handleTagStart(LinkedList<String> stack, Attributes attributes) {
-		if (!inSub && stack.size()==4) {
-			if ("bierdopje".equals(stack.get(0)) 
-					&& "response".equals(stack.get(1))
-					&& "results".equals(stack.get(2))
-					&& "result".equals(stack.get(3))) {
-				subsParser.reset();
-				inSub = true;
-			}
+		if (!inSub && stackEquals("bierdopje","response","results","result")) {
+			subsParser.reset();
+			inSub = true;
 		}
 	}
 
@@ -58,17 +53,12 @@ public class ResponseParser extends AbstractSaxParser{
 
 	@Override
 	public void handleTagEnd(LinkedList<String> stack) {
-		if (inSub && stack.size()==4) {
-			if ("bierdopje".equals(stack.get(0)) 
-					&& "response".equals(stack.get(1))
-					&& "results".equals(stack.get(2))
-					&& "result".equals(stack.get(3))) {
-				Subtitle sub = subsParser.getResult();
-				sub.setEpisode(episode);
-				result.add(sub);
-				subsParser.reset();
-				inSub = true;
-			}
+		if (inSub && stackEquals("bierdopje","response","results","result")) {
+			Subtitle sub = subsParser.getResult();
+			sub.setEpisode(episode);
+			result.add(sub);
+			subsParser.reset();
+			inSub = true;
 		}
 	}
 	

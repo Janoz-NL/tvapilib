@@ -19,6 +19,7 @@ import com.janoz.tvapilib.model.Episode;
 import com.janoz.tvapilib.model.Show;
 import com.janoz.tvapilib.support.XmlParsingObject;
 import com.janoz.tvapilib.thetvdb.TheTVDB;
+import com.janoz.tvapilib.thetvdb.impl.parsers.BannersParser;
 import com.janoz.tvapilib.thetvdb.impl.parsers.BaseEpisodeParser;
 import com.janoz.tvapilib.thetvdb.impl.parsers.BaseShowParser;
 import com.janoz.tvapilib.thetvdb.impl.parsers.FullShowParser;
@@ -40,7 +41,7 @@ public class TheTVDBImpl extends XmlParsingObject implements TheTVDB {
 
 	@Override
 	public Show getShow(int showId) {
-		String url = urlSupplier.getBaseShowUrl(showId).toString();
+		String url = urlSupplier.getBaseShowUrl(showId);
 		BaseShowParser parser = new BaseShowParser();
 		parse(parser,openStream(url));
 		return parser.getResult();
@@ -48,7 +49,7 @@ public class TheTVDBImpl extends XmlParsingObject implements TheTVDB {
 	
 	@Override
 	public Show getFullShow(int showId) {
-		String url = urlSupplier.getFullShowUrl(showId).toString();
+		String url = urlSupplier.getFullShowUrl(showId);
 		FullShowParser parser = new FullShowParser(urlSupplier);
 		parse(parser,openStream(url));
 		return parser.getResult();
@@ -64,14 +65,17 @@ public class TheTVDBImpl extends XmlParsingObject implements TheTVDB {
 	@Override
 	public Episode getEpisode(Show show, int season, int episode) {
 		String url = urlSupplier.getBaseEpisodeUrl(show.getId(),
-				season, episode).toString();
+				season, episode);
 		BaseEpisodeParser parser = new BaseEpisodeParser(show,urlSupplier);
 		parse(parser,openStream(url));
 		return parser.getResult();
 	}
 	
-	public void getBanners(Show show) {
-		System.out.println(urlSupplier.getBaseShowUrl(show.getId()).append("/banner.xml").toString());
+	@Override
+	public void fillFanart(Show show) {
+		String url = urlSupplier.getBannerUrl(show.getId());
+		BannersParser parser = new BannersParser(urlSupplier,show);
+		parse(parser,openStream(url));
 	}
 
 

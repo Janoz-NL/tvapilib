@@ -15,6 +15,8 @@
  ******************************************************************************/
 package com.janoz.tvapilib.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -53,12 +55,12 @@ public class Show {
 	private TreeSet<Season> seasons = new TreeSet<Season>();
 	
 	
-	private List<Fanart> fanarts;
-	private List<Fanart> posters;
-	private List<Fanart> banners;
-	private List<Fanart> logos;
-	private List<Fanart> allSeasonPosters;
-	private List<Fanart> allSeasonBanners;
+	private List<Fanart> fanarts = new ArrayList<Fanart>();
+	private List<Fanart> posters = new ArrayList<Fanart>();
+	private List<Fanart> banners = new ArrayList<Fanart>();
+	private List<Fanart> logos = new ArrayList<Fanart>();
+	private List<Fanart> allSeasonPosters = new ArrayList<Fanart>();
+	private List<Fanart> allSeasonBanners = new ArrayList<Fanart>();
 
 
 	public int getId() {
@@ -125,51 +127,51 @@ public class Show {
 	}
 
 	public List<Fanart> getFanarts() {
-		return fanarts;
+		return Collections.unmodifiableList(fanarts);
 	}
 
-	public void setFanarts(List<Fanart> fanarts) {
-		this.fanarts = fanarts;
+	public void addFanart(Fanart fanart) {
+		this.fanarts.add(fanart);
 	}
 
 	public List<Fanart> getPosters() {
-		return posters;
+		return Collections.unmodifiableList(posters);
 	}
 
-	public void setPosters(List<Fanart> posters) {
-		this.posters = posters;
+	public void addPoster(Fanart poster) {
+		this.posters.add(poster);
 	}
 
 	public List<Fanart> getBanners() {
-		return banners;
+		return Collections.unmodifiableList(banners);
 	}
 
-	public void setBanners(List<Fanart> banners) {
-		this.banners = banners;
+	public void addBanner(Fanart banner) {
+		this.banners.add(banner);
 	}
 
 	public List<Fanart> getLogos() {
-		return logos;
+		return Collections.unmodifiableList(logos);
 	}
 
-	public void setLogos(List<Fanart> logos) {
-		this.logos = logos;
+	public void addLogo(Fanart logo) {
+		this.logos.add(logo);
 	}
 
 	public List<Fanart> getAllSeasonPosters() {
-		return allSeasonPosters;
+		return Collections.unmodifiableList(allSeasonPosters);
 	}
 
-	public void setAllSeasonPosters(List<Fanart> allSeasonPosters) {
-		this.allSeasonPosters = allSeasonPosters;
+	public void addAllSeasonPoster(Fanart allSeasonPoster) {
+		this.allSeasonPosters.add(allSeasonPoster);
 	}
 
 	public List<Fanart> getAllSeasonBanners() {
-		return allSeasonBanners;
+		return Collections.unmodifiableList(allSeasonBanners);
 	}
 
-	public void setAllSeasonBanners(List<Fanart> allSeasonBanners) {
-		this.allSeasonBanners = allSeasonBanners;
+	public void addAllSeasonBanner(Fanart allSeasonBanner) {
+		this.allSeasonBanners.add(allSeasonBanner);
 	}
 	
 	

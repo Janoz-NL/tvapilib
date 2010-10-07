@@ -18,7 +18,7 @@ package com.janoz.tvapilib.model;
 public class Fanart {
 
 	private FanartType type;
-	private String id;
+	private int id;
 	private String url;
 	private String thumbUrl;
 	private float rating;
@@ -31,10 +31,10 @@ public class Fanart {
 	public void setType(FanartType type) {
 		this.type = type;
 	}
-	public String getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public String getUrl() {

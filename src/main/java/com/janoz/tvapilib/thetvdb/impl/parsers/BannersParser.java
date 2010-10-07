@@ -21,41 +21,39 @@ import org.xml.sax.Attributes;
 
 import com.janoz.tvapilib.model.Show;
 import com.janoz.tvapilib.support.AbstractSaxParser;
+import com.janoz.tvapilib.thetvdb.impl.UrlSupplier;
 
-public class BaseShowParser extends AbstractSaxParser {
+public class BannersParser extends AbstractSaxParser {
 
-	private boolean inShow = false;
-	private ShowParser showParser = new ShowParser();
-	private Show result = null;
+	private boolean inBanner = false;
+	private Show show;
+	private BannerParser bannerParser;
 	
+	public BannersParser(UrlSupplier urlSupplier, Show show) {
+		this.show = show;
+		this.bannerParser = new BannerParser(urlSupplier);
+	}
 	
 	@Override
 	public void handleTagStart(LinkedList<String> stack, Attributes attributes) {
-		if (!inShow && stackEquals("data","series")) {
-			result = new Show();
-			showParser.reset(result);
-			inShow = true;
+		if (!inBanner && stackEquals("banners","banner")) {
+			bannerParser.reset();
+			inBanner = true;
 		}
 	}
 
 	@Override
 	public void handleContent(LinkedList<String> stack, String content) {
-		if (inShow) {
-			showParser.handleContent(stack.subList(2, stack.size()), content);
+		if (inBanner) {
+			bannerParser.handleContent(stack.subList(2, stack.size()), content);
 		}
 	}
-	
+
 	@Override
 	public void handleTagEnd(LinkedList<String> stack) {
-		if (inShow && stackEquals("data","series")) {
-			inShow = false;
+		if (inBanner && stackEquals("banners","banner")) {
+			inBanner = false;
+			bannerParser.storeFanart(show);
 		}
 	}
-
-	public Show getResult() {
-		return result;
-	}
-
-	
-
 }

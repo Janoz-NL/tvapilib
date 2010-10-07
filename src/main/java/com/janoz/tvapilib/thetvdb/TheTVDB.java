@@ -55,4 +55,10 @@ public interface TheTVDB {
 	 */
 	Episode getEpisode(Show show, int season, int episode);
 
+	/**
+	 * 
+	 * @param show Show to add all fanart to.
+	 */
+	void fillFanart(Show show);
+
 }
