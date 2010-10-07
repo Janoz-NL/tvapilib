@@ -36,11 +36,10 @@ public enum FanartType {
 	
 	public static FanartType getTvDbType(String bannerType1, String bannerType2) {
 		for (FanartType type : values()) {
-			if (type.bannerType1.equals(bannerType1)) {
-				if ((type.bannerType2 == null) 
-						|| (type.bannerType2.equals(bannerType2))) {
-					return type;
-				}
+			if (type.bannerType1.equals(bannerType1) 
+					&& ((type.bannerType2 == null) 
+						|| (type.bannerType2.equals(bannerType2)))) {
+				return type;
 			}
 		}
 		return UNKNOWN;

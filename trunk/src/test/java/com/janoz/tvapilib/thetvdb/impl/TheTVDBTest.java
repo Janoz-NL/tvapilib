@@ -21,13 +21,16 @@ import static org.junit.Assert.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.sql.Date;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import com.janoz.tvapilib.model.Episode;
+import com.janoz.tvapilib.model.Fanart;
 import com.janoz.tvapilib.model.Show;
 
 public class TheTVDBTest {
@@ -51,9 +54,7 @@ public class TheTVDBTest {
 	
 	@Test
 	public void testEpisodeByShow() throws Exception {
-		expect(urlSupplierMock.getBaseEpisodeUrl(eq(164301), eq(1), eq(3))).andReturn(
-				new StringBuilder(
-						this.getClass().getClassLoader().getResource("responses/thetvdb/164301_1_3.xml").toString()));
+		expect(urlSupplierMock.getBaseEpisodeUrl(eq(164301), eq(1), eq(3))).andReturn(getResource("164301_1_3.xml"));
 		expect(urlSupplierMock.getImageUrl(eq("episodes/164301/2738381.jpg"))).andReturn(
 				"http://aDomain/ep_1_3.jpg");
 		replay(urlSupplierMock);
@@ -107,10 +108,45 @@ public class TheTVDBTest {
 		assertNull(show.getSeason(1).getEpisode(10));
 		assertEquals(9,show.getSeason(1).getNrOfEpisodes());
 	}
+	
+	@Test
+	public void testBanners() {
+		expect(urlSupplierMock.getBannerUrl(164301)).andReturn(getResource("164301_banners.xml"));
+		expect(urlSupplierMock.getImageUrl((String)anyObject())).andReturn("http://anUrl/").anyTimes();
+		
+		replay(urlSupplierMock);
+		Show show = new Show();
+		show.setId(164301);
+		subject.fillFanart(show);
+		verify(urlSupplierMock);
+		
+		assertContains(show.getFanarts(),587461,535361,495351,495371);
+		assertContains(show.getPosters(),541941,541951,495381);
+		assertContains(show.getBanners(),550631,541931,598121,550801,490141,482301,585071);
+		assertEquals(0,show.getAllSeasonBanners().size());
+		assertEquals(0,show.getAllSeasonPosters().size());
+		assertEquals(0,show.getSeason(1).getBanners().size());
+		assertContains(show.getSeason(1).getPosters(),600161);
+	}
 
-	private StringBuilder getResource(String filename) {
-		return new StringBuilder(
-				this.getClass().getClassLoader().getResource("responses/thetvdb/"+filename).toString());
+	private void assertContains(List<Fanart> fanartList, int... ids) {
+		assertEquals(ids.length, fanartList.size());
+		for (Fanart f : fanartList) {
+			assertTrue("id " + f.getId() + " not found.",inArray(ids,f.getId()));
+		}
+	}
+	
+	private boolean inArray(int[] haystack, int needle) {
+		for (int i : haystack) {
+			if (i == needle) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private String getResource(String filename) {
+		return this.getClass().getClassLoader().getResource("responses/thetvdb/"+filename).toString();
 	}
 
 
@@ -133,7 +169,6 @@ public class TheTVDBTest {
 	private void assertShow164301(Show show) {
 		assertEquals(164301,show.getId());
 		assertEquals("Nikita",show.getTitle());
-
 	}
 	
 	

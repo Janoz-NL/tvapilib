@@ -31,7 +31,9 @@ public class LockStockModsImpl extends XmlParsingObject implements LockStockMods
 
 	@Override
 	public void addClearLogos(Show show) {
-		show.setLogos(getClearLogos(show.getId()));
+		for(Fanart logo:getClearLogos(show.getId())){
+			show.addLogo(logo);
+		}
 	}
 
 	@Override

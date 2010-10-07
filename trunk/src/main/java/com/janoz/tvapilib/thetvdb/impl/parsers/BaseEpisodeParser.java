@@ -40,14 +40,12 @@ public class BaseEpisodeParser extends AbstractSaxParser {
 
 	@Override
 	public void handleTagStart(LinkedList<String> stack, Attributes attributes) {
-		if (!inEpisode && stack.size()==2) {
-			if ("data".equals(stack.get(0)) 
-					&& "episode".equals(stack.get(1))) {
-				episodeParser.reset(show);
-				inEpisode = true;
-			}
+		if (!inEpisode && stack.size()==2
+				&& "data".equals(stack.get(0)) 
+				&& "episode".equals(stack.get(1))) {
+			episodeParser.reset(show);
+			inEpisode = true;
 		}
-		
 	}
 
 	@Override
@@ -59,11 +57,10 @@ public class BaseEpisodeParser extends AbstractSaxParser {
 	
 	@Override
 	public void handleTagEnd(LinkedList<String> stack) {
-		if (inEpisode && stack.size()==2) {
-			if ("data".equals(stack.get(0)) 
-					&& "episode".equals(stack.get(1))) {
+		if (inEpisode && stack.size()==2
+				&& "data".equals(stack.get(0)) 
+				&& "episode".equals(stack.get(1))) {
 				inEpisode = false;
-			}
 		}
 	}
 

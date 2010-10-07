@@ -46,14 +46,13 @@ public class MirrorParser extends AbstractSaxParser{
 
 	@Override
 	public void handleContent(LinkedList<String> stack, String content) {
-		if (stack.size()==3) {
-			if ("mirrors".equals(stack.get(0)) 
-					&& "mirror".equals(stack.get(1))) {
-				if ("typemask".equalsIgnoreCase(stack.get(2))) {
-					typemask = Integer.parseInt(content);
-				} else if ("mirrorpath".equalsIgnoreCase(stack.get(2))) {
-					url = content;
-				}
+		if (stack.size()==3
+				&&"mirrors".equals(stack.get(0)) 
+				&& "mirror".equals(stack.get(1))) {
+			if ("typemask".equalsIgnoreCase(stack.get(2))) {
+				typemask = Integer.parseInt(content);
+			} else if ("mirrorpath".equalsIgnoreCase(stack.get(2))) {
+				url = content;
 			}
 		}		
 		
@@ -61,9 +60,7 @@ public class MirrorParser extends AbstractSaxParser{
 
 	@Override
 	public void handleTagEnd(LinkedList<String> stack) {
-		if (stack.size()==2
-			&& "mirrors".equals(stack.get(0)) 
-			&& "mirror".equals(stack.get(1))) {
+		if (stackEquals("mirrors","mirror")) {
 			for (MirrorType type : MirrorType.values()) {
 				if (type.matches(typemask)) {
 					mirrors.get(type).add(url);

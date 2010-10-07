@@ -15,6 +15,8 @@
  ******************************************************************************/
 package com.janoz.tvapilib.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -24,8 +26,8 @@ public class Season implements Comparable<Season> {
 	private int season;
 	private Show show;
 	private SortedSet<Episode> episodes = new TreeSet<Episode>();
-	private List<Fanart> poster;
-	private List<Fanart> banners;
+	private List<Fanart> posters = new ArrayList<Fanart>();
+	private List<Fanart> banners = new ArrayList<Fanart>();
 
 	
 	
@@ -47,6 +49,22 @@ public class Season implements Comparable<Season> {
 	
 	public void addEpisode(Episode episode) {
 		episodes.add(episode);
+	}
+	
+	public void addPoster(Fanart fanart){
+		posters.add(fanart);
+	}
+	
+	public List<Fanart> getPosters() {
+		return Collections.unmodifiableList(posters);
+	}
+	
+	public void addBanner(Fanart fanart){
+		banners.add(fanart);
+	}
+	
+	public List<Fanart> getBanners() {
+		return Collections.unmodifiableList(banners);
 	}
 	
 	public Episode getEpisode(int episodeNr) {

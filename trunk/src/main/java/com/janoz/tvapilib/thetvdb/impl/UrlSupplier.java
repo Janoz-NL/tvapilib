@@ -49,33 +49,45 @@ public class UrlSupplier extends XmlParsingObject {
 	 * @param episode episode number.
 	 * @return API url for retrieving episode information.
 	 */
-	public StringBuilder getBaseEpisodeUrl(int showId, int season, int episode) {
-		return getBaseShowUrl(showId)
-				.append("/default/").append(season).append("/").append(episode);
+	public String getBaseEpisodeUrl(int showId, int season, int episode) {
+		return getBaseShowUrlBuilder(showId)
+				.append("/default/").append(season).append("/").append(episode).toString();
 	}
 
 	/**
 	 * @param showId TheTVDB show ID
 	 * @return API url for retrieving show information. 
 	 */
-	public StringBuilder getBaseShowUrl(int showId) {
-		return getXmlUrl().append("/series/").append(showId);
+	public String getBaseShowUrl(int showId) {
+		return getBaseShowUrlBuilder(showId).toString();
 	}
 
 	/**
 	 * @param showId TheTVDB show ID
 	 * @return API url for retrieving full show information. 
 	 */
-	public StringBuilder getFullShowUrl(int showId) {
-		return getBaseShowUrl(showId).append("/all/");
+	public String getFullShowUrl(int showId) {
+		return getBaseShowUrlBuilder(showId).append("/all/").toString();
 	}
 
 	/**
-	 * @param filename uri of the show or episode artwork. 
+	 * @param filename uri of artwork. 
 	 * @return Complete url constructed from filename uri and mirrordata.
 	 */
 	public String getImageUrl(String filename) {
 		return getBannerUrl().append(filename).toString();
+	}
+	
+	/**
+	 * @param showId TheTVDB show ID
+	 * @return API url for retrieving banner information. 
+	 */
+	public String getBannerUrl(int showId) {
+		return getBaseShowUrlBuilder(showId).append("/banner.xml").toString();
+	}
+
+	private StringBuilder getBaseShowUrlBuilder(int showId) {
+		return getXmlUrl().append("/series/").append(showId);
 	}
 
 	

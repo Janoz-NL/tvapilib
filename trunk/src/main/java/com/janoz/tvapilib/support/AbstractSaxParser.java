@@ -68,5 +68,19 @@ public abstract class AbstractSaxParser extends DefaultHandler {
 	public abstract void handleTagStart(LinkedList<String> stack, Attributes attributes );
 	public abstract void handleContent(LinkedList<String> stack, String content);
 	public abstract void handleTagEnd(LinkedList<String> stack);
+	
+	protected boolean stackEquals(String... nodeNames) {
+		if (nodeNames.length != stack.size()) {
+			return false;
+		}
+		int i=0;
+		for (String node:stack) {
+			if (!node.equals(nodeNames[i])) {
+				return false;
+			}
+			i++;
+		}
+		return true;
+	}
 
 }
