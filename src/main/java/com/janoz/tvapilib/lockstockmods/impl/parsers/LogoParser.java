@@ -16,7 +16,6 @@
 package com.janoz.tvapilib.lockstockmods.impl.parsers;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.xml.sax.Attributes;
@@ -30,11 +29,8 @@ public class LogoParser extends AbstractSaxParser {
 	private List<Fanart> result = new ArrayList<Fanart>();
 
 	@Override
-	public void handleTagStart(LinkedList<String> stack, Attributes attributes) {
-		if (stack.size()==2
-			&& "logos".equals(stack.get(0)) 
-			&& "logo".equals(stack.get(1))) {
-
+	public void handleTagStart(Attributes attributes) {
+		if (stackEquals("logos","logo")) {
 			Fanart fanart = new Fanart();
 			fanart.setType(FanartType.LOGO);
 			fanart.setUrl(attributes.getValue("", "url"));
@@ -43,13 +39,13 @@ public class LogoParser extends AbstractSaxParser {
 	}
 
 	@Override
-	public void handleContent(LinkedList<String> stack, String content) {
+	public void handleContent(String content) {
 		// Do Nothing
 		
 	}
 
 	@Override
-	public void handleTagEnd(LinkedList<String> stack) {
+	public void handleTagEnd() {
 		// Do Nothing
 		
 	}

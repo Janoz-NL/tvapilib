@@ -21,7 +21,7 @@ import com.janoz.tvapilib.model.Subtitle;
 
 public class SubsParser {
 
-	private Subtitle subtitle;
+	private Subtitle subtitle = null;
 
 	public void reset() {
 		this.subtitle = new Subtitle();

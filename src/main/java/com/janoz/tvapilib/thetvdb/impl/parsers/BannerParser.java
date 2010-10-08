@@ -24,7 +24,7 @@ import com.janoz.tvapilib.thetvdb.impl.UrlSupplier;
 
 public class BannerParser {
 
-	private Fanart fanart;
+	private Fanart fanart = null;
 	private UrlSupplier urlSupplier;
 	private String bannerType1;
 	private String bannerType2;

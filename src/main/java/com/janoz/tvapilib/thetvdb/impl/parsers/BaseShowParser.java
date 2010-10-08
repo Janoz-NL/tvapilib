@@ -15,8 +15,6 @@
  ******************************************************************************/
 package com.janoz.tvapilib.thetvdb.impl.parsers;
 
-import java.util.LinkedList;
-
 import org.xml.sax.Attributes;
 
 import com.janoz.tvapilib.model.Show;
@@ -30,7 +28,7 @@ public class BaseShowParser extends AbstractSaxParser {
 	
 	
 	@Override
-	public void handleTagStart(LinkedList<String> stack, Attributes attributes) {
+	public void handleTagStart(Attributes attributes) {
 		if (!inShow && stackEquals("data","series")) {
 			result = new Show();
 			showParser.reset(result);
@@ -39,14 +37,14 @@ public class BaseShowParser extends AbstractSaxParser {
 	}
 
 	@Override
-	public void handleContent(LinkedList<String> stack, String content) {
+	public void handleContent(String content) {
 		if (inShow) {
-			showParser.handleContent(stack.subList(2, stack.size()), content);
+			showParser.handleContent(getStackTail(2), content);
 		}
 	}
 	
 	@Override
-	public void handleTagEnd(LinkedList<String> stack) {
+	public void handleTagEnd() {
 		if (inShow && stackEquals("data","series")) {
 			inShow = false;
 		}

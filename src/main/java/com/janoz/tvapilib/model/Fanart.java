@@ -24,7 +24,7 @@ public class Fanart {
 	private float rating;
 	private int ratingCount;
 	private boolean seriesName;
-	private Integer season;
+	private Integer season = null;
 	public FanartType getType() {
 		return type;
 	}

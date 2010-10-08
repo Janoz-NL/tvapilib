@@ -15,8 +15,6 @@
  ******************************************************************************/
 package com.janoz.tvapilib.thetvdb.impl.parsers;
 
-import java.util.LinkedList;
-
 import org.xml.sax.Attributes;
 
 import com.janoz.tvapilib.model.Show;
@@ -35,7 +33,7 @@ public class BannersParser extends AbstractSaxParser {
 	}
 	
 	@Override
-	public void handleTagStart(LinkedList<String> stack, Attributes attributes) {
+	public void handleTagStart(Attributes attributes) {
 		if (!inBanner && stackEquals("banners","banner")) {
 			bannerParser.reset();
 			inBanner = true;
@@ -43,14 +41,14 @@ public class BannersParser extends AbstractSaxParser {
 	}
 
 	@Override
-	public void handleContent(LinkedList<String> stack, String content) {
+	public void handleContent(String content) {
 		if (inBanner) {
-			bannerParser.handleContent(stack.subList(2, stack.size()), content);
+			bannerParser.handleContent(getStackTail(2), content);
 		}
 	}
 
 	@Override
-	public void handleTagEnd(LinkedList<String> stack) {
+	public void handleTagEnd() {
 		if (inBanner && stackEquals("banners","banner")) {
 			inBanner = false;
 			bannerParser.storeFanart(show);

@@ -17,7 +17,6 @@ package com.janoz.tvapilib.thetvdb.impl.parsers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -40,18 +39,17 @@ public class MirrorParser extends AbstractSaxParser{
 	}
 	
 	@Override
-	public void handleTagStart(LinkedList<String> stack, Attributes attributes) {
+	public void handleTagStart(Attributes attributes) {
 		//do Nothing
 	}
 
 	@Override
-	public void handleContent(LinkedList<String> stack, String content) {
-		if (stack.size()==3
-				&&"mirrors".equals(stack.get(0)) 
-				&& "mirror".equals(stack.get(1))) {
-			if ("typemask".equalsIgnoreCase(stack.get(2))) {
+	public void handleContent(String content) {
+		if (isStackSize(3)
+				&& stackStartsWith("mirrors","mirror")) {
+			if ("typemask".equalsIgnoreCase(getNodeName())) {
 				typemask = Integer.parseInt(content);
-			} else if ("mirrorpath".equalsIgnoreCase(stack.get(2))) {
+			} else if ("mirrorpath".equalsIgnoreCase(getNodeName())) {
 				url = content;
 			}
 		}		
@@ -59,7 +57,7 @@ public class MirrorParser extends AbstractSaxParser{
 	}
 
 	@Override
-	public void handleTagEnd(LinkedList<String> stack) {
+	public void handleTagEnd() {
 		if (stackEquals("mirrors","mirror")) {
 			for (MirrorType type : MirrorType.values()) {
 				if (type.matches(typemask)) {

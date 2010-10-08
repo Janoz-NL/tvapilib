@@ -16,7 +16,6 @@
 package com.janoz.tvapilib.bierdopje.impl.parser;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.xml.sax.Attributes;
@@ -37,7 +36,7 @@ public class ResponseParser extends AbstractSaxParser{
 	}
 	
 	@Override
-	public void handleTagStart(LinkedList<String> stack, Attributes attributes) {
+	public void handleTagStart(Attributes attributes) {
 		if (!inSub && stackEquals("bierdopje","response","results","result")) {
 			subsParser.reset();
 			inSub = true;
@@ -45,14 +44,14 @@ public class ResponseParser extends AbstractSaxParser{
 	}
 
 	@Override
-	public void handleContent(LinkedList<String> stack, String content) {
+	public void handleContent(String content) {
 		if (inSub) {
-			subsParser.handleContent(stack.subList(4, stack.size()), content);
+			subsParser.handleContent(getStackTail(4), content);
 		}
 	}
 
 	@Override
-	public void handleTagEnd(LinkedList<String> stack) {
+	public void handleTagEnd() {
 		if (inSub && stackEquals("bierdopje","response","results","result")) {
 			Subtitle sub = subsParser.getResult();
 			sub.setEpisode(episode);
