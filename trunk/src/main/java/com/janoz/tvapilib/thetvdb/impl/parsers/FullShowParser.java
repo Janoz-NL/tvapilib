@@ -15,8 +15,6 @@
  ******************************************************************************/
 package com.janoz.tvapilib.thetvdb.impl.parsers;
 
-import java.util.LinkedList;
-
 import org.xml.sax.Attributes;
 
 import com.janoz.tvapilib.model.Show;
@@ -36,17 +34,17 @@ public class FullShowParser extends AbstractSaxParser {
 	}
 	
 	@Override
-	public void handleTagStart(LinkedList<String> stack, Attributes attributes) {
+	public void handleTagStart(Attributes attributes) {
 		if (
 				!inShow 
 				&& !inEpisode 
-				&& stack.size()==2 
-				&&"data".equals(stack.get(0))) {
-			if ("series".equals(stack.get(1))) {
+				&& isStackSize(2)
+				&& stackStartsWith("data")) {
+			if ("series".equals(getNodeName())) {
 				inShow = true;
 				result = new Show();
 				showParser.reset(result);
-			} else if ("episode".equals(stack.get(1))) {
+			} else if ("episode".equals(getNodeName())) {
 				inEpisode = true;
 				episodeParser.reset(result);
 			}
@@ -54,20 +52,20 @@ public class FullShowParser extends AbstractSaxParser {
 	}
 
 	@Override
-	public void handleContent(LinkedList<String> stack, String content) {
+	public void handleContent(String content) {
 		if (inEpisode) {
-			episodeParser.handleContent(stack.subList(2, stack.size()), content);
+			episodeParser.handleContent(getStackTail(2), content);
 		} else if (inShow) {
-			showParser.handleContent(stack.subList(2, stack.size()), content);
+			showParser.handleContent(getStackTail(2), content);
 		}
 	}
 
 	@Override
-	public void handleTagEnd(LinkedList<String> stack) {
-		if (stack.size()==2 && "data".equals(stack.get(0))) {
-			if (inShow && "series".equals(stack.get(1))) {
+	public void handleTagEnd() {
+		if (isStackSize(2) && stackStartsWith("data")) {
+			if (inShow && "series".equals(getNodeName())) {
 				inShow = false;
-			} else if (inEpisode && "episode".equals(stack.get(1))) {
+			} else if (inEpisode && "episode".equals(getNodeName())) {
 				inEpisode = false;
 				episodeParser.getEpisode();
 			}

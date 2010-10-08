@@ -18,6 +18,7 @@ package com.janoz.tvapilib.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 /**
@@ -52,7 +53,7 @@ public class Show {
 //    <poster>posters/164301-2.jpg</poster>
 //    <zap2it_id></zap2it_id>
 	
-	private TreeSet<Season> seasons = new TreeSet<Season>();
+	private SortedSet<Season> seasons = new TreeSet<Season>();
 	
 	
 	private List<Fanart> fanarts = new ArrayList<Fanart>();
@@ -84,7 +85,7 @@ public class Show {
 		result.setShow(this);
 		result.setSeason(season);
 		if (seasons.contains(result)) {
-			result = seasons.floor(result);
+			result = seasons.tailSet(result).first();
 		} else {
 			seasons.add(result);
 		}
@@ -118,12 +119,8 @@ public class Show {
 		return true;
 	}
 
-	public TreeSet<Season> getSeasons() {
-		return seasons;
-	}
-
-	public void setSeasons(TreeSet<Season> seasons) {
-		this.seasons = seasons;
+	public SortedSet<Season> getSeasons() {
+		return Collections.unmodifiableSortedSet(seasons);
 	}
 
 	public List<Fanart> getFanarts() {

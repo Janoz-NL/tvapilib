@@ -16,6 +16,7 @@
 package com.janoz.tvapilib.support;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -23,7 +24,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public abstract class AbstractSaxParser extends DefaultHandler {
 	
-	private LinkedList<String> stack;
+	private LinkedList<String> stack = null;
 
 	@Override
 	public void startDocument() throws SAXException {
@@ -34,7 +35,7 @@ public abstract class AbstractSaxParser extends DefaultHandler {
 	public void startElement(String uri, String localName, String qName,
 			Attributes attributes) throws SAXException {
 		stack.add(localName.toLowerCase());
-		handleTagStart(stack, attributes);
+		handleTagStart(attributes);
 	}
 	
 	@Override
@@ -42,7 +43,7 @@ public abstract class AbstractSaxParser extends DefaultHandler {
 			throws SAXException {
 		String content = new String(ch,start,length).trim();
 		if (content.length() > 0) {
-			handleContent(stack, content);
+			handleContent(content);
 		}
 	}
 
@@ -50,8 +51,8 @@ public abstract class AbstractSaxParser extends DefaultHandler {
 	@Override
 	public void endElement(String uri, String localName, String qName)
 			throws SAXException {
-		handleTagEnd(stack);
-		if (!localName.toLowerCase().equals(stack.removeLast())) {
+		handleTagEnd();
+		if (!localName.equalsIgnoreCase(stack.removeLast())) {
 			throw new SAXException("Unexpected endtag '"+localName+"'");
 		}
 
@@ -65,9 +66,9 @@ public abstract class AbstractSaxParser extends DefaultHandler {
 	}
 
 
-	public abstract void handleTagStart(LinkedList<String> stack, Attributes attributes );
-	public abstract void handleContent(LinkedList<String> stack, String content);
-	public abstract void handleTagEnd(LinkedList<String> stack);
+	public abstract void handleTagStart(Attributes attributes );
+	public abstract void handleContent(String content);
+	public abstract void handleTagEnd();
 	
 	protected boolean stackEquals(String... nodeNames) {
 		if (nodeNames.length != stack.size()) {
@@ -82,5 +83,33 @@ public abstract class AbstractSaxParser extends DefaultHandler {
 		}
 		return true;
 	}
+	
+	protected boolean stackStartsWith(String... nodeNames) {
+		if (nodeNames.length > stack.size()) {
+			return false;
+		}
+		int i=0;
+		for (String node:stack) {
+			if (i == nodeNames.length) {
+				return true;
+			}
+			if (!node.equals(nodeNames[i])) {
+				return false;
+			}
+			i++;
+		}
+		return true;
+	}
 
+	protected List<String> getStackTail(int offset) {
+		return stack.subList(offset, stack.size());
+	}
+	
+	protected String getNodeName() {
+		return stack.getLast();
+	}
+	
+	protected boolean isStackSize(int i) {
+		return i == stack.size();
+	}
 }

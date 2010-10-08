@@ -24,10 +24,10 @@ import java.util.Date;
 public class Episode implements Comparable<Episode>  {
 
 	private int id;
-	private Season season;
+	private Season season = null;
 	private int episode;
 	private String title;
-	private Date aired;
+	private Date aired = null;
 	private String description;
 	private String thumbUrl;
 

@@ -21,7 +21,7 @@ import com.janoz.tvapilib.model.Show;
 
 public class ShowParser {
 	
-	private Show show;
+	private Show show = null;
 
 	public void reset(Show show) {
 		this.show = show;

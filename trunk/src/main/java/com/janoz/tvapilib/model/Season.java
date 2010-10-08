@@ -24,7 +24,7 @@ import java.util.TreeSet;
 public class Season implements Comparable<Season> {
 
 	private int season;
-	private Show show;
+	private Show show = null;
 	private SortedSet<Episode> episodes = new TreeSet<Episode>();
 	private List<Fanart> posters = new ArrayList<Fanart>();
 	private List<Fanart> banners = new ArrayList<Fanart>();

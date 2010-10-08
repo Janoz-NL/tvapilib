@@ -15,8 +15,6 @@
  ******************************************************************************/
 package com.janoz.tvapilib.thetvdb.impl.parsers;
 
-import java.util.LinkedList;
-
 import org.xml.sax.Attributes;
 
 import com.janoz.tvapilib.model.Episode;
@@ -39,27 +37,23 @@ public class BaseEpisodeParser extends AbstractSaxParser {
 	}
 
 	@Override
-	public void handleTagStart(LinkedList<String> stack, Attributes attributes) {
-		if (!inEpisode && stack.size()==2
-				&& "data".equals(stack.get(0)) 
-				&& "episode".equals(stack.get(1))) {
+	public void handleTagStart(Attributes attributes) {
+		if (!inEpisode && stackEquals("data","episode")) {
 			episodeParser.reset(show);
 			inEpisode = true;
 		}
 	}
 
 	@Override
-	public void handleContent(LinkedList<String> stack, String content) {
+	public void handleContent(String content) {
 		if (inEpisode) {
-			episodeParser.handleContent(stack.subList(2, stack.size()), content);
+			episodeParser.handleContent(getStackTail(2), content);
 		}
 	}
 	
 	@Override
-	public void handleTagEnd(LinkedList<String> stack) {
-		if (inEpisode && stack.size()==2
-				&& "data".equals(stack.get(0)) 
-				&& "episode".equals(stack.get(1))) {
+	public void handleTagEnd() {
+		if (inEpisode && stackEquals("data","episode")) {
 				inEpisode = false;
 		}
 	}
