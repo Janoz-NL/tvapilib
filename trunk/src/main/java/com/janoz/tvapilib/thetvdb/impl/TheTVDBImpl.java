@@ -1,17 +1,12 @@
 /*******************************************************************************
- * Copyright 2010 Gijs de Vries aka Janoz
+ * Copyright (c) 2010 Gijs de Vries aka Janoz.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
  * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *   http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Contributors:
+ *     Gijs de Vries aka Janoz - initial API and implementation
  ******************************************************************************/
 package com.janoz.tvapilib.thetvdb.impl;
 
@@ -32,11 +27,22 @@ public class TheTVDBImpl extends XmlParsingObject implements TheTVDB {
 
 	private UrlSupplier urlSupplier;
 	
+	
+
 	/**
 	 * @param apiKey TVDB Apikey
 	 */
 	public TheTVDBImpl(String apiKey) {
 		urlSupplier = new UrlSupplier(apiKey);
+	}
+
+	
+	@Override
+	public Show getFullShow(int showId) {
+		// TODO reimplement this using the zip file
+		Show show = getShowWithEpisodes(showId);
+		fillFanart(show);
+		return show;
 	}
 
 	@Override
@@ -48,7 +54,7 @@ public class TheTVDBImpl extends XmlParsingObject implements TheTVDB {
 	}
 	
 	@Override
-	public Show getFullShow(int showId) {
+	public Show getShowWithEpisodes(int showId) {
 		String url = urlSupplier.getFullShowUrl(showId);
 		FullShowParser parser = new FullShowParser(urlSupplier);
 		parse(parser,openStream(url));
