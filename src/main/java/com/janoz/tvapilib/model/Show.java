@@ -1,17 +1,12 @@
 /*******************************************************************************
- * Copyright 2010 Gijs de Vries aka Janoz
+ * Copyright (c) 2010 Gijs de Vries aka Janoz.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
  * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *   http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Contributors:
+ *     Gijs de Vries aka Janoz - initial API and implementation
  ******************************************************************************/
 package com.janoz.tvapilib.model;
 
@@ -29,29 +24,17 @@ public class Show {
 
 	private int id;
 	private String title;
-//    <Actors>|Maggie Q|Shane West|Lyndsy Fonseca|Aaron Stanford|Melinda Clarke|Xander Berkeley|Ashton Holmes|Tiffany Hines|</Actors>
+	private String description;;
 	//private List<Actor> actors;
-//    <ContentRating>TV-14</ContentRating>
-//    <FirstAired>2010-09-09</FirstAired>
-//    <Genre>|Action and Adventure|Drama|</Genre>
-//    <IMDB_ID>tt1592154</IMDB_ID>
-//    <Language>en</Language>
-//    <Network>The CW</Network>
-//    <NetworkID></NetworkID>
-//    <Overview>A very long description about Nikita and division.</Overview>
-//    <Rating>9.0</Rating>
-//    <RatingCount>10</RatingCount>
-//    <Runtime>60</Runtime>
-//    <SeriesID>164301</SeriesID>
-//    <SeriesName>Nikita</SeriesName>
-//    <Status>Continuing</Status>
-//    <added>2010-05-20 12:28:55</added>
-//    <addedBy>235</addedBy>
-//    <banner>graphical/164301-g4.jpg</banner>
-//    <fanart>fanart/original/164301-5.jpg</fanart>
-//    <lastupdated>1285704535</lastupdated>
-//    <poster>posters/164301-2.jpg</poster>
-//    <zap2it_id></zap2it_id>
+	//private Set<Genre> genres
+	//private String imdbId;
+	//private Language language
+	//private Double rating;
+	//private int ratingCount;
+	//private String network;
+	//private ContentRating contentRating
+	//private ShowStatus status;
+	//private int runtime;
 	
 	private SortedSet<Season> seasons = new TreeSet<Season>();
 	
@@ -78,6 +61,14 @@ public class Show {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public Season getSeason(int season) {

@@ -1,17 +1,12 @@
 /*******************************************************************************
- * Copyright 2010 Gijs de Vries aka Janoz
+ * Copyright (c) 2010 Gijs de Vries aka Janoz.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
  * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *   http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Contributors:
+ *     Gijs de Vries aka Janoz - initial API and implementation
  ******************************************************************************/
 package com.janoz.tvapilib.thetvdb.impl;
 
@@ -100,7 +95,7 @@ public class TheTVDBTest {
 			"http://aDomain/ep_1_5.jpg");		
 		replay(urlSupplierMock);
 		
-		Show show = subject.getFullShow(164301);
+		Show show = subject.getShowWithEpisodes(164301);
 		verify(urlSupplierMock);
 		assertShow164301(show);
 		assertEpisode164301_1_3(show, show.getSeason(1).getEpisode(3));
@@ -169,6 +164,7 @@ public class TheTVDBTest {
 	private void assertShow164301(Show show) {
 		assertEquals(164301,show.getId());
 		assertEquals("Nikita",show.getTitle());
+		assertEquals("A very long description about Nikita and division.",show.getDescription());
 	}
 	
 	
