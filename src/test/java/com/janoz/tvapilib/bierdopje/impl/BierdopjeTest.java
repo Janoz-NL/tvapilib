@@ -42,7 +42,7 @@ public class BierdopjeTest {
 		replay(subject);
 		List<Subtitle> result = subject.getAllSubsFor(1,2,3);
 		verify(subject);
-		assertEquals(1,epCap.getValue().getSeason().getShow().getId());
+		assertEquals(1,epCap.getValue().getSeason().getShow().getTheTvDbId());
 		assertEquals(2,epCap.getValue().getSeason().getSeason());
 		assertEquals(3,epCap.getValue().getEpisode());
 		assertTrue(result.isEmpty());
@@ -56,7 +56,7 @@ public class BierdopjeTest {
 		replay(subject);
 		List<Subtitle> result = subject.getAllSubsFor(1,2,3);
 		verify(subject);
-		assertEquals(1,epCap.getValue().getSeason().getShow().getId());
+		assertEquals(1,epCap.getValue().getSeason().getShow().getTheTvDbId());
 		assertEquals(2,epCap.getValue().getSeason().getSeason());
 		assertEquals(3,epCap.getValue().getEpisode());
 		assertEquals(4,result.size());

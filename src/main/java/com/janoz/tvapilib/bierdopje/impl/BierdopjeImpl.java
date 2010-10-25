@@ -36,9 +36,9 @@ public class BierdopjeImpl extends XmlParsingObject implements Bierdopje {
 	}
 
 	@Override
-	public List<Subtitle> getAllSubsFor(int showId, int season, int episode) {
+	public List<Subtitle> getAllSubsFor(int theTvDbId, int season, int episode) {
 		Show show = new Show();
-		show.setId(showId);
+		show.setTheTvDbId(theTvDbId);
 		Season se = new Season();
 		se.setSeason(season);
 		se.setShow(show);
@@ -58,7 +58,7 @@ public class BierdopjeImpl extends XmlParsingObject implements Bierdopje {
 	String constructGetAllSubsForUrl(Episode episode) {
 		StringBuilder sb = new StringBuilder("http://api.bierdopje.com/")
 				.append(apiKey).append("/GetAllSubsFor/")
-				.append(episode.getSeason().getShow().getId()).append("/")
+				.append(episode.getSeason().getShow().getTheTvDbId()).append("/")
 				.append(episode.getSeason().getSeason()).append("/")
 				.append(episode.getEpisode()).append("/nl/true");
 		return sb.toString();

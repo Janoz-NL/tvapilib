@@ -26,23 +26,23 @@ public class LockStockModsImpl extends XmlParsingObject implements LockStockMods
 
 	@Override
 	public void addClearLogos(Show show) {
-		for(Fanart logo:getClearLogos(show.getId())){
+		for(Fanart logo:getClearLogos(show.getTheTvDbId())){
 			show.addLogo(logo);
 		}
 	}
 
 	@Override
-	public List<Fanart> getClearLogos(int showId) {
+	public List<Fanart> getClearLogos(int theTvDbId) {
 		LogoParser parser = new LogoParser();
-		parse(parser, openStream(getUrl(showId)));
+		parse(parser, openStream(getUrl(theTvDbId)));
 		return parser.getResult();
 	}
 	
 	/*
 	 * Package accessible so it can be mocked for test purposes.
 	 */
-	String getUrl(int showId) {
-		return "http://www.lockstockmods.net/logos/getlogo.php?id="+showId;
+	String getUrl(int theTvDbId) {
+		return "http://www.lockstockmods.net/logos/getlogo.php?id="+theTvDbId;
 	}
 
 }

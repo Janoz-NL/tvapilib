@@ -38,39 +38,39 @@ public class TheTVDBImpl extends XmlParsingObject implements TheTVDB {
 
 	
 	@Override
-	public Show getFullShow(int showId) {
+	public Show getFullShow(int theTvDbId) {
 		// TODO reimplement this using the zip file
-		Show show = getShowWithEpisodes(showId);
+		Show show = getShowWithEpisodes(theTvDbId);
 		fillFanart(show);
 		return show;
 	}
 
 	@Override
-	public Show getShow(int showId) {
-		String url = urlSupplier.getBaseShowUrl(showId);
+	public Show getShow(int theTvDbId) {
+		String url = urlSupplier.getBaseShowUrl(theTvDbId);
 		BaseShowParser parser = new BaseShowParser();
 		parse(parser,openStream(url));
 		return parser.getResult();
 	}
 	
 	@Override
-	public Show getShowWithEpisodes(int showId) {
-		String url = urlSupplier.getFullShowUrl(showId);
+	public Show getShowWithEpisodes(int theTvDbId) {
+		String url = urlSupplier.getFullShowUrl(theTvDbId);
 		FullShowParser parser = new FullShowParser(urlSupplier);
 		parse(parser,openStream(url));
 		return parser.getResult();
 	}
 
 	@Override
-	public Episode getEpisode(int showId, int season, int episode) {
+	public Episode getEpisode(int theTvDbId, int season, int episode) {
 		Show show = new Show();
-		show.setId(showId);
+		show.setTheTvDbId(theTvDbId);
 		return getEpisode(show, season, episode);
 	}
 
 	@Override
 	public Episode getEpisode(Show show, int season, int episode) {
-		String url = urlSupplier.getBaseEpisodeUrl(show.getId(),
+		String url = urlSupplier.getBaseEpisodeUrl(show.getTheTvDbId(),
 				season, episode);
 		BaseEpisodeParser parser = new BaseEpisodeParser(show,urlSupplier);
 		parse(parser,openStream(url));
@@ -79,7 +79,7 @@ public class TheTVDBImpl extends XmlParsingObject implements TheTVDB {
 	
 	@Override
 	public void fillFanart(Show show) {
-		String url = urlSupplier.getBannerUrl(show.getId());
+		String url = urlSupplier.getBannerUrl(show.getTheTvDbId());
 		BannersParser parser = new BannersParser(urlSupplier,show);
 		parse(parser,openStream(url));
 	}
