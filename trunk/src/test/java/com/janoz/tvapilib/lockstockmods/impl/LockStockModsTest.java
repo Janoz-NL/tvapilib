@@ -36,7 +36,7 @@ public class LockStockModsTest {
 				this.getClass().getClassLoader().getResource("responses/lockstockmods/164301.xml").toString());
 		replay(subject);
 		Show show = new Show();
-		show.setId(164301);
+		show.setTheTvDbId(164301);
 		subject.addClearLogos(show);
 		verify(subject);
 		Fanart f = show.getLogos().get(0);
@@ -53,7 +53,7 @@ public class LockStockModsTest {
 				this.getClass().getClassLoader().getResource("responses/lockstockmods/1.xml").toString());
 		replay(subject);
 		Show show = new Show();
-		show.setId(1);
+		show.setTheTvDbId(1);
 		subject.addClearLogos(show);
 		verify(subject);
 		assertTrue("ShouldBeUntouched",show.getLogos().isEmpty());

@@ -27,12 +27,12 @@ import com.janoz.tvapilib.model.Subtitle;
 public interface Bierdopje {
 
 	/**
-	 * @param showId TheTVDB id of the requested show.
+	 * @param theTvDbId TheTVDB id of the requested show.
 	 * @param season Season number.
 	 * @param episode Episode number.
 	 * @return A list of subtitles for this episode.
 	 */
-	List<Subtitle> getAllSubsFor(int showId, int season, int episode);
+	List<Subtitle> getAllSubsFor(int theTvDbId, int season, int episode);
 
 	/**
 	 * @param episode The episode for which subtitles are requested

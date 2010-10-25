@@ -54,7 +54,7 @@ public class TheTVDBTest {
 				"http://aDomain/ep_1_3.jpg");
 		replay(urlSupplierMock);
 		Show show = new Show();
-		show.setId(164301);
+		show.setTheTvDbId(164301);
 		Episode episode = subject.getEpisode(show, 1, 3);
 		verify(urlSupplierMock);
 		assertEpisode164301_1_3(show, episode);
@@ -111,7 +111,7 @@ public class TheTVDBTest {
 		
 		replay(urlSupplierMock);
 		Show show = new Show();
-		show.setId(164301);
+		show.setTheTvDbId(164301);
 		subject.fillFanart(show);
 		verify(urlSupplierMock);
 		
@@ -148,7 +148,7 @@ public class TheTVDBTest {
 	
 	private void assertEpisode164301_1_3(Show show, Episode episode) {
 		if (show == null) {
-			assertEquals(164301,episode.getSeason().getShow().getId());
+			assertEquals(164301,episode.getSeason().getShow().getTheTvDbId());
 		} else {
 			assertSame(show,episode.getSeason().getShow());
 		}
@@ -162,7 +162,7 @@ public class TheTVDBTest {
 	}
 	
 	private void assertShow164301(Show show) {
-		assertEquals(164301,show.getId());
+		assertEquals(164301,show.getTheTvDbId());
 		assertEquals("Nikita",show.getTitle());
 		assertEquals("A very long description about Nikita and division.",show.getDescription());
 	}

@@ -32,8 +32,8 @@ public interface LockStockMods {
 	void addClearLogos(Show show);
 	
 	/**
-	 * @param showId TheTVDB ID of the show 
+	 * @param theTvDbId TheTVDB ID of the show 
 	 * @return A list of clearlogos.
 	 */
-	List<Fanart> getClearLogos(int showId);
+	List<Fanart> getClearLogos(int theTvDbId);
 }

@@ -22,7 +22,8 @@ import java.util.TreeSet;
  */
 public class Show {
 
-	private int id;
+	private int tvRageId;
+	private int theTvDbId;
 	private String title;
 	private String description;;
 	//private List<Actor> actors;
@@ -46,13 +47,20 @@ public class Show {
 	private List<Fanart> allSeasonPosters = new ArrayList<Fanart>();
 	private List<Fanart> allSeasonBanners = new ArrayList<Fanart>();
 
-
-	public int getId() {
-		return id;
+	public int getTvRageId() {
+		return tvRageId;
 	}
 
-	public void setId(int showId) {
-		this.id = showId;
+	public void setTvRageId(int tvRageId) {
+		this.tvRageId = tvRageId;
+	}
+
+	public int getTheTvDbId() {
+		return theTvDbId;
+	}
+
+	public void setTheTvDbId(int showId) {
+		this.theTvDbId = showId;
 	}
 
 	public String getTitle() {
@@ -87,7 +95,7 @@ public class Show {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + id;
+		result = prime * result + theTvDbId;
 		return result;
 	}
 
@@ -104,7 +112,7 @@ public class Show {
 			return false;
 		}
 		Show other = (Show) obj;
-		if (id != other.id) {
+		if (theTvDbId != other.theTvDbId) {
 			return false;
 		}
 		return true;

@@ -25,7 +25,7 @@ public class ShowParser {
 	public void handleContent(List<String> stack, String content){
 		if (stack.size()==1) {
 			if ("seriesid".equals(stack.get(0))) {
-				show.setId(Integer.parseInt(content));
+				show.setTheTvDbId(Integer.parseInt(content));
 			} else if ("seriesname".equals(stack.get(0))) {
 				show.setTitle(content);
 			} else if ("overview".equals(stack.get(0))) {
