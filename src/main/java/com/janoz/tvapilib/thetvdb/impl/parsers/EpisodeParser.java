@@ -17,7 +17,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.janoz.tvapilib.model.Episode;
 import com.janoz.tvapilib.model.Season;
@@ -27,7 +28,7 @@ import com.janoz.tvapilib.thetvdb.impl.UrlSupplier;
 
 public class EpisodeParser {
 	
-	private static final Logger LOG = Logger.getLogger(EpisodeParser.class);
+	private static final Log LOG = LogFactory.getLog(EpisodeParser.class);
 	
 	private Episode episode;
 	private Show show;
@@ -65,7 +66,8 @@ public class EpisodeParser {
 	public Episode getEpisode(){
 		if (!done) {
 			if (season == null) {
-				throw new TvException("Parsing incomplete");
+				LOG.info("Episode never got a season.");
+				throw new TvException("Episode never got a season.");
 			}
 			episode.setSeason(season);
 			season.addEpisode(episode);
