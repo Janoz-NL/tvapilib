@@ -39,11 +39,8 @@ public class BierdopjeImpl extends XmlParsingObject implements Bierdopje {
 	public List<Subtitle> getAllSubsFor(int theTvDbId, int season, int episode) {
 		Show show = new Show();
 		show.setTheTvDbId(theTvDbId);
-		Season se = new Season();
-		se.setSeason(season);
-		se.setShow(show);
 		Episode ep = new Episode();
-		ep.setSeason(se);
+		ep.setSeason(show.getSeason(season));
 		ep.setEpisode(episode);
 		return getAllSubsFor(ep);
 	}
