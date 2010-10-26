@@ -28,7 +28,7 @@ import org.xml.sax.helpers.XMLReaderFactory;
  */
 public abstract class XmlParsingObject {
 	
-	private static Log LOG = LogFactory.getLog(XmlParsingObject.class);
+	private static final Log LOG = LogFactory.getLog(XmlParsingObject.class);
 	
 	protected void parse(AbstractSaxParser parser,InputStream inputStream) {
 		try {
