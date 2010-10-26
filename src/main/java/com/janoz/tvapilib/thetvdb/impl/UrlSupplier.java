@@ -38,31 +38,39 @@ public class UrlSupplier extends XmlParsingObject {
 		initMirrors();
 	}
 
+	/*
+	 * Constructor so class can be instantiated without initializing mirrordata.
+	 */
+	UrlSupplier(){
+		//Added for test purposes..
+	}
+	
+	
 	/**
-	 * @param showId TheTVDB show ID.
+	 * @param theTvDbId TheTVDB show ID.
 	 * @param season season number.
 	 * @param episode episode number.
 	 * @return API url for retrieving episode information.
 	 */
-	public String getBaseEpisodeUrl(int showId, int season, int episode) {
-		return getBaseShowUrlBuilder(showId)
+	public String getBaseEpisodeUrl(int theTvDbId, int season, int episode) {
+		return getBaseShowUrlBuilder(theTvDbId)
 				.append("/default/").append(season).append("/").append(episode).toString();
 	}
 
 	/**
-	 * @param showId TheTVDB show ID
+	 * @param theTvDbId TheTVDB show ID
 	 * @return API url for retrieving show information. 
 	 */
-	public String getBaseShowUrl(int showId) {
-		return getBaseShowUrlBuilder(showId).toString();
+	public String getBaseShowUrl(int theTvDbId) {
+		return getBaseShowUrlBuilder(theTvDbId).toString();
 	}
 
 	/**
-	 * @param showId TheTVDB show ID
+	 * @param theTvDbId TheTVDB show ID
 	 * @return API url for retrieving full show information. 
 	 */
-	public String getFullShowUrl(int showId) {
-		return getBaseShowUrlBuilder(showId).append("/all/").toString();
+	public String getFullShowUrl(int theTvDbId) {
+		return getBaseShowUrlBuilder(theTvDbId).append("/all/").toString();
 	}
 
 	/**
@@ -74,15 +82,15 @@ public class UrlSupplier extends XmlParsingObject {
 	}
 	
 	/**
-	 * @param showId TheTVDB show ID
+	 * @param theTvDbId TheTVDB show ID
 	 * @return API url for retrieving banner information. 
 	 */
-	public String getBannerUrl(int showId) {
-		return getBaseShowUrlBuilder(showId).append("/banner.xml").toString();
+	public String getBannerUrl(int theTvDbId) {
+		return getBaseShowUrlBuilder(theTvDbId).append("/banner.xml").toString();
 	}
 
-	private StringBuilder getBaseShowUrlBuilder(int showId) {
-		return getXmlUrl().append("/series/").append(showId);
+	private StringBuilder getBaseShowUrlBuilder(int theTvDbId) {
+		return getXmlUrl().append("/series/").append(theTvDbId);
 	}
 
 	
@@ -115,15 +123,8 @@ public class UrlSupplier extends XmlParsingObject {
 	 * Package accessible so it can be mocked even though t causes a 
 	 * major violation in Sonar.
 	 */
-	String getMirrorUrl() { //NOSONAR
+	String getMirrorUrl() {
 		return "http://thetvdb.com/api/"+apiKey+"/mirrors.xml";
 	}
-	
-	/*
-	 * Constructor so class can be instantiated without initializing mirrordata.
-	 */
-	UrlSupplier(){ //NOSONAR
-		//Added for test purposes..
-	}
-	
+
 }

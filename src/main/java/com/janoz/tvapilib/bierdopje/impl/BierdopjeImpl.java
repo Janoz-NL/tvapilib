@@ -15,7 +15,6 @@ import java.util.List;
 import com.janoz.tvapilib.bierdopje.Bierdopje;
 import com.janoz.tvapilib.bierdopje.impl.parser.ResponseParser;
 import com.janoz.tvapilib.model.Episode;
-import com.janoz.tvapilib.model.Season;
 import com.janoz.tvapilib.model.Show;
 import com.janoz.tvapilib.model.Subtitle;
 import com.janoz.tvapilib.support.XmlParsingObject;

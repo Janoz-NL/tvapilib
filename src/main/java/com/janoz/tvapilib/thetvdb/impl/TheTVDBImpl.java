@@ -35,7 +35,14 @@ public class TheTVDBImpl extends XmlParsingObject implements TheTVDB {
 	public TheTVDBImpl(String apiKey) {
 		urlSupplier = new UrlSupplier(apiKey);
 	}
-
+	
+	/*
+	 * Constructor so class can be instantiated without initializing UrlSupplier.
+	 */
+	@SuppressWarnings("unused")
+	private TheTVDBImpl(){
+		//Added for test purposes..
+	}
 	
 	@Override
 	public Show getFullShow(int theTvDbId) {
@@ -82,17 +89,5 @@ public class TheTVDBImpl extends XmlParsingObject implements TheTVDB {
 		String url = urlSupplier.getBannerUrl(show.getTheTvDbId());
 		BannersParser parser = new BannersParser(urlSupplier,show);
 		parse(parser,openStream(url));
-	}
-
-
-	
-	/* * * Below is for test purposes. * * */
-	
-	/*
-	 * Constructor so class can be instantiated without initializing UrlSupplier.
-	 */
-	@SuppressWarnings("unused")
-	private TheTVDBImpl(){  //NOSONAR
-		//Added for test purposes..
 	}
 }

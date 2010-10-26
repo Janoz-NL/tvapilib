@@ -20,6 +20,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.janoz.tvapilib.model.Episode;
+import com.janoz.tvapilib.model.Season;
+import com.janoz.tvapilib.model.Show;
 import com.janoz.tvapilib.model.Subtitle;
 
 
@@ -32,6 +34,21 @@ public class BierdopjeTest {
 	public void setup() {
 		subject = createMockBuilder(BierdopjeImpl.class)
 			.addMockedMethod("constructGetAllSubsForUrl").withConstructor(API_KEY).createMock();
+	}
+
+	@Test
+	public void testGetSubsUrl(){
+		//replace mock
+		subject = new BierdopjeImpl(API_KEY);
+		Show show = new Show();
+		show.setTheTvDbId(1);
+		Season season = show.getSeason(2);
+		Episode episode = new Episode();
+		episode.setEpisode(3);
+		episode.setSeason(season);
+		season.addEpisode(episode);
+		
+		assertEquals("http://api.bierdopje.com/**apiKey**/GetAllSubsFor/1/2/3/nl/true",subject.constructGetAllSubsForUrl(episode));
 	}
 	
 	@Test

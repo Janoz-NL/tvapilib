@@ -20,28 +20,20 @@ import com.janoz.tvapilib.model.Show;
 public interface TvRage {
 	
 	/**
-	 * 
-	 * @param tvRageId TheTVDB id of the requested show.
-	 * @return Show including episodes and fanart.
-	 */
-	Show getFullShow(int tvRageId);
-	
-	/**
-	 * @param tvRageId TheTVDB id of the requested show.
-	 * @return The show or null if t
-	 * he show is not found.
+	 * @param tvRageId TvRage id of the requested show.
+	 * @return The show or null if the show is not found.
 	 */
 	Show getShow(int tvRageId);
 
 	/**
 	 * 
-	 * @param tvRageId TheTVDB id of the requested show.
+	 * @param tvRageId TvRage id of the requested show.
 	 * @return The show including all known episodes or null if the show is not found.
 	 */
 	Show getShowWithEpisodes(int tvRageId);
 	
 	/**
-	 * @param tvRageId TheTVDB id of the requested show.
+	 * @param tvRageId TvRage id of the requested show.
 	 * @param season Season number.
 	 * @param episode Episode number.
 	 * @return 
