@@ -10,6 +10,8 @@
  ******************************************************************************/
 package com.janoz.tvapilib.thetvdb.impl;
 
+import java.util.List;
+
 import com.janoz.tvapilib.model.Episode;
 import com.janoz.tvapilib.model.Show;
 import com.janoz.tvapilib.support.XmlParsingObject;
@@ -44,6 +46,14 @@ public class TheTVDBImpl extends XmlParsingObject implements TheTVDB {
 		//Added for test purposes..
 	}
 	
+	@Override
+	public List<Show> searchShows(String name) {
+		String url = urlSupplier.getShowSearchUrl(name);
+		BaseShowParser parser = new BaseShowParser();
+		parse(parser,openStream(url));
+		return parser.getResults();
+	}
+
 	@Override
 	public Show getFullShow(int theTvDbId) {
 		// TODO reimplement this using the zip file

@@ -45,7 +45,14 @@ public class UrlSupplier extends XmlParsingObject {
 		//Added for test purposes..
 	}
 	
-	
+	/**
+	 * 
+	 * @param name Show to search for.
+	 * @return Search URL (this method does not require the apikey).
+	 */
+	public String getShowSearchUrl(String name) {
+		return  "http://www.thetvdb.com/api/GetSeries.php?seriesname="+ name;
+	}
 	/**
 	 * @param theTvDbId TheTVDB show ID.
 	 * @param season season number.

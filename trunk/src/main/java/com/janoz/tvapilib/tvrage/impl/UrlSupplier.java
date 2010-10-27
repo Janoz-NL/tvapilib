@@ -12,6 +12,7 @@ package com.janoz.tvapilib.tvrage.impl;
 
 public class UrlSupplier {
 
+	private static final String SHOW_SEARCH = "search.php";
 	private static final String SHOW_INFO = "showinfo.php";
 	private static final String EPISODE_LIST = "episode_list.php";
 	private static final String EPISODE_INFO = "episodeinfo.php";
@@ -22,6 +23,12 @@ public class UrlSupplier {
 		this.apiKey = apiKey;
 	}
 	
+	public String getShowSearchUrl(String name){
+		boolean usePublic = apiKey == null;
+		return getServicesUrlBuilder(SHOW_SEARCH, usePublic)
+				.append("show=").append(name).toString();
+	}
+
 	public String getShowInfoUrl(int tvRageId){
 		boolean usePublic = apiKey == null;
 		return getServicesUrlBuilder(SHOW_INFO, usePublic)

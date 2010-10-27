@@ -25,6 +25,18 @@ public class UrlSupplierTest {
 		subject = new UrlSupplier(API_KEY);
 	}
 	
+
+	@Test
+	public void testShowSearch() {
+		assertEquals("http://services.tvrage.com/myfeeds/search.php?key=**API_KEY**&show=name",subject.getShowSearchUrl("name"));
+	}
+	
+	@Test
+	public void testShowSearchPublic() throws Exception{
+		clearApiKey();
+		assertEquals("http://services.tvrage.com/feeds/search.php?show=name",subject.getShowSearchUrl("name"));
+	}
+
 	@Test
 	public void testShowInfo() {
 		assertEquals("http://services.tvrage.com/myfeeds/showinfo.php?key=**API_KEY**&sid=123",subject.getShowInfoUrl(123));

@@ -10,6 +10,8 @@
  ******************************************************************************/
 package com.janoz.tvapilib.thetvdb;
 
+import java.util.List;
+
 import com.janoz.tvapilib.model.Episode;
 import com.janoz.tvapilib.model.Show;
 
@@ -19,6 +21,12 @@ import com.janoz.tvapilib.model.Show;
  */
 public interface TheTVDB {
 
+	/**
+	 * @param name The name of the show to search for.
+	 * @return A list of shows.
+	 */
+	List<Show> searchShows(String name);
+	
 	/**
 	 * 
 	 * @param theTvDbId TheTVDB id of the requested show.

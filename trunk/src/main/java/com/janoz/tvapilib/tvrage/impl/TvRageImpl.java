@@ -10,11 +10,14 @@
  ******************************************************************************/
 package com.janoz.tvapilib.tvrage.impl;
 
+import java.util.List;
+
 import com.janoz.tvapilib.model.Episode;
 import com.janoz.tvapilib.model.Show;
 import com.janoz.tvapilib.support.XmlParsingObject;
 import com.janoz.tvapilib.tvrage.TvRage;
 import com.janoz.tvapilib.tvrage.impl.parser.BaseEpisodeParser;
+import com.janoz.tvapilib.tvrage.impl.parser.BaseSearchResultParser;
 import com.janoz.tvapilib.tvrage.impl.parser.BaseShowParser;
 
 public class TvRageImpl extends XmlParsingObject implements TvRage {
@@ -27,6 +30,15 @@ public class TvRageImpl extends XmlParsingObject implements TvRage {
 	
 	public TvRageImpl(String apiKey) {
 		this.urlSupplier = new UrlSupplier(apiKey);
+	}
+	
+	@Override
+	public List<Show> searchShows(String name) {
+		String url = urlSupplier.getShowSearchUrl(name);
+		BaseSearchResultParser parser = new BaseSearchResultParser();
+		parse(parser,openStream(url));
+		return parser.getResults();
+		
 	}
 	
 	@Override
