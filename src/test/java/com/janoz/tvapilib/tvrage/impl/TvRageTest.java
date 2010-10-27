@@ -21,6 +21,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -45,6 +46,30 @@ public class TvRageTest {
 		field.set(subject,urlSupplierMock);
 	}
 	
+	@Test
+	public void testSearch() {
+		expect(urlSupplierMock.getShowSearchUrl(eq("buffy"))).andReturn(getResource("search_buffy.MF.xml"));
+		replay(urlSupplierMock);
+
+		List<Show> shows = subject.searchShows("buffy");
+		verify(urlSupplierMock);
+		assertBuffy(shows.get(0));
+		assertEquals("Buffy the Animated Series",shows.get(1).getTitle());
+		assertEquals(2,shows.size());
+	}
+
+	@Test
+	public void testSearchPublic() {
+		expect(urlSupplierMock.getShowSearchUrl(eq("buffy"))).andReturn(getResource("search_buffy.xml"));
+		replay(urlSupplierMock);
+
+		List<Show> shows = subject.searchShows("buffy");
+		verify(urlSupplierMock);
+		assertBuffy(shows.get(0));
+		assertEquals("Buffy the Animated Series",shows.get(1).getTitle());
+		assertEquals(2,shows.size());
+	}
+
 	@Test
 	public void testShow() {
 		expect(urlSupplierMock.getShowInfoUrl(eq(2930))).andReturn(getResource("showinfo_2930.MF.xml"));

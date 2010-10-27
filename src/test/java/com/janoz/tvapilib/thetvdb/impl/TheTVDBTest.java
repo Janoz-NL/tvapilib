@@ -48,6 +48,18 @@ public class TheTVDBTest {
 	}
 	
 	@Test
+	public void testSearch() {
+		expect(urlSupplierMock.getShowSearchUrl(eq("nikita"))).andReturn(getResource("GetSeries.nikita.xml"));
+		replay(urlSupplierMock);
+
+		List<Show> shows = subject.searchShows("nikita");
+		verify(urlSupplierMock);
+		assertShow164301(shows.get(0));
+		assertEquals("La Femme Nikita",shows.get(1).getTitle());
+		assertEquals(2,shows.size());
+	}
+	
+	@Test
 	public void testEpisodeByShow() throws Exception {
 		expect(urlSupplierMock.getBaseEpisodeUrl(eq(164301), eq(1), eq(3))).andReturn(getResource("164301_1_3.xml"));
 		expect(urlSupplierMock.getImageUrl(eq("episodes/164301/2738381.jpg"))).andReturn(

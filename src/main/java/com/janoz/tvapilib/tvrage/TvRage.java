@@ -10,6 +10,8 @@
  ******************************************************************************/
 package com.janoz.tvapilib.tvrage;
 
+import java.util.List;
+
 import com.janoz.tvapilib.model.Episode;
 import com.janoz.tvapilib.model.Show;
 
@@ -18,6 +20,12 @@ import com.janoz.tvapilib.model.Show;
  *
  */
 public interface TvRage {
+	
+	/**
+	 * @param name The name of the show to search for.
+	 * @return A list of shows.
+	 */
+	List<Show> searchShows(String name);
 	
 	/**
 	 * @param tvRageId TvRage id of the requested show.

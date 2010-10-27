@@ -75,6 +75,11 @@ public class UrlSupplierTest {
 	}
 	
 	@Test
+	public void testShowSearchUrl() throws Exception{
+		assertEquals("http://www.thetvdb.com/api/GetSeries.php?seriesname=SomeShowName",subject.getShowSearchUrl("SomeShowName"));
+	}
+	
+	@Test
 	public void testGetEpisodeUrl() throws Exception{
 		initWithMirrorConfig("responses/thetvdb/singlemirrors.xml");
 		assertEquals("http://xml.com/api/**API_KEY**/series/1/default/2/3",subject.getBaseEpisodeUrl(1, 2, 3).toString());
