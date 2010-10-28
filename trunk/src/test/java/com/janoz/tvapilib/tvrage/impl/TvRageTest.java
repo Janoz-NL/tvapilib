@@ -59,6 +59,21 @@ public class TvRageTest {
 	}
 
 	@Test
+	public void testSearchGreek() {
+		expect(urlSupplierMock.getShowSearchUrl(eq("greek"))).andReturn(getResource("search_greek.xml"));
+		replay(urlSupplierMock);
+
+		List<Show> shows = subject.searchShows("greek");
+		verify(urlSupplierMock);
+		assertEquals("My Big Fat Greek Life",shows.get(0).getTitle());
+		assertEquals("Jim Henson's The Storyteller: Greek Myths",shows.get(1).getTitle());
+		assertEquals("The Greek Variety Show",shows.get(2).getTitle());
+		assertEquals("GREEK",shows.get(3).getTitle());
+		assertEquals("GRΣΣK UNCOVΣRΣD",shows.get(4).getTitle());
+		assertEquals(5,shows.size());
+	}
+
+	@Test
 	public void testSearchPublic() {
 		expect(urlSupplierMock.getShowSearchUrl(eq("buffy"))).andReturn(getResource("search_buffy.xml"));
 		replay(urlSupplierMock);

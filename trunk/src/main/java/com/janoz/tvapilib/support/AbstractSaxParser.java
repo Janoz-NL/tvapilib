@@ -20,6 +20,7 @@ import org.xml.sax.helpers.DefaultHandler;
 public abstract class AbstractSaxParser extends DefaultHandler {
 	
 	private LinkedList<String> stack = null;
+	private StringBuilder collectedContent = new StringBuilder();
 
 	@Override
 	public void startDocument() throws SAXException {
@@ -36,16 +37,18 @@ public abstract class AbstractSaxParser extends DefaultHandler {
 	@Override
 	public void characters(char[] ch, int start, int length)
 			throws SAXException {
-		String content = new String(ch,start,length).trim();
-		if (content.length() > 0) {
-			handleContent(content);
-		}
+		collectedContent.append(ch,start,length);
 	}
 
 
 	@Override
 	public void endElement(String uri, String localName, String qName)
 			throws SAXException {
+		String content = collectedContent.toString().trim(); 
+		if (content.length() > 0) {
+			handleContent(content);
+		}
+		collectedContent.setLength(0);
 		handleTagEnd();
 		if (!localName.equalsIgnoreCase(stack.removeLast())) {
 			throw new SAXException("Unexpected endtag '"+localName+"'");
