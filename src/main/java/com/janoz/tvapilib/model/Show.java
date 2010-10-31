@@ -20,7 +20,7 @@ import java.util.TreeSet;
  * @author Gijs de Vries aka Janoz
  *
  */
-public class Show {
+public class Show implements IShow<Show,Season,Episode> {
 
 	private int tvRageId;
 	private int theTvDbId;
@@ -47,18 +47,22 @@ public class Show {
 	private List<Fanart> allSeasonPosters = new ArrayList<Fanart>();
 	private List<Fanart> allSeasonBanners = new ArrayList<Fanart>();
 
+	@Override
 	public int getTvRageId() {
 		return tvRageId;
 	}
 
+	@Override
 	public void setTvRageId(int tvRageId) {
 		this.tvRageId = tvRageId;
 	}
 
+	@Override
 	public int getTheTvDbId() {
 		return theTvDbId;
 	}
 
+	@Override
 	public void setTheTvDbId(int showId) {
 		this.theTvDbId = showId;
 	}
@@ -67,6 +71,7 @@ public class Show {
 		return title;
 	}
 
+	@Override
 	public void setTitle(String title) {
 		this.title = title;
 	}
@@ -75,10 +80,12 @@ public class Show {
 		return description;
 	}
 
+	@Override
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
+	@Override
 	public Season getSeason(int season) {
 		Season result = new Season();
 		result.setShow(this);
@@ -126,6 +133,7 @@ public class Show {
 		return Collections.unmodifiableList(fanarts);
 	}
 
+	@Override
 	public void addFanart(Fanart fanart) {
 		this.fanarts.add(fanart);
 	}
@@ -134,6 +142,7 @@ public class Show {
 		return Collections.unmodifiableList(posters);
 	}
 
+	@Override
 	public void addPoster(Fanart poster) {
 		this.posters.add(poster);
 	}
@@ -142,6 +151,7 @@ public class Show {
 		return Collections.unmodifiableList(banners);
 	}
 
+	@Override
 	public void addBanner(Fanart banner) {
 		this.banners.add(banner);
 	}
@@ -150,6 +160,7 @@ public class Show {
 		return Collections.unmodifiableList(logos);
 	}
 
+	@Override
 	public void addLogo(Fanart logo) {
 		this.logos.add(logo);
 	}
@@ -158,6 +169,7 @@ public class Show {
 		return Collections.unmodifiableList(allSeasonPosters);
 	}
 
+	@Override
 	public void addAllSeasonPoster(Fanart allSeasonPoster) {
 		this.allSeasonPosters.add(allSeasonPoster);
 	}
@@ -166,6 +178,7 @@ public class Show {
 		return Collections.unmodifiableList(allSeasonBanners);
 	}
 
+	@Override
 	public void addAllSeasonBanner(Fanart allSeasonBanner) {
 		this.allSeasonBanners.add(allSeasonBanner);
 	}

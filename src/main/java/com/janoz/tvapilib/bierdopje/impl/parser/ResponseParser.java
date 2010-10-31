@@ -15,7 +15,6 @@ import java.util.List;
 
 import org.xml.sax.Attributes;
 
-import com.janoz.tvapilib.model.Episode;
 import com.janoz.tvapilib.model.Subtitle;
 import com.janoz.tvapilib.support.AbstractSaxParser;
 
@@ -23,12 +22,7 @@ public class ResponseParser extends AbstractSaxParser{
 
 	private boolean inSub = false;
 	private SubsParser subsParser = new SubsParser();
-	private Episode episode;
 	private List<Subtitle> result = new ArrayList<Subtitle>();
-
-	public ResponseParser(Episode episode) {
-		this.episode = episode;
-	}
 	
 	@Override
 	public void handleTagStart(Attributes attributes) {
@@ -49,7 +43,6 @@ public class ResponseParser extends AbstractSaxParser{
 	public void handleTagEnd() {
 		if (inSub && stackEquals("bierdopje","response","results","result")) {
 			Subtitle sub = subsParser.getResult();
-			sub.setEpisode(episode);
 			result.add(sub);
 			subsParser.reset();
 			inSub = true;

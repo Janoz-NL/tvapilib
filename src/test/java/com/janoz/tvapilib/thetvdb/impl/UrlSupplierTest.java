@@ -10,8 +10,12 @@
  ******************************************************************************/
 package com.janoz.tvapilib.thetvdb.impl;
 
-import static org.easymock.EasyMock.*;
-import static org.junit.Assert.*;
+import static org.easymock.EasyMock.createMockBuilder;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.verify;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -31,7 +35,7 @@ public class UrlSupplierTest {
 	public void setup() throws Exception {
 		//UrlSupplier.class.getDeclaredConstructor().setAccessible(true);
 		subject = createMockBuilder(UrlSupplier.class)
-			.addMockedMethod("getMirrorUrl").withConstructor().createMock();
+			.addMockedMethod("getMirrorUrl").withConstructor(API_KEY).createMock();
 	}
 	
 	@Test

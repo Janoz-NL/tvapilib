@@ -14,16 +14,21 @@ import java.util.List;
 
 import com.janoz.tvapilib.bierdopje.Bierdopje;
 import com.janoz.tvapilib.bierdopje.impl.parser.ResponseParser;
-import com.janoz.tvapilib.model.Episode;
-import com.janoz.tvapilib.model.Show;
+import com.janoz.tvapilib.model.IEpisode;
+import com.janoz.tvapilib.model.ISeason;
+import com.janoz.tvapilib.model.IShow;
 import com.janoz.tvapilib.model.Subtitle;
 import com.janoz.tvapilib.support.XmlParsingObject;
 
 /**
  * @author Gijs de Vries aka Janoz
+ * 
+ * @param <Sh> Show type
+ * @param <Se> Season type
+ * @param <Ep> Episode type
  *
  */
-public class BierdopjeImpl extends XmlParsingObject implements Bierdopje {
+public class BierdopjeImpl<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>, Ep extends IEpisode<Sh,Se,Ep>> extends XmlParsingObject implements Bierdopje<Sh,Se,Ep> {
 
 	private String apiKey;
 
@@ -36,27 +41,25 @@ public class BierdopjeImpl extends XmlParsingObject implements Bierdopje {
 
 	@Override
 	public List<Subtitle> getAllSubsFor(int theTvDbId, int season, int episode) {
-		Show show = new Show();
-		show.setTheTvDbId(theTvDbId);
-		Episode ep = new Episode();
-		ep.setSeason(show.getSeason(season));
-		ep.setEpisode(episode);
-		return getAllSubsFor(ep);
+		ResponseParser parser = new ResponseParser();
+		parse(parser,openStream(constructGetAllSubsForUrl(theTvDbId, season, episode)));
+		return parser.getResult();
 	}
 
 	@Override
-	public List<Subtitle> getAllSubsFor(Episode episode) {
-		ResponseParser parser = new ResponseParser(episode);
-		parse(parser,openStream(constructGetAllSubsForUrl(episode)));
-		return parser.getResult();
+	public List<Subtitle> getAllSubsFor(Ep episode) {
+		return getAllSubsFor(episode.getSeason().getShow().getTheTvDbId(),
+				episode.getSeason().getSeason(),
+				episode.getEpisode());
+		
 	}
-	
-	String constructGetAllSubsForUrl(Episode episode) {
+
+	String constructGetAllSubsForUrl(int theTvDbId, int season, int episode) {
 		StringBuilder sb = new StringBuilder("http://api.bierdopje.com/")
 				.append(apiKey).append("/GetAllSubsFor/")
-				.append(episode.getSeason().getShow().getTheTvDbId()).append("/")
-				.append(episode.getSeason().getSeason()).append("/")
-				.append(episode.getEpisode()).append("/nl/true");
+				.append(theTvDbId).append("/")
+				.append(season).append("/")
+				.append(episode).append("/nl/true");
 		return sb.toString();
 	}
 }

@@ -12,20 +12,25 @@ package com.janoz.tvapilib.thetvdb.impl.parsers;
 
 import org.xml.sax.Attributes;
 
-import com.janoz.tvapilib.model.Show;
+import com.janoz.tvapilib.model.IEpisode;
+import com.janoz.tvapilib.model.ISeason;
+import com.janoz.tvapilib.model.IShow;
+import com.janoz.tvapilib.model.ModelFactory;
 import com.janoz.tvapilib.support.AbstractSaxParser;
 import com.janoz.tvapilib.thetvdb.impl.UrlSupplier;
 
-public class FullShowParser extends AbstractSaxParser {
+public class FullShowParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>, Ep extends IEpisode<Sh,Se,Ep>> extends AbstractSaxParser {
 
 	private boolean inShow = false;
 	private boolean inEpisode = false;
-	private ShowParser showParser = new ShowParser();
-	private EpisodeParser episodeParser = new EpisodeParser();
-	private Show result = null;	
+	private final ModelFactory<Sh,Se,Ep> modelFactory;
+	private ShowParser<Sh,Se,Ep> showParser = new ShowParser<Sh,Se,Ep>();
+	private EpisodeParser<Sh,Se,Ep> episodeParser;
+	private Sh result = null;	
 	
-	public FullShowParser(UrlSupplier urlSupplier) {
-		episodeParser.setUrlSupplier(urlSupplier);
+	public FullShowParser(ModelFactory<Sh,Se,Ep> modelFactory, UrlSupplier urlSupplier) {
+		this.modelFactory = modelFactory;
+		episodeParser = new EpisodeParser<Sh,Se,Ep>(modelFactory,urlSupplier);
 	}
 	
 	@Override
@@ -37,7 +42,7 @@ public class FullShowParser extends AbstractSaxParser {
 				&& stackStartsWith("data")) {
 			if ("series".equals(getNodeName())) {
 				inShow = true;
-				result = new Show();
+				result = modelFactory.newShow();
 				showParser.reset(result);
 			} else if ("episode".equals(getNodeName())) {
 				inEpisode = true;
@@ -67,7 +72,7 @@ public class FullShowParser extends AbstractSaxParser {
 		}
 	}
 	
-	public Show getResult() {
+	public Sh getResult() {
 		return result;
 	}
 

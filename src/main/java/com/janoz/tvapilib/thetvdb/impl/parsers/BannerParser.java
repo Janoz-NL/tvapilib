@@ -14,10 +14,12 @@ import java.util.List;
 
 import com.janoz.tvapilib.model.Fanart;
 import com.janoz.tvapilib.model.FanartType;
-import com.janoz.tvapilib.model.Show;
+import com.janoz.tvapilib.model.IEpisode;
+import com.janoz.tvapilib.model.ISeason;
+import com.janoz.tvapilib.model.IShow;
 import com.janoz.tvapilib.thetvdb.impl.UrlSupplier;
 
-public class BannerParser {
+public class BannerParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>, Ep extends IEpisode<Sh,Se,Ep>> {
 
 	private Fanart fanart = null;
 	private UrlSupplier urlSupplier;
@@ -69,7 +71,7 @@ public class BannerParser {
 		}
 	}
 	
-	public void storeFanart(Show show) {
+	public void storeFanart(Sh show) {
 		fanart.setType(FanartType.getTvDbType(bannerType1, bannerType2));
 		if (language==null || "en".equals(language)) {
 			//Only English for now

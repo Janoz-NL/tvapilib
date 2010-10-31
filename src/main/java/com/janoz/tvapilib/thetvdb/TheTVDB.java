@@ -12,27 +12,32 @@ package com.janoz.tvapilib.thetvdb;
 
 import java.util.List;
 
-import com.janoz.tvapilib.model.Episode;
-import com.janoz.tvapilib.model.Show;
+import com.janoz.tvapilib.model.IEpisode;
+import com.janoz.tvapilib.model.ISeason;
+import com.janoz.tvapilib.model.IShow;
 
 /**
  * @author Gijs de Vries aka Janoz
  *
+ * @param <Sh> Show type
+ * @param <Se> Season type
+ * @param <Ep> Episode type
+ *
  */
-public interface TheTVDB {
+public interface TheTVDB<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>, Ep extends IEpisode<Sh,Se,Ep>> {
 
 	/**
 	 * @param name The name of the show to search for.
 	 * @return A list of shows.
 	 */
-	List<Show> searchShows(String name);
+	List<Sh> searchShows(String name);
 	
 	/**
 	 * 
 	 * @param theTvDbId TheTVDB id of the requested show.
 	 * @return Show including episodes and fanart.
 	 */
-	Show getFullShow(int theTvDbId);
+	Sh getFullShow(int theTvDbId);
 	
 	
 	/**
@@ -40,14 +45,14 @@ public interface TheTVDB {
 	 * @return The show or null if t
 	 * he show is not found.
 	 */
-	Show getShow(int theTvDbId);
+	Sh getShow(int theTvDbId);
 
 	/**
 	 * 
 	 * @param theTvDbId TheTVDB id of the requested show.
 	 * @return The show including all known episodes or null if the show is not found.
 	 */
-	Show getShowWithEpisodes(int theTvDbId);
+	Sh getShowWithEpisodes(int theTvDbId);
 	/**
 	 * @param theTvDbId TheTVDB id of the requested show.
 	 * @param season Season number.
@@ -57,7 +62,7 @@ public interface TheTVDB {
 	 * 			containing only the ID will be injected (ie requesting show.getTitle 
 	 * 			will return null)
 	 */
-	Episode getEpisode(int theTvDbId, int season, int episode);
+	Ep getEpisode(int theTvDbId, int season, int episode);
 
 	/**
 	 * @param show Show. Only the ID is used, but the show is also injected into the returned episode
@@ -65,12 +70,12 @@ public interface TheTVDB {
 	 * @param episode Episode number.
 	 * @return The episode or null if the episode is not known.
 	 */
-	Episode getEpisode(Show show, int season, int episode);
+	Ep getEpisode(Sh show, int season, int episode);
 
 	/**
 	 * 
 	 * @param show Show to add all fanart to.
 	 */
-	void fillFanart(Show show);
+	void fillFanart(Sh show);
 
 }
