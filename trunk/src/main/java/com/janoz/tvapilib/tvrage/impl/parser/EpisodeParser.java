@@ -18,57 +18,86 @@ import java.util.List;
 import com.janoz.tvapilib.model.IEpisode;
 import com.janoz.tvapilib.model.ISeason;
 import com.janoz.tvapilib.model.IShow;
-import com.janoz.tvapilib.model.ModelFactory;
+import com.janoz.tvapilib.support.TvException;
 
 public class EpisodeParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>, Ep extends IEpisode<Sh,Se,Ep>> {
 	
 //	private static final Log LOG = LogFactory.getLog(EpisodeParser.class);
 
-	private Ep episode = null;
+	private Sh show = null;
+	private Se season = null;
+	private Integer episode = null;
 	private String episodeString = null;
-	private final ModelFactory<Sh,Se,Ep> modelFactory;
+	private String title = null;
+	private String thumbUrl = null;
+	private Date airDate = null;
+
 	
-	public EpisodeParser(ModelFactory<Sh,Se,Ep> modelFactory) {
-		this.modelFactory = modelFactory;
+	public void reset(Sh show) {
+		reset(show,null);
+	}
+	public void reset(Se season) {
+		reset(null,season);
 	}
 	
-	public void reset() {
-		this.episode = modelFactory.newEpisode();
+	private void reset(Sh show, Se season) {
+		this.show = show;
+		this.season = season;
+		this.episode = null;
 		this.episodeString = null;
+		this.title = null;
+		this.thumbUrl = null;
+		this.airDate = null;
+		
 	}
 	
 	public void handleContent(List<String> stack, String content){
 		if (stack.size()==1) {
 			if ("seasonnum".equals(stack.get(0))) {
-				episode.setEpisode(Integer.parseInt(content));
+				episode = Integer.parseInt(content);
 			} else if ("title".equals(stack.get(0))) {
-				episode.setTitle(content);
+				title = content;
 			} else if ("airdate".equals(stack.get(0))) {
-				episode.setAired(parseDate(content));
+				airDate = parseDate(content);
 			} else if ("number".equals(stack.get(0))) {
 				episodeString = content;
+			} else if ("screencap".equals(stack.get(0))) {
+				thumbUrl = content;
 			}
 		}
 	}
 
 	public Ep getEpisode(){
-		return episode;
+		if (season == null) {
+			season = show.getSeason(getSeasonFormEpisodeString());
+			episode = getEpisodeFormEpisodeString();
+		}
+		if (episode == null) {
+			throw new TvException("No episode found.");
+		}
+		Ep result = season.getEpisode(episode);
+		if (title != null) {
+			result.setTitle(title);
+		}
+		if (thumbUrl != null) {
+			result.setThumbUrl(thumbUrl);
+		}
+		if (airDate != null) {
+			result.setAired(airDate);
+		}		
+		return result;
 	}
 	
-	public String getEpisodeString() {
-		return episodeString;
-	}
-	
-	public Integer getEpisodeFormEpisodeString() {
+	private Integer getEpisodeFormEpisodeString() {
 		if (episodeString == null) {
-			return null;
+			throw new TvException("No episode found in result.");
 		}
 		return Integer.valueOf(episodeString.split("x")[1]);
 	}
 
-	public Integer getSeasonFormEpisodeString() {
+	private Integer getSeasonFormEpisodeString() {
 		if (episodeString == null) {
-			return null;
+			throw new TvException("No season found in result.");
 		}
 		return Integer.valueOf(episodeString.split("x")[0]);
 	}

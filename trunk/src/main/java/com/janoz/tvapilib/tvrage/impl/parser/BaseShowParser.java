@@ -38,14 +38,14 @@ public class BaseShowParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se
 		this.modelFactory = modelFactory;
 		this.rootTag = rootTag;
 		showParser = new ShowParser<Sh,Se,Ep>();
-		episodeParser = new EpisodeParser<Sh,Se,Ep>(this.modelFactory);
+		episodeParser = new EpisodeParser<Sh,Se,Ep>();
 		
 	}
 	
 	@Override
 	public void handleTagStart(Attributes attributes) {
 		if (parseState == ParseState.IN_SEASON && stackEquals(rootTag,EPISODELIST,SEASON,EPISODE)) {
-			episodeParser.reset();
+			episodeParser.reset(currentSeason);
 			parseState = ParseState.IN_EPISODE;
 		}
 		if (parseState == ParseState.IN_EPISODELIST && stackEquals(rootTag,EPISODELIST,SEASON)) {
@@ -85,9 +85,7 @@ public class BaseShowParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se
 		}
 		if (parseState == ParseState.IN_EPISODE && stackEquals(rootTag,EPISODELIST,SEASON,EPISODE)) {
 			parseState = ParseState.IN_SEASON;
-			Ep ep = episodeParser.getEpisode();
-			ep.setSeason(currentSeason);
-			currentSeason.addEpisode(ep);
+			episodeParser.getEpisode();
 		}
 	}
 

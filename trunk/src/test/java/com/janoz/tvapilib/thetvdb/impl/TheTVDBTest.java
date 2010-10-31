@@ -105,8 +105,8 @@ public class TheTVDBTest {
 		verify(urlSupplierMock);
 		assertShow164301(show);
 		assertEpisode164301_1_3(show, show.getSeason(1).getEpisode(3));
-		assertNotNull(show.getSeason(1).getEpisode(9));
-		assertNull(show.getSeason(1).getEpisode(10));
+		assertTrue(show.getSeason(1).hasEpisode(9));
+		assertFalse(show.getSeason(1).hasEpisode(10));
 		assertEquals(9,show.getSeason(1).getNrOfEpisodes());
 	}
 	

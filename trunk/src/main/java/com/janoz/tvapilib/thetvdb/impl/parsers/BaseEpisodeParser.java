@@ -15,7 +15,6 @@ import org.xml.sax.Attributes;
 import com.janoz.tvapilib.model.IEpisode;
 import com.janoz.tvapilib.model.ISeason;
 import com.janoz.tvapilib.model.IShow;
-import com.janoz.tvapilib.model.ModelFactory;
 import com.janoz.tvapilib.support.AbstractSaxParser;
 import com.janoz.tvapilib.thetvdb.impl.UrlSupplier;
 
@@ -27,10 +26,10 @@ public class BaseEpisodeParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh
 	
 	
 	
-	public BaseEpisodeParser(Sh show, ModelFactory<Sh,Se,Ep> modelFactory, UrlSupplier urlSupplier) {
+	public BaseEpisodeParser(Sh show, UrlSupplier urlSupplier) {
 		super();
 		this.show = show;
-		this.episodeParser = new EpisodeParser<Sh,Se,Ep>(modelFactory,urlSupplier);
+		this.episodeParser = new EpisodeParser<Sh,Se,Ep>(urlSupplier);
 	}
 
 	@Override

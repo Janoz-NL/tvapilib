@@ -15,7 +15,6 @@ import org.xml.sax.Attributes;
 import com.janoz.tvapilib.model.IEpisode;
 import com.janoz.tvapilib.model.ISeason;
 import com.janoz.tvapilib.model.IShow;
-import com.janoz.tvapilib.model.ModelFactory;
 import com.janoz.tvapilib.support.AbstractSaxParser;
 
 public class BaseEpisodeParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>, Ep extends IEpisode<Sh,Se,Ep>> extends AbstractSaxParser {
@@ -34,31 +33,25 @@ public class BaseEpisodeParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh
 	private Ep episode = null;
 //	private Episode lastEpisode = null;
 //	private Episode nextEpisode = null;
-//	private final ModelFactory<Sh,Se,Ep> modelFactory; 
 	
-	public BaseEpisodeParser(ModelFactory<Sh,Se,Ep> modelFactory) {
-		this(modelFactory,modelFactory.newShow());
-	}
-	
-	public BaseEpisodeParser(ModelFactory<Sh,Se,Ep> modelFactory, Sh show) {
-		//this.modelFactory = modelFactory;
+	public BaseEpisodeParser(Sh show) {
 		this.show = show;
 		this.showParser = new ShowParser<Sh,Se,Ep>();
-		this.episodeParser = new EpisodeParser<Sh,Se,Ep>(modelFactory);
+		this.episodeParser = new EpisodeParser<Sh,Se,Ep>();
 	}
 	
 	@Override
 	public void handleTagStart(Attributes attributes) {
 		if (parseState == ParseState.IN_SHOW && stackEquals(SHOW,EPISODE)) {
-			episodeParser.reset();
+			episodeParser.reset(show);
 			parseState = ParseState.IN_EPISODE;
 		}
 		if (parseState == ParseState.IN_SHOW && stackEquals(SHOW,LAST_EPISODE)) {
-			episodeParser.reset();
+			episodeParser.reset(show);
 			parseState = ParseState.IN_LAST_EPISODE;
 		}
 		if (parseState == ParseState.IN_SHOW && stackEquals(SHOW,NEXT_EPISODE)) {
-			episodeParser.reset();
+			episodeParser.reset(show);
 			parseState = ParseState.IN_NEXT_EPISODE;
 		}
 		if (parseState == null && stackEquals(SHOW)) {
@@ -91,27 +84,17 @@ public class BaseEpisodeParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh
 		} 
 		if (parseState == ParseState.IN_EPISODE && stackEquals(SHOW,EPISODE)) {
 			parseState = ParseState.IN_SHOW;
-			episode = getEpisodeFromParser();
+			episode = episodeParser.getEpisode();
 		}
 		if (parseState == ParseState.IN_LAST_EPISODE && stackEquals(SHOW,EPISODE)) {
 			parseState = ParseState.IN_SHOW;
-			getEpisodeFromParser();
+			episodeParser.getEpisode();
 		}
 		if (parseState == ParseState.IN_NEXT_EPISODE && stackEquals(SHOW,EPISODE)) {
 			parseState = ParseState.IN_SHOW;
-			getEpisodeFromParser();
+			episodeParser.getEpisode();
 		}
 	}
-
-	private Ep getEpisodeFromParser() {
-		Ep ep = episodeParser.getEpisode();
-		ep.setEpisode(episodeParser.getEpisodeFormEpisodeString());
-		Se season = show.getSeason(episodeParser.getSeasonFormEpisodeString());
-		ep.setSeason(season);
-		season.addEpisode(ep);
-		return ep;
-	}
-
 	
 	public Ep getResult() {
 		return episode;

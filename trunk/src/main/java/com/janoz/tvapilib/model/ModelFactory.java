@@ -11,8 +11,5 @@
 package com.janoz.tvapilib.model;
 
 public interface ModelFactory<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>, Ep extends IEpisode<Sh,Se,Ep>> {
-
 	Sh newShow();
-	Ep newEpisode();
-	
 }

@@ -72,7 +72,7 @@ public class TvRageImpl<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>
 	@Override
 	public Ep getEpisode(int tvRageId, int season, int episode) {
 		String url = urlSupplier.getEpisodeInfoUrl(tvRageId,season,episode);
-		BaseEpisodeParser<Sh,Se,Ep> parser = new BaseEpisodeParser<Sh,Se,Ep>(modelFactory);
+		BaseEpisodeParser<Sh,Se,Ep> parser = new BaseEpisodeParser<Sh,Se,Ep>(modelFactory.newShow());
 		parse(parser,openStream(url));
 		return parser.getResult();
 	}
@@ -80,7 +80,7 @@ public class TvRageImpl<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>
 	@Override
 	public Ep getEpisode(Sh show, int season, int episode) {
 		String url = urlSupplier.getEpisodeInfoUrl(show.getTvRageId(),season,episode);
-		BaseEpisodeParser<Sh,Se,Ep> parser = new BaseEpisodeParser<Sh,Se,Ep>(modelFactory,show);
+		BaseEpisodeParser<Sh,Se,Ep> parser = new BaseEpisodeParser<Sh,Se,Ep>(show);
 		parse(parser,openStream(url));
 		return parser.getResult();
 	}

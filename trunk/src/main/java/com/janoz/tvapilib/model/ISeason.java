@@ -12,9 +12,12 @@ package com.janoz.tvapilib.model;
 
 public interface ISeason<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>, Ep extends IEpisode<Sh,Se,Ep>> {
 
-	void addEpisode(Ep episode);
+	Ep getEpisode(int episode);
 	Sh getShow();
+	
 	int getSeason();
+	
+	//Art methods
 	void addPoster(Fanart fanart);
 	void addBanner(Fanart fanart);
 

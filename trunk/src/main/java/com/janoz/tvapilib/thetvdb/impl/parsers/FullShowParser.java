@@ -30,7 +30,7 @@ public class FullShowParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se
 	
 	public FullShowParser(ModelFactory<Sh,Se,Ep> modelFactory, UrlSupplier urlSupplier) {
 		this.modelFactory = modelFactory;
-		episodeParser = new EpisodeParser<Sh,Se,Ep>(modelFactory,urlSupplier);
+		episodeParser = new EpisodeParser<Sh,Se,Ep>(urlSupplier);
 	}
 	
 	@Override

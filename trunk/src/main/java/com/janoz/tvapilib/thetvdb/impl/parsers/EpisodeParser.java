@@ -23,7 +23,6 @@ import org.apache.commons.logging.LogFactory;
 import com.janoz.tvapilib.model.IEpisode;
 import com.janoz.tvapilib.model.ISeason;
 import com.janoz.tvapilib.model.IShow;
-import com.janoz.tvapilib.model.ModelFactory;
 import com.janoz.tvapilib.support.TvException;
 import com.janoz.tvapilib.thetvdb.impl.UrlSupplier;
 
@@ -31,56 +30,81 @@ public class EpisodeParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,
 	
 	private static final Log LOG = LogFactory.getLog(EpisodeParser.class);
 	
-	private Ep episode;
 	private Sh show;
-	private Se season;
-	private final ModelFactory<Sh,Se,Ep> modelFactory;
+
 	private final UrlSupplier urlSupplier;
-	private boolean done = false;
 	
-	public EpisodeParser(ModelFactory<Sh,Se,Ep> modelFactory, UrlSupplier urlSupplier) {
-		this.modelFactory = modelFactory;
+	//collectedData
+	private Se season = null;
+	private Integer episode = null;
+	private Integer theTvDbId = null;
+	private String title = null;
+	private String description = null;
+	private String thumbUrl = null;
+	private Date airDate = null;
+	
+	public EpisodeParser(UrlSupplier urlSupplier) {
 		this.urlSupplier = urlSupplier;
 	}
 
 	public void reset(Sh show) {
 		this.show = show;
-		this.episode = modelFactory.newEpisode();
-		this.done = false;
+		this.season = null;
+		this.episode = null;
+		this.theTvDbId = null;
+		this.title = null;
+		this.description = null;
+		this.thumbUrl = null;
+		this.airDate = null;
 	}
 	
 	public void handleContent(List<String> stack, String content){
 		if (stack.size()==1) {
 			if ("id".equals(stack.get(0))) {
-				episode.setTheTvDbId(Integer.parseInt(content));
+				theTvDbId = Integer.valueOf(content);
 			} else if ("seasonnumber".equals(stack.get(0))) {
 				season = show.getSeason(
 						Integer.parseInt(content));
 			} else if ("episodenumber".equals(stack.get(0))) {
-				episode.setEpisode(Integer.parseInt(content));
+				episode = Integer.valueOf(content);
 			} else if ("episodename".equals(stack.get(0))) {
-				episode.setTitle(content);
+				title = content;
 			} else if ("overview".equals(stack.get(0))) {
-				episode.setDescription(content);
+				description = content;
 			} else if ("filename".equals(stack.get(0))) {
-				episode.setThumbUrl(urlSupplier.getImageUrl(content));
+				thumbUrl = urlSupplier.getImageUrl(content);
 			} else if ("firstaired".equals(stack.get(0))) {
-				episode.setAired(parseDate(content));
+				airDate = parseDate(content);
 			}
 		}
 	}
 
 	public Ep getEpisode(){
-		if (!done) {
-			if (season == null) {
-				LOG.info("Episode never got a season.");
-				throw new TvException("Episode never got a season.");
-			}
-			episode.setSeason(season);
-			season.addEpisode(episode);
-			done=true;
+		if (season == null) {
+			LOG.info("Episode never got a season.");
+			throw new TvException("Episode never got a season.");
 		}
-		return episode;
+		if (episode == null) {
+			LOG.info("Episode never got an episode.");
+			throw new TvException("Episode never got an episode.");
+		}
+		Ep result = season.getEpisode(episode);
+		if (theTvDbId != null) {
+			result.setTheTvDbId(theTvDbId);
+		}
+		if (title != null) {
+			result.setTitle(title);
+		}
+		if (description != null) {
+			result.setDescription(description);
+		}
+		if (thumbUrl != null) {
+			result.setThumbUrl(thumbUrl);
+		}
+		if (airDate != null) {
+			result.setAired(airDate);
+		}
+		return result;
 	}
 
 	private Date parseDate(String src) {
