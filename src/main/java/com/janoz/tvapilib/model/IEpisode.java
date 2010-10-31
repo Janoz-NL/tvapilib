@@ -14,19 +14,15 @@ import java.util.Date;
 
 public interface IEpisode<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>, Ep extends IEpisode<Sh,Se,Ep>> {
 	
-	void setTheTvDbId(int theTvDbId);
-	
-	void setSeason(Se season);
 	Se getSeason();
 
-	void setAired(Date aired);
-
-	void setTitle(String title);
-
-	void setEpisode(int episode);
 	int getEpisode();
-	
-	void setDescription(String descritpion);
+
+	void setTheTvDbId(int theTvDbId);
+	void setTitle(String title);
+	void setAired(Date aired);
+	void setDescription(String description);
+
 	void setThumbUrl(String thumbUrl);
 
 }

@@ -90,7 +90,7 @@ public class TheTVDBImpl<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep
 	public Ep getEpisode(Sh show, int season, int episode) {
 		String url = urlSupplier.getBaseEpisodeUrl(show.getTheTvDbId(),
 				season, episode);
-		BaseEpisodeParser<Sh,Se,Ep> parser = new BaseEpisodeParser<Sh,Se,Ep>(show,modelFactory,urlSupplier);
+		BaseEpisodeParser<Sh,Se,Ep> parser = new BaseEpisodeParser<Sh,Se,Ep>(show,urlSupplier);
 		parse(parser,openStream(url));
 		return parser.getResult();
 	}

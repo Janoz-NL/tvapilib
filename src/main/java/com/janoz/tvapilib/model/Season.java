@@ -45,8 +45,17 @@ public class Season implements Comparable<Season>,ISeason<Show,Season,Episode> {
 	}
 	
 	@Override
-	public void addEpisode(Episode episode) {
-		episodes.add(episode);
+	public Episode getEpisode(int episode) {
+		Episode newEp = new Episode();
+		newEp.setSeason(this);
+		newEp.setEpisode(episode);
+		SortedSet<Episode> tail = episodes.tailSet(newEp);
+		if (!tail.isEmpty() && tail.first().getEpisode() == episode) {
+			return tail.first();
+		} else {
+			episodes.add(newEp);
+			return newEp;
+		}
 	}
 	
 	@Override
@@ -67,17 +76,6 @@ public class Season implements Comparable<Season>,ISeason<Show,Season,Episode> {
 		return Collections.unmodifiableList(banners);
 	}
 	
-	public Episode getEpisode(int episodeNr) {
-		Episode dummy = new Episode();
-		dummy.setSeason(this);
-		dummy.setEpisode(episodeNr);
-		SortedSet<Episode> tail = episodes.tailSet(dummy);
-		if (!tail.isEmpty() && tail.first().getEpisode() == episodeNr) {
-			return tail.first();
-		} else {
-			return null;
-		}
-	}
 	public int getNrOfEpisodes() {
 		return episodes.size();
 	}
@@ -131,6 +129,14 @@ public class Season implements Comparable<Season>,ISeason<Show,Season,Episode> {
 			return false;
 		}
 		return true;
+	}
+
+	public boolean hasEpisode(int episode) {
+		Episode dummy = new Episode();
+		dummy.setSeason(this);
+		dummy.setEpisode(episode);
+		SortedSet<Episode> tail = episodes.tailSet(dummy);
+		return (!tail.isEmpty() && tail.first().getEpisode() == episode);
 	}
 	
 	

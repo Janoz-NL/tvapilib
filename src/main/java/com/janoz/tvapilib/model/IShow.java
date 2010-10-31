@@ -17,13 +17,10 @@ public interface IShow<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>,
 	int getTvRageId();
 	int getTheTvDbId();
 
-	void setDescription(String description);
-
-	void setTitle(String title);
-
-	void setTheTvDbId(int showId);
-
 	void setTvRageId(int tvRageId);
+	void setTheTvDbId(int showId);
+	void setDescription(String description);
+	void setTitle(String title);
 
 	void addLogo(Fanart logo);
 	void addAllSeasonPoster(Fanart poster);

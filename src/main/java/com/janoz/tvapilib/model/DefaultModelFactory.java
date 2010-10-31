@@ -18,9 +18,4 @@ public enum DefaultModelFactory implements ModelFactory<Show, Season, Episode> {
 	public Show newShow() {
 		return new Show();
 	}
-
-	@Override
-	public Episode newEpisode() {
-		return new Episode();
-	}
 }

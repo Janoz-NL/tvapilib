@@ -40,7 +40,6 @@ public class Episode implements Comparable<Episode>, IEpisode<Show,Season,Episod
 		return episode;
 	}
 
-	@Override
 	public void setEpisode(int episode) {
 		this.episode = episode;
 	}
@@ -50,7 +49,6 @@ public class Episode implements Comparable<Episode>, IEpisode<Show,Season,Episod
 		return season;
 	}
 
-	@Override
 	public void setSeason(Season season) {
 		this.season = season;
 	}
