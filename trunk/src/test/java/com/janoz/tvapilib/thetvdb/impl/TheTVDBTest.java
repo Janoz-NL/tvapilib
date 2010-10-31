@@ -14,9 +14,6 @@ import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.sql.Date;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -32,19 +29,16 @@ public class TheTVDBTest {
 
 
 	UrlSupplier urlSupplierMock;
-	TheTVDBImpl subject;
+	DefaultTheTVDBImpl subject;
 	
 	@Before
 	public void setup() throws Exception {
 		//construct an instance of the subject with a mocked UrlSupplier
 		urlSupplierMock = createMock(UrlSupplier.class);
-		Constructor<TheTVDBImpl> constructor =
-			TheTVDBImpl.class.getDeclaredConstructor();
+		Constructor<DefaultTheTVDBImpl> constructor =
+			DefaultTheTVDBImpl.class.getDeclaredConstructor(UrlSupplier.class);
 		constructor.setAccessible(true);
-		subject = constructor.newInstance();
-		Field field = subject.getClass().getDeclaredField("urlSupplier");
-		field.setAccessible(true);
-		field.set(subject,urlSupplierMock);
+		subject = constructor.newInstance(urlSupplierMock);
 	}
 	
 	@Test
@@ -164,7 +158,7 @@ public class TheTVDBTest {
 		} else {
 			assertSame(show,episode.getSeason().getShow());
 		}
-		assertEquals(2738381,episode.getId());
+		assertEquals(2738381,episode.getTheTvDbId());
 		assertEquals(1,episode.getSeason().getSeason());
 		assertEquals(3,episode.getEpisode());
 		assertEquals("Kill Jill",episode.getTitle());

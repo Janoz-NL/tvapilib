@@ -16,9 +16,9 @@ import java.util.Date;
  * @author Gijs de Vries aka Janoz
  *
  */
-public class Episode implements Comparable<Episode>  {
+public class Episode implements Comparable<Episode>, IEpisode<Show,Season,Episode> {
 
-	private int id;
+	private int theTvDbId;
 	private Season season = null;
 	private int episode;
 	private String title;
@@ -26,26 +26,31 @@ public class Episode implements Comparable<Episode>  {
 	private String description;
 	private String thumbUrl;
 
-	public int getId() {
-		return id;
+	public int getTheTvDbId() {
+		return theTvDbId;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	@Override
+	public void setTheTvDbId(int theTvDbId) {
+		this.theTvDbId = theTvDbId;
 	}
 
+	@Override
 	public int getEpisode() {
 		return episode;
 	}
 
+	@Override
 	public void setEpisode(int episode) {
 		this.episode = episode;
 	}
 
+	@Override
 	public Season getSeason() {
 		return season;
 	}
 
+	@Override
 	public void setSeason(Season season) {
 		this.season = season;
 	}
@@ -54,6 +59,7 @@ public class Episode implements Comparable<Episode>  {
 		return title;
 	}
 
+	@Override
 	public void setTitle(String title) {
 		this.title = title;
 	}
@@ -62,6 +68,7 @@ public class Episode implements Comparable<Episode>  {
 		return (aired == null) ? null : (Date)aired.clone();
 	}
 
+	@Override
 	public void setAired(Date aired) {
 		this.aired = (aired == null) ? null : (Date)aired.clone();
 	}
@@ -70,6 +77,7 @@ public class Episode implements Comparable<Episode>  {
 		return description;
 	}
 
+	@Override
 	public void setDescription(String description) {
 		this.description = description;
 	}
@@ -78,6 +86,7 @@ public class Episode implements Comparable<Episode>  {
 		return thumbUrl;
 	}
 
+	@Override
 	public void setThumbUrl(String thumbUrl) {
 		this.thumbUrl = thumbUrl;
 	}

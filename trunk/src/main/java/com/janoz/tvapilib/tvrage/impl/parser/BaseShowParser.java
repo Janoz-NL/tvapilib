@@ -12,12 +12,13 @@ package com.janoz.tvapilib.tvrage.impl.parser;
 
 import org.xml.sax.Attributes;
 
-import com.janoz.tvapilib.model.Episode;
-import com.janoz.tvapilib.model.Season;
-import com.janoz.tvapilib.model.Show;
+import com.janoz.tvapilib.model.IEpisode;
+import com.janoz.tvapilib.model.ISeason;
+import com.janoz.tvapilib.model.IShow;
+import com.janoz.tvapilib.model.ModelFactory;
 import com.janoz.tvapilib.support.AbstractSaxParser;
 
-public class BaseShowParser extends AbstractSaxParser {
+public class BaseShowParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>, Ep extends IEpisode<Sh,Se,Ep>> extends AbstractSaxParser {
 
 	private static final String EPISODELIST = "episodelist";
 	private static final String SEASON = "season";
@@ -27,13 +28,18 @@ public class BaseShowParser extends AbstractSaxParser {
 	
 	private String rootTag = null;
 	
-	private Show result = null;
-	private Season currentSeason = null;
-	private ShowParser showParser = new ShowParser();
-	private EpisodeParser episodeParser = new EpisodeParser();
+	private Sh result = null;
+	private Se currentSeason = null;
+	private final ModelFactory<Sh,Se,Ep> modelFactory;
+	private final ShowParser<Sh,Se,Ep> showParser;
+	private final EpisodeParser<Sh,Se,Ep> episodeParser;
 	
-	public BaseShowParser(String rootTag) {
+	public BaseShowParser(ModelFactory<Sh,Se,Ep> modelFactory, String rootTag) {
+		this.modelFactory = modelFactory;
 		this.rootTag = rootTag;
+		showParser = new ShowParser<Sh,Se,Ep>();
+		episodeParser = new EpisodeParser<Sh,Se,Ep>(this.modelFactory);
+		
 	}
 	
 	@Override
@@ -51,7 +57,7 @@ public class BaseShowParser extends AbstractSaxParser {
 			parseState = ParseState.IN_EPISODELIST;
 		}
 		if (parseState == null && stackEquals(rootTag)) {
-			result = new Show();
+			result = modelFactory.newShow();
 			showParser.reset(result);
 			parseState = ParseState.IN_SHOW;
 		}
@@ -79,13 +85,13 @@ public class BaseShowParser extends AbstractSaxParser {
 		}
 		if (parseState == ParseState.IN_EPISODE && stackEquals(rootTag,EPISODELIST,SEASON,EPISODE)) {
 			parseState = ParseState.IN_SEASON;
-			Episode ep = episodeParser.getEpisode();
+			Ep ep = episodeParser.getEpisode();
 			ep.setSeason(currentSeason);
 			currentSeason.addEpisode(ep);
 		}
 	}
 
-	public Show getResult(){
+	public Sh getResult(){
 		return result;
 	}
 

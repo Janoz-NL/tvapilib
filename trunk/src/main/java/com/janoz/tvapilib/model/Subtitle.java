@@ -13,26 +13,12 @@ package com.janoz.tvapilib.model;
 /**
  * @author Gijs de Vries aka Janoz
  *
+ * TODO language
  */
 public class Subtitle {
 
-	private Episode episode;
 	private String fileTitle;
 	private String downloadUrl;
-
-	/**
-	 * @return The episode this subtitle belongs to.
-	 */
-	public Episode getEpisode() {
-		return episode;
-	}
-
-	/**
-	 * @param episode The episode this subtitle belongs to.
-	 */
-	public void setEpisode(Episode episode) {
-		this.episode = episode;
-	}
 
 	/**
 	 * @return The title of the file

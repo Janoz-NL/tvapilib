@@ -15,23 +15,32 @@ import java.util.List;
 
 import org.xml.sax.Attributes;
 
-import com.janoz.tvapilib.model.Show;
+import com.janoz.tvapilib.model.IEpisode;
+import com.janoz.tvapilib.model.ISeason;
+import com.janoz.tvapilib.model.IShow;
+import com.janoz.tvapilib.model.ModelFactory;
 import com.janoz.tvapilib.support.AbstractSaxParser;
 
-public class BaseSearchResultParser  extends AbstractSaxParser {
+public class BaseSearchResultParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>, Ep extends IEpisode<Sh,Se,Ep>>  extends AbstractSaxParser {
 
 	private static final String SHOW = "show";
 	private static final String RESULTS = "results";
 	
 	private boolean inShow = false;
-	private ShowParser showParser = new ShowParser();
-	private List<Show> results = new ArrayList<Show>();
+	private final ModelFactory<Sh,Se,Ep> modelFactory;
+	private final ShowParser<Sh,Se,Ep> showParser;
+	private List<Sh> results = new ArrayList<Sh>();
+	
+	public BaseSearchResultParser(ModelFactory<Sh,Se,Ep> modelFactory) {
+		this.modelFactory = modelFactory;
+		this.showParser = new ShowParser<Sh,Se,Ep>();
+	}
 	
 	@Override
 	public void handleTagStart(Attributes attributes) {
 		if (!inShow && stackEquals(RESULTS,SHOW)) {
 			inShow = true;
-			Show show = new Show();
+			Sh show = modelFactory.newShow();
 			results.add(show);
 			showParser.reset(show);
 		}
@@ -51,7 +60,7 @@ public class BaseSearchResultParser  extends AbstractSaxParser {
 		}
 	}
 
-	public List<Show> getResults() {
+	public List<Sh> getResults() {
 		return results;
 	}
 }

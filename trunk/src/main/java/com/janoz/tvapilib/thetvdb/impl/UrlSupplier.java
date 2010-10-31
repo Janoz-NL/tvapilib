@@ -35,16 +35,8 @@ public class UrlSupplier extends XmlParsingObject {
 	 */
 	public UrlSupplier(String apiKey) {
 		this.apiKey = apiKey;
-		initMirrors();
 	}
 
-	/*
-	 * Constructor so class can be instantiated without initializing mirrordata.
-	 */
-	UrlSupplier(){
-		//Added for test purposes..
-	}
-	
 	/**
 	 * 
 	 * @param name Show to search for.
@@ -122,6 +114,9 @@ public class UrlSupplier extends XmlParsingObject {
 	}
 
 	private String getMirror(MirrorType type) {
+		if (mirrors == null) {
+			initMirrors();
+		}
 		List<String> candidates = mirrors.get(type);
 		return candidates.get(rand.nextInt(candidates.size()));
 	}

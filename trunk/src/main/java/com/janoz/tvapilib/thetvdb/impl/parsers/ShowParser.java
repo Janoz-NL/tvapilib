@@ -12,13 +12,15 @@ package com.janoz.tvapilib.thetvdb.impl.parsers;
 
 import java.util.List;
 
-import com.janoz.tvapilib.model.Show;
+import com.janoz.tvapilib.model.IEpisode;
+import com.janoz.tvapilib.model.ISeason;
+import com.janoz.tvapilib.model.IShow;
 
-public class ShowParser {
+public class ShowParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>, Ep extends IEpisode<Sh,Se,Ep>> {
 	
-	private Show show = null;
+	private Sh show = null;
 
-	public void reset(Show show) {
+	public void reset(Sh show) {
 		this.show = show;
 	}
 	
@@ -34,7 +36,7 @@ public class ShowParser {
 		}
 	}
 	
-	public Show getShow() {
+	public Sh getShow() {
 		return show;
 	}
 }

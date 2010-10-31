@@ -20,32 +20,39 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.janoz.tvapilib.model.Episode;
-import com.janoz.tvapilib.model.Season;
-import com.janoz.tvapilib.model.Show;
+import com.janoz.tvapilib.model.IEpisode;
+import com.janoz.tvapilib.model.ISeason;
+import com.janoz.tvapilib.model.IShow;
+import com.janoz.tvapilib.model.ModelFactory;
 import com.janoz.tvapilib.support.TvException;
 import com.janoz.tvapilib.thetvdb.impl.UrlSupplier;
 
-public class EpisodeParser {
+public class EpisodeParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>, Ep extends IEpisode<Sh,Se,Ep>> {
 	
 	private static final Log LOG = LogFactory.getLog(EpisodeParser.class);
 	
-	private Episode episode;
-	private Show show;
-	private Season season;
-	private UrlSupplier urlSupplier;
+	private Ep episode;
+	private Sh show;
+	private Se season;
+	private final ModelFactory<Sh,Se,Ep> modelFactory;
+	private final UrlSupplier urlSupplier;
 	private boolean done = false;
+	
+	public EpisodeParser(ModelFactory<Sh,Se,Ep> modelFactory, UrlSupplier urlSupplier) {
+		this.modelFactory = modelFactory;
+		this.urlSupplier = urlSupplier;
+	}
 
-	public void reset(Show show) {
+	public void reset(Sh show) {
 		this.show = show;
-		this.episode = new Episode();
+		this.episode = modelFactory.newEpisode();
 		this.done = false;
 	}
 	
 	public void handleContent(List<String> stack, String content){
 		if (stack.size()==1) {
 			if ("id".equals(stack.get(0))) {
-				episode.setId(Integer.parseInt(content));
+				episode.setTheTvDbId(Integer.parseInt(content));
 			} else if ("seasonnumber".equals(stack.get(0))) {
 				season = show.getSeason(
 						Integer.parseInt(content));
@@ -63,7 +70,7 @@ public class EpisodeParser {
 		}
 	}
 
-	public Episode getEpisode(){
+	public Ep getEpisode(){
 		if (!done) {
 			if (season == null) {
 				LOG.info("Episode never got a season.");
@@ -74,11 +81,6 @@ public class EpisodeParser {
 			done=true;
 		}
 		return episode;
-	}
-	
-	
-	public void setUrlSupplier(UrlSupplier urlSupplier) {
-		this.urlSupplier = urlSupplier;
 	}
 
 	private Date parseDate(String src) {

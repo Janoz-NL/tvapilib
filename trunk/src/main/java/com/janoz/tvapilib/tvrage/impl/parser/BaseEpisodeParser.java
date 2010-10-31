@@ -12,34 +12,39 @@ package com.janoz.tvapilib.tvrage.impl.parser;
 
 import org.xml.sax.Attributes;
 
-import com.janoz.tvapilib.model.Episode;
-import com.janoz.tvapilib.model.Season;
-import com.janoz.tvapilib.model.Show;
+import com.janoz.tvapilib.model.IEpisode;
+import com.janoz.tvapilib.model.ISeason;
+import com.janoz.tvapilib.model.IShow;
+import com.janoz.tvapilib.model.ModelFactory;
 import com.janoz.tvapilib.support.AbstractSaxParser;
 
-public class BaseEpisodeParser extends AbstractSaxParser {
+public class BaseEpisodeParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>, Ep extends IEpisode<Sh,Se,Ep>> extends AbstractSaxParser {
 	
 	private static final String SHOW = "show";
 	private static final String EPISODE = "episode";
 	private static final String LAST_EPISODE = "latestepisode";
 	private static final String NEXT_EPISODE = "nextepisode";
 
-	private ShowParser showParser = new ShowParser();
-	private EpisodeParser episodeParser = new EpisodeParser();
+	private final ShowParser<Sh,Se,Ep> showParser;
+	private final EpisodeParser<Sh,Se,Ep> episodeParser;
 	
 	private ParseState parseState = null;
 	
-	private Show show = null;
-	private Episode episode = null;
+	private Sh show = null;
+	private Ep episode = null;
 //	private Episode lastEpisode = null;
 //	private Episode nextEpisode = null;
+//	private final ModelFactory<Sh,Se,Ep> modelFactory; 
 	
-	public BaseEpisodeParser() {
-		this(new Show());
+	public BaseEpisodeParser(ModelFactory<Sh,Se,Ep> modelFactory) {
+		this(modelFactory,modelFactory.newShow());
 	}
 	
-	public BaseEpisodeParser(Show show) {
+	public BaseEpisodeParser(ModelFactory<Sh,Se,Ep> modelFactory, Sh show) {
+		//this.modelFactory = modelFactory;
 		this.show = show;
+		this.showParser = new ShowParser<Sh,Se,Ep>();
+		this.episodeParser = new EpisodeParser<Sh,Se,Ep>(modelFactory);
 	}
 	
 	@Override
@@ -98,17 +103,17 @@ public class BaseEpisodeParser extends AbstractSaxParser {
 		}
 	}
 
-	private Episode getEpisodeFromParser() {
-		Episode ep = episodeParser.getEpisode();
+	private Ep getEpisodeFromParser() {
+		Ep ep = episodeParser.getEpisode();
 		ep.setEpisode(episodeParser.getEpisodeFormEpisodeString());
-		Season season = show.getSeason(episodeParser.getSeasonFormEpisodeString());
+		Se season = show.getSeason(episodeParser.getSeasonFormEpisodeString());
 		ep.setSeason(season);
 		season.addEpisode(ep);
 		return ep;
 	}
 
 	
-	public Episode getResult() {
+	public Ep getResult() {
 		return episode;
 	}
 	

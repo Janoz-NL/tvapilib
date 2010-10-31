@@ -10,15 +10,10 @@
  ******************************************************************************/
 package com.janoz.tvapilib.tvrage.impl;
 
-import static org.easymock.EasyMock.createMock;
-import static org.easymock.EasyMock.eq;
-import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.replay;
-import static org.easymock.EasyMock.verify;
-import static org.junit.Assert.*;
+import static org.easymock.EasyMock.*;
+import static org.junit.Assert.assertEquals;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -31,19 +26,16 @@ import com.janoz.tvapilib.model.Show;
 public class TvRageTest {
 
 	UrlSupplier urlSupplierMock;
-	TvRageImpl subject;
+	DefaultTvRageImpl subject;
 	
 	@Before
 	public void setup() throws Exception {
 		//construct an instance of the subject with a mocked UrlSupplier
 		urlSupplierMock = createMock(UrlSupplier.class);
-		Constructor<TvRageImpl> constructor =
-			TvRageImpl.class.getDeclaredConstructor();
+		Constructor<DefaultTvRageImpl> constructor =
+			DefaultTvRageImpl.class.getDeclaredConstructor(UrlSupplier.class);
 		constructor.setAccessible(true);
-		subject = constructor.newInstance();
-		Field field = subject.getClass().getDeclaredField("urlSupplier");
-		field.setAccessible(true);
-		field.set(subject,urlSupplierMock);
+		subject = constructor.newInstance(urlSupplierMock);
 	}
 	
 	@Test

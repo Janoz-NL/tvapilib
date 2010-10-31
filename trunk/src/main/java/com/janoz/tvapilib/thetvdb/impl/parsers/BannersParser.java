@@ -12,19 +12,21 @@ package com.janoz.tvapilib.thetvdb.impl.parsers;
 
 import org.xml.sax.Attributes;
 
-import com.janoz.tvapilib.model.Show;
+import com.janoz.tvapilib.model.IEpisode;
+import com.janoz.tvapilib.model.ISeason;
+import com.janoz.tvapilib.model.IShow;
 import com.janoz.tvapilib.support.AbstractSaxParser;
 import com.janoz.tvapilib.thetvdb.impl.UrlSupplier;
 
-public class BannersParser extends AbstractSaxParser {
+public class BannersParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>, Ep extends IEpisode<Sh,Se,Ep>> extends AbstractSaxParser {
 
 	private boolean inBanner = false;
-	private Show show;
-	private BannerParser bannerParser;
+	private Sh show;
+	private BannerParser<Sh,Se,Ep> bannerParser;
 	
-	public BannersParser(UrlSupplier urlSupplier, Show show) {
+	public BannersParser(UrlSupplier urlSupplier, Sh show) {
 		this.show = show;
-		this.bannerParser = new BannerParser(urlSupplier);
+		this.bannerParser = new BannerParser<Sh,Se,Ep>(urlSupplier);
 	}
 	
 	@Override

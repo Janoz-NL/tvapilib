@@ -13,15 +13,21 @@ package com.janoz.tvapilib.lockstockmods;
 import java.util.List;
 
 import com.janoz.tvapilib.model.Fanart;
-import com.janoz.tvapilib.model.Show;
+import com.janoz.tvapilib.model.IEpisode;
+import com.janoz.tvapilib.model.ISeason;
+import com.janoz.tvapilib.model.IShow;
 
 /**
- * @author Gijs de Vries aka Janoz
- *
  * Retrieves ClearLOGOs from http://www.lockstockmods.net/clearart/
  * 
+ * @author Gijs de Vries aka Janoz
+ *
+ * @param <Sh> Show type
+ * @param <Se> Season type
+ * @param <Ep> Episode type
+ * 
  */
-public interface LockStockMods {
+public interface LockStockMods<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>, Ep extends IEpisode<Sh,Se,Ep>> {
 
 	
 	/**
@@ -29,7 +35,7 @@ public interface LockStockMods {
 	 * @param show The show to add the logo to.
 	 * 
 	 */
-	void addClearLogos(Show show);
+	void addClearLogos(Sh show);
 	
 	/**
 	 * @param theTvDbId TheTVDB ID of the show 

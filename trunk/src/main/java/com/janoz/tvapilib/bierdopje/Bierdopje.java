@@ -12,7 +12,9 @@ package com.janoz.tvapilib.bierdopje;
 
 import java.util.List;
 
-import com.janoz.tvapilib.model.Episode;
+import com.janoz.tvapilib.model.IEpisode;
+import com.janoz.tvapilib.model.ISeason;
+import com.janoz.tvapilib.model.IShow;
 import com.janoz.tvapilib.model.Subtitle;
 
 /**
@@ -22,9 +24,13 @@ import com.janoz.tvapilib.model.Subtitle;
  * 
  * 
  * @author Gijs de Vries aka Janoz
+ * 
+ * @param <Sh> Show type
+ * @param <Se> Season type
+ * @param <Ep> Episode type
  *
  */
-public interface Bierdopje {
+public interface Bierdopje<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>, Ep extends IEpisode<Sh,Se,Ep>> {
 
 	/**
 	 * @param theTvDbId TheTVDB id of the requested show.
@@ -38,6 +44,6 @@ public interface Bierdopje {
 	 * @param episode The episode for which subtitles are requested
 	 * @return A list of subtitles for this episode.
 	 */
-	List<Subtitle> getAllSubsFor(Episode episode);
+	List<Subtitle> getAllSubsFor(Ep episode);
 
 }

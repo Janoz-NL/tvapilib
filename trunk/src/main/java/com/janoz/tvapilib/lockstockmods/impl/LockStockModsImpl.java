@@ -15,17 +15,23 @@ import java.util.List;
 import com.janoz.tvapilib.lockstockmods.LockStockMods;
 import com.janoz.tvapilib.lockstockmods.impl.parsers.LogoParser;
 import com.janoz.tvapilib.model.Fanart;
-import com.janoz.tvapilib.model.Show;
+import com.janoz.tvapilib.model.IEpisode;
+import com.janoz.tvapilib.model.ISeason;
+import com.janoz.tvapilib.model.IShow;
 import com.janoz.tvapilib.support.XmlParsingObject;
 
 /**
  * @author Gijs de Vries aka Janoz
  *
+ * @param <Sh> Show type
+ * @param <Se> Season type
+ * @param <Ep> Episode type
+ *
  */
-public class LockStockModsImpl extends XmlParsingObject implements LockStockMods {
+public class LockStockModsImpl<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>, Ep extends IEpisode<Sh,Se,Ep>> extends XmlParsingObject implements LockStockMods<Sh,Se,Ep> {
 
 	@Override
-	public void addClearLogos(Show show) {
+	public void addClearLogos(Sh show) {
 		for(Fanart logo:getClearLogos(show.getTheTvDbId())){
 			show.addLogo(logo);
 		}

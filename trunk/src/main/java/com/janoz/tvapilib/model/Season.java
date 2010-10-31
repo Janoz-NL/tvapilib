@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-public class Season implements Comparable<Season> {
+public class Season implements Comparable<Season>,ISeason<Show,Season,Episode> {
 
 	private int season;
 	private Show show = null;
@@ -26,6 +26,7 @@ public class Season implements Comparable<Season> {
 
 	
 	
+	@Override
 	public int getSeason() {
 		return season;
 	}
@@ -34,6 +35,7 @@ public class Season implements Comparable<Season> {
 		this.season = season;
 	}
 
+	@Override
 	public Show getShow() {
 		return show;
 	}
@@ -42,10 +44,12 @@ public class Season implements Comparable<Season> {
 		this.show = show;
 	}
 	
+	@Override
 	public void addEpisode(Episode episode) {
 		episodes.add(episode);
 	}
 	
+	@Override
 	public void addPoster(Fanart fanart){
 		posters.add(fanart);
 	}
@@ -54,6 +58,7 @@ public class Season implements Comparable<Season> {
 		return Collections.unmodifiableList(posters);
 	}
 	
+	@Override
 	public void addBanner(Fanart fanart){
 		banners.add(fanart);
 	}

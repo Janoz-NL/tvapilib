@@ -12,8 +12,10 @@ package com.janoz.tvapilib.thetvdb.impl;
 
 import java.util.List;
 
-import com.janoz.tvapilib.model.Episode;
-import com.janoz.tvapilib.model.Show;
+import com.janoz.tvapilib.model.IEpisode;
+import com.janoz.tvapilib.model.ISeason;
+import com.janoz.tvapilib.model.IShow;
+import com.janoz.tvapilib.model.ModelFactory;
 import com.janoz.tvapilib.support.XmlParsingObject;
 import com.janoz.tvapilib.thetvdb.TheTVDB;
 import com.janoz.tvapilib.thetvdb.impl.parsers.BannersParser;
@@ -24,80 +26,79 @@ import com.janoz.tvapilib.thetvdb.impl.parsers.FullShowParser;
 /**
  * @author Gijs de Vries aka Janoz
  *
+ * @param <Sh> Show type
+ * @param <Se> Season type
+ * @param <Ep> Episode type
+ *
  */
-public class TheTVDBImpl extends XmlParsingObject implements TheTVDB {
+public class TheTVDBImpl<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>, Ep extends IEpisode<Sh,Se,Ep>> extends XmlParsingObject implements TheTVDB<Sh,Se,Ep> {
 
-	private UrlSupplier urlSupplier;
-	
-	
+	private final UrlSupplier urlSupplier;
+	private final ModelFactory<Sh,Se,Ep> modelFactory;
 
-	/**
-	 * @param apiKey TVDB Apikey
-	 */
-	public TheTVDBImpl(String apiKey) {
+	public TheTVDBImpl(ModelFactory<Sh,Se,Ep> modelFactory, String apiKey) {
 		urlSupplier = new UrlSupplier(apiKey);
+		this.modelFactory = modelFactory;
 	}
 	
-	/*
-	 * Constructor so class can be instantiated without initializing UrlSupplier.
-	 */
-	@SuppressWarnings("unused")
-	private TheTVDBImpl(){
-		//Added for test purposes..
+	//Added for test purposes..
+	protected TheTVDBImpl(ModelFactory<Sh,Se,Ep> modelFactory,UrlSupplier urlSupplier){
+		this.urlSupplier = urlSupplier;
+		this.modelFactory = modelFactory;
 	}
 	
 	@Override
-	public List<Show> searchShows(String name) {
+	public List<Sh> searchShows(String name) {
 		String url = urlSupplier.getShowSearchUrl(name);
-		BaseShowParser parser = new BaseShowParser();
+		BaseShowParser<Sh,Se,Ep> parser = new BaseShowParser<Sh,Se,Ep>(modelFactory);
 		parse(parser,openStream(url));
 		return parser.getResults();
 	}
 
 	@Override
-	public Show getFullShow(int theTvDbId) {
+	public Sh getFullShow(int theTvDbId) {
 		// TODO reimplement this using the zip file
-		Show show = getShowWithEpisodes(theTvDbId);
+		Sh show = getShowWithEpisodes(theTvDbId);
 		fillFanart(show);
 		return show;
 	}
 
 	@Override
-	public Show getShow(int theTvDbId) {
+	public Sh getShow(int theTvDbId) {
 		String url = urlSupplier.getBaseShowUrl(theTvDbId);
-		BaseShowParser parser = new BaseShowParser();
+		BaseShowParser<Sh,Se,Ep> parser = new BaseShowParser<Sh,Se,Ep>(modelFactory);
 		parse(parser,openStream(url));
 		return parser.getResult();
 	}
 	
 	@Override
-	public Show getShowWithEpisodes(int theTvDbId) {
+	public Sh getShowWithEpisodes(int theTvDbId) {
 		String url = urlSupplier.getFullShowUrl(theTvDbId);
-		FullShowParser parser = new FullShowParser(urlSupplier);
+		FullShowParser<Sh,Se,Ep> parser = new FullShowParser<Sh,Se,Ep>(modelFactory,urlSupplier);
 		parse(parser,openStream(url));
 		return parser.getResult();
 	}
 
 	@Override
-	public Episode getEpisode(int theTvDbId, int season, int episode) {
-		Show show = new Show();
+	public Ep getEpisode(int theTvDbId, int season, int episode) {
+		Sh show = modelFactory.newShow();
 		show.setTheTvDbId(theTvDbId);
 		return getEpisode(show, season, episode);
 	}
 
 	@Override
-	public Episode getEpisode(Show show, int season, int episode) {
+	public Ep getEpisode(Sh show, int season, int episode) {
 		String url = urlSupplier.getBaseEpisodeUrl(show.getTheTvDbId(),
 				season, episode);
-		BaseEpisodeParser parser = new BaseEpisodeParser(show,urlSupplier);
+		BaseEpisodeParser<Sh,Se,Ep> parser = new BaseEpisodeParser<Sh,Se,Ep>(show,modelFactory,urlSupplier);
 		parse(parser,openStream(url));
 		return parser.getResult();
 	}
 	
 	@Override
-	public void fillFanart(Show show) {
+	public void fillFanart(Sh show) {
 		String url = urlSupplier.getBannerUrl(show.getTheTvDbId());
-		BannersParser parser = new BannersParser(urlSupplier,show);
+		BannersParser<Sh,Se,Ep> parser = new BannersParser<Sh,Se,Ep>(urlSupplier,show);
 		parse(parser,openStream(url));
 	}
 }

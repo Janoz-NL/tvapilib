@@ -15,17 +15,25 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import com.janoz.tvapilib.model.Episode;
+import com.janoz.tvapilib.model.IEpisode;
+import com.janoz.tvapilib.model.ISeason;
+import com.janoz.tvapilib.model.IShow;
+import com.janoz.tvapilib.model.ModelFactory;
 
-public class EpisodeParser {
+public class EpisodeParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>, Ep extends IEpisode<Sh,Se,Ep>> {
 	
 //	private static final Log LOG = LogFactory.getLog(EpisodeParser.class);
 
-	private Episode episode;
-	private String episodeString;
+	private Ep episode = null;
+	private String episodeString = null;
+	private final ModelFactory<Sh,Se,Ep> modelFactory;
+	
+	public EpisodeParser(ModelFactory<Sh,Se,Ep> modelFactory) {
+		this.modelFactory = modelFactory;
+	}
 	
 	public void reset() {
-		this.episode = new Episode();
+		this.episode = modelFactory.newEpisode();
 		this.episodeString = null;
 	}
 	
@@ -43,7 +51,7 @@ public class EpisodeParser {
 		}
 	}
 
-	public Episode getEpisode(){
+	public Ep getEpisode(){
 		return episode;
 	}
 	
