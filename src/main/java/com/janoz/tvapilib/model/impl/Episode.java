@@ -8,9 +8,11 @@
  * Contributors:
  *     Gijs de Vries aka Janoz - initial API and implementation
  ******************************************************************************/
-package com.janoz.tvapilib.model;
+package com.janoz.tvapilib.model.impl;
 
 import java.util.Date;
+
+import com.janoz.tvapilib.model.IEpisode;
 
 /**
  * @author Gijs de Vries aka Janoz

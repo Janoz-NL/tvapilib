@@ -18,7 +18,7 @@ import java.util.List;
 import com.janoz.tvapilib.model.IEpisode;
 import com.janoz.tvapilib.model.ISeason;
 import com.janoz.tvapilib.model.IShow;
-import com.janoz.tvapilib.support.TvException;
+import com.janoz.tvapilib.support.TvApiException;
 
 public class EpisodeParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>, Ep extends IEpisode<Sh,Se,Ep>> {
 	
@@ -73,7 +73,7 @@ public class EpisodeParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,
 			episode = getEpisodeFormEpisodeString();
 		}
 		if (episode == null) {
-			throw new TvException("No episode found.");
+			throw new TvApiException("No episode number found.");
 		}
 		Ep result = season.getEpisode(episode);
 		if (title != null) {
@@ -90,14 +90,14 @@ public class EpisodeParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,
 	
 	private Integer getEpisodeFormEpisodeString() {
 		if (episodeString == null) {
-			throw new TvException("No episode found in result.");
+			throw new TvApiException("No episode number found in result.");
 		}
 		return Integer.valueOf(episodeString.split("x")[1]);
 	}
 
 	private Integer getSeasonFormEpisodeString() {
 		if (episodeString == null) {
-			throw new TvException("No season found in result.");
+			throw new TvApiException("No season found in result.");
 		}
 		return Integer.valueOf(episodeString.split("x")[0]);
 	}

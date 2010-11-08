@@ -10,10 +10,10 @@
  ******************************************************************************/
 package com.janoz.tvapilib.thetvdb.impl;
 
-import com.janoz.tvapilib.model.DefaultModelFactory;
-import com.janoz.tvapilib.model.Episode;
-import com.janoz.tvapilib.model.Season;
-import com.janoz.tvapilib.model.Show;
+import com.janoz.tvapilib.model.impl.DefaultModelFactory;
+import com.janoz.tvapilib.model.impl.Episode;
+import com.janoz.tvapilib.model.impl.Season;
+import com.janoz.tvapilib.model.impl.Show;
 
 public class DefaultTheTVDBImpl extends TheTVDBImpl<Show, Season, Episode> {
 

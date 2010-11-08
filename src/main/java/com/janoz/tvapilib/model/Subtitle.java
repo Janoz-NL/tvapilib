@@ -19,6 +19,7 @@ public class Subtitle {
 
 	private String fileTitle;
 	private String downloadUrl;
+	//private Language language;
 
 	/**
 	 * @return The title of the file

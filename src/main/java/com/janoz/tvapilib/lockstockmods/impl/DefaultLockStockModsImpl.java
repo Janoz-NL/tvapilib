@@ -10,9 +10,9 @@
  ******************************************************************************/
 package com.janoz.tvapilib.lockstockmods.impl;
 
-import com.janoz.tvapilib.model.Episode;
-import com.janoz.tvapilib.model.Season;
-import com.janoz.tvapilib.model.Show;
+import com.janoz.tvapilib.model.impl.Episode;
+import com.janoz.tvapilib.model.impl.Season;
+import com.janoz.tvapilib.model.impl.Show;
 
 public class DefaultLockStockModsImpl extends LockStockModsImpl<Show, Season, Episode> {
 

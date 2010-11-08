@@ -8,13 +8,16 @@
  * Contributors:
  *     Gijs de Vries aka Janoz - initial API and implementation
  ******************************************************************************/
-package com.janoz.tvapilib.model;
+package com.janoz.tvapilib.model.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
+import com.janoz.tvapilib.model.Fanart;
+import com.janoz.tvapilib.model.ISeason;
 
 public class Season implements Comparable<Season>,ISeason<Show,Season,Episode> {
 

@@ -38,10 +38,10 @@ public abstract class XmlParsingObject {
 			reader.parse(input);
 		} catch (SAXException e) {
 			LOG.info("Error parsing XML data.",e);
-			throw new TvException("Error parsing XML data.",e);
+			throw new TvApiException(e.getMessage(),e);
 		} catch (IOException e) {
-			LOG.info("IOError while parsing XML data.",e);
-			throw new TvException("IOError while parsing XML data.",e);
+			LOG.info("IO error while parsing XML data.",e);
+			throw new TvApiException("IO error while parsing XML data.",e);
 		}
 	}
 	
@@ -50,7 +50,7 @@ public abstract class XmlParsingObject {
 			return new URL(url).openStream();
 		} catch (IOException e) {
 			LOG.info("Unable to open XML data.",e);
-			throw new TvException("Unable to open XML data.",e);
+			throw new TvApiException("Unable to open XML data.",e);
 		}
 	}
 	
