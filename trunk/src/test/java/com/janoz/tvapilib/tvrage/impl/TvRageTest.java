@@ -21,8 +21,8 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.janoz.tvapilib.model.Episode;
-import com.janoz.tvapilib.model.Show;
+import com.janoz.tvapilib.model.impl.Episode;
+import com.janoz.tvapilib.model.impl.Show;
 public class TvRageTest {
 
 	UrlSupplier urlSupplierMock;

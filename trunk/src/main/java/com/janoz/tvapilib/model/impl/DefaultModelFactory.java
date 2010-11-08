@@ -8,7 +8,9 @@
  * Contributors:
  *     Gijs de Vries aka Janoz - initial API and implementation
  ******************************************************************************/
-package com.janoz.tvapilib.model;
+package com.janoz.tvapilib.model.impl;
+
+import com.janoz.tvapilib.model.ModelFactory;
 
 public enum DefaultModelFactory implements ModelFactory<Show, Season, Episode> {
 

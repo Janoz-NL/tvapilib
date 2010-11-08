@@ -23,7 +23,7 @@ import org.apache.commons.logging.LogFactory;
 import com.janoz.tvapilib.model.IEpisode;
 import com.janoz.tvapilib.model.ISeason;
 import com.janoz.tvapilib.model.IShow;
-import com.janoz.tvapilib.support.TvException;
+import com.janoz.tvapilib.support.TvApiException;
 import com.janoz.tvapilib.thetvdb.impl.UrlSupplier;
 
 public class EpisodeParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>, Ep extends IEpisode<Sh,Se,Ep>> {
@@ -82,11 +82,11 @@ public class EpisodeParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,
 	public Ep getEpisode(){
 		if (season == null) {
 			LOG.info("Episode never got a season.");
-			throw new TvException("Episode never got a season.");
+			throw new TvApiException("Episode never got a season.");
 		}
 		if (episode == null) {
 			LOG.info("Episode never got an episode.");
-			throw new TvException("Episode never got an episode.");
+			throw new TvApiException("Episode never got an episode.");
 		}
 		Ep result = season.getEpisode(episode);
 		if (theTvDbId != null) {
@@ -112,8 +112,7 @@ public class EpisodeParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,
 		try {
 			return new Date(df.parse(src).getTime());
 		} catch (ParseException e) {
-			LOG.warn("Unable to retreive date from '" + src + "'.", e);
-			return null;
+			throw new TvApiException("Unable to retreive date from '" + src + "'.", e);
 		}
 	}
 }

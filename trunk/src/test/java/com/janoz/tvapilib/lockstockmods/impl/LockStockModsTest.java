@@ -23,7 +23,7 @@ import org.junit.Test;
 
 import com.janoz.tvapilib.model.Fanart;
 import com.janoz.tvapilib.model.FanartType;
-import com.janoz.tvapilib.model.Show;
+import com.janoz.tvapilib.model.impl.Show;
 public class LockStockModsTest {
 	
 	DefaultLockStockModsImpl subject;
