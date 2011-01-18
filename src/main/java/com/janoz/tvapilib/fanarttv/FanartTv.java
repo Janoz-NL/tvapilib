@@ -8,7 +8,7 @@
  * Contributors:
  *     Gijs de Vries aka Janoz - initial API and implementation
  ******************************************************************************/
-package com.janoz.tvapilib.lockstockmods;
+package com.janoz.tvapilib.fanarttv;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ import com.janoz.tvapilib.model.IShow;
  * @param <Ep> Episode type
  * 
  */
-public interface LockStockMods<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>, Ep extends IEpisode<Sh,Se,Ep>> {
+public interface FanartTv<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>, Ep extends IEpisode<Sh,Se,Ep>> {
 
 	
 	/**

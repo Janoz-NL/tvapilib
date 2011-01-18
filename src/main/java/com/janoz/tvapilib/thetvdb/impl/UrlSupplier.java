@@ -85,7 +85,7 @@ public class UrlSupplier extends XmlParsingObject {
 	 * @return API url for retrieving banner information. 
 	 */
 	public String getBannerUrl(int theTvDbId) {
-		return getBaseShowUrlBuilder(theTvDbId).append("/banner.xml").toString();
+		return getBaseShowUrlBuilder(theTvDbId).append("/banners.xml").toString();
 	}
 
 	private StringBuilder getBaseShowUrlBuilder(int theTvDbId) {
