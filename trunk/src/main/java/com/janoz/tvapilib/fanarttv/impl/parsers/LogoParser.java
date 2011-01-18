@@ -8,7 +8,7 @@
  * Contributors:
  *     Gijs de Vries aka Janoz - initial API and implementation
  ******************************************************************************/
-package com.janoz.tvapilib.lockstockmods.impl.parsers;
+package com.janoz.tvapilib.fanarttv.impl.parsers;
 
 import java.util.ArrayList;
 import java.util.List;

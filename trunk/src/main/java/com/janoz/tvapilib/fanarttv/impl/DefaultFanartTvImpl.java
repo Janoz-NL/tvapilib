@@ -8,13 +8,13 @@
  * Contributors:
  *     Gijs de Vries aka Janoz - initial API and implementation
  ******************************************************************************/
-package com.janoz.tvapilib.lockstockmods.impl;
+package com.janoz.tvapilib.fanarttv.impl;
 
 import com.janoz.tvapilib.model.impl.Episode;
 import com.janoz.tvapilib.model.impl.Season;
 import com.janoz.tvapilib.model.impl.Show;
 
-public class DefaultLockStockModsImpl extends LockStockModsImpl<Show, Season, Episode> {
+public class DefaultFanartTvImpl extends FanartTvImpl<Show, Season, Episode> {
 
 	//Intentionally left blank
 }

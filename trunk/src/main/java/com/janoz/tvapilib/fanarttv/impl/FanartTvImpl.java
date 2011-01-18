@@ -8,12 +8,12 @@
  * Contributors:
  *     Gijs de Vries aka Janoz - initial API and implementation
  ******************************************************************************/
-package com.janoz.tvapilib.lockstockmods.impl;
+package com.janoz.tvapilib.fanarttv.impl;
 
 import java.util.List;
 
-import com.janoz.tvapilib.lockstockmods.LockStockMods;
-import com.janoz.tvapilib.lockstockmods.impl.parsers.LogoParser;
+import com.janoz.tvapilib.fanarttv.FanartTv;
+import com.janoz.tvapilib.fanarttv.impl.parsers.LogoParser;
 import com.janoz.tvapilib.model.Fanart;
 import com.janoz.tvapilib.model.IEpisode;
 import com.janoz.tvapilib.model.ISeason;
@@ -28,7 +28,7 @@ import com.janoz.tvapilib.support.XmlParsingObject;
  * @param <Ep> Episode type
  *
  */
-public class LockStockModsImpl<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>, Ep extends IEpisode<Sh,Se,Ep>> extends XmlParsingObject implements LockStockMods<Sh,Se,Ep> {
+public class FanartTvImpl<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>, Ep extends IEpisode<Sh,Se,Ep>> extends XmlParsingObject implements FanartTv<Sh,Se,Ep> {
 
 	@Override
 	public void addClearLogos(Sh show) {
@@ -48,7 +48,7 @@ public class LockStockModsImpl<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh
 	 * Package accessible so it can be mocked for test purposes.
 	 */
 	String getUrl(int theTvDbId) {
-		return "http://www.lockstockmods.net/logos/getlogo.php?id="+theTvDbId;
+		return "http://fanart.tv/api/getart.php?type=clearlogo&id="+theTvDbId;
 	}
 
 }

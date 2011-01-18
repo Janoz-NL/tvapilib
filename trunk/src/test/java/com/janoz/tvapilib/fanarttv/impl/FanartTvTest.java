@@ -8,7 +8,7 @@
  * Contributors:
  *     Gijs de Vries aka Janoz - initial API and implementation
  ******************************************************************************/
-package com.janoz.tvapilib.lockstockmods.impl;
+package com.janoz.tvapilib.fanarttv.impl;
 
 import static org.easymock.EasyMock.createMockBuilder;
 import static org.easymock.EasyMock.eq;
@@ -21,16 +21,17 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.janoz.tvapilib.fanarttv.impl.DefaultFanartTvImpl;
 import com.janoz.tvapilib.model.Fanart;
 import com.janoz.tvapilib.model.FanartType;
 import com.janoz.tvapilib.model.impl.Show;
-public class LockStockModsTest {
+public class FanartTvTest {
 	
-	DefaultLockStockModsImpl subject;
+	DefaultFanartTvImpl subject;
 	
 	@Before
 	public void setup() {
-		subject = createMockBuilder(DefaultLockStockModsImpl.class)
+		subject = createMockBuilder(DefaultFanartTvImpl.class)
 			.addMockedMethod("getUrl").withConstructor().createMock();
 		
 	}
@@ -38,7 +39,7 @@ public class LockStockModsTest {
 	@Test
 	public void addLogoTest() throws Exception {
 		expect(subject.getUrl(eq(164301))).andReturn(
-				this.getClass().getClassLoader().getResource("responses/lockstockmods/164301.xml").toString());
+				this.getClass().getClassLoader().getResource("responses/fanart.tv/164301.xml").toString());
 		replay(subject);
 		Show show = new Show();
 		show.setTheTvDbId(164301);
@@ -55,7 +56,7 @@ public class LockStockModsTest {
 	@Test
 	public void addLogoUnknownTest() throws Exception {
 		expect(subject.getUrl(eq(1))).andReturn(
-				this.getClass().getClassLoader().getResource("responses/lockstockmods/1.xml").toString());
+				this.getClass().getClassLoader().getResource("responses/fanart.tv/1.xml").toString());
 		replay(subject);
 		Show show = new Show();
 		show.setTheTvDbId(1);
