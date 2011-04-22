@@ -17,7 +17,6 @@ import java.lang.reflect.Field;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.janoz.tvapilib.tvrage.impl.support.UrlSupplier;
 
 public class UrlSupplierTest {
 	private static final String API_KEY = "**API_KEY**";

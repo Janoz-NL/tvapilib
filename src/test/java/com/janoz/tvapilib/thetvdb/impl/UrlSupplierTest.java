@@ -8,7 +8,7 @@
  * Contributors:
  *     Gijs de Vries aka Janoz - initial API and implementation
  ******************************************************************************/
-package com.janoz.tvapilib.thetvdb.impl.support;
+package com.janoz.tvapilib.thetvdb.impl;
 
 import static org.easymock.EasyMock.createMockBuilder;
 import static org.easymock.EasyMock.expect;
@@ -25,8 +25,8 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.janoz.tvapilib.thetvdb.impl.support.MirrorType;
-import com.janoz.tvapilib.thetvdb.impl.support.UrlSupplier;
+import com.janoz.tvapilib.thetvdb.impl.MirrorType;
+import com.janoz.tvapilib.thetvdb.impl.UrlSupplier;
 
 
 public class UrlSupplierTest {

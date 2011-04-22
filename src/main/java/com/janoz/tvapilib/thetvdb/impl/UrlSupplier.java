@@ -8,14 +8,13 @@
  * Contributors:
  *     Gijs de Vries aka Janoz - initial API and implementation
  ******************************************************************************/
-package com.janoz.tvapilib.thetvdb.impl.support;
+package com.janoz.tvapilib.thetvdb.impl;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
 import com.janoz.tvapilib.support.XmlParsingObject;
-import com.janoz.tvapilib.thetvdb.impl.parsers.MirrorParser;
 
 
 /**

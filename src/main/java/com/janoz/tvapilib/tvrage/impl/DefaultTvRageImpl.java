@@ -14,7 +14,6 @@ import com.janoz.tvapilib.model.impl.DefaultModelFactory;
 import com.janoz.tvapilib.model.impl.Episode;
 import com.janoz.tvapilib.model.impl.Season;
 import com.janoz.tvapilib.model.impl.Show;
-import com.janoz.tvapilib.tvrage.impl.support.UrlSupplier;
 
 public class DefaultTvRageImpl extends TvRageImpl<Show,Season,Episode> {
 

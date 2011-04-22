@@ -8,7 +8,7 @@
  * Contributors:
  *     Gijs de Vries aka Janoz - initial API and implementation
  ******************************************************************************/
-package com.janoz.tvapilib.thetvdb.impl.parsers;
+package com.janoz.tvapilib.thetvdb.impl;
 
 import org.xml.sax.Attributes;
 
@@ -16,7 +16,6 @@ import com.janoz.tvapilib.model.IEpisode;
 import com.janoz.tvapilib.model.ISeason;
 import com.janoz.tvapilib.model.IShow;
 import com.janoz.tvapilib.support.AbstractSaxParser;
-import com.janoz.tvapilib.thetvdb.impl.support.UrlSupplier;
 
 public class BannersParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>, Ep extends IEpisode<Sh,Se,Ep>> extends AbstractSaxParser {
 
