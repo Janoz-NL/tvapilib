@@ -21,6 +21,7 @@ import com.janoz.tvapilib.tvrage.TvRage;
 import com.janoz.tvapilib.tvrage.impl.parser.BaseEpisodeParser;
 import com.janoz.tvapilib.tvrage.impl.parser.BaseSearchResultParser;
 import com.janoz.tvapilib.tvrage.impl.parser.BaseShowParser;
+import com.janoz.tvapilib.tvrage.impl.support.UrlSupplier;
 
 public class TvRageImpl<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>, Ep extends IEpisode<Sh,Se,Ep>> extends XmlParsingObject implements TvRage<Sh,Se,Ep> {
 

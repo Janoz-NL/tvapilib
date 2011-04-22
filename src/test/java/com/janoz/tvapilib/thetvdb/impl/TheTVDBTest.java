@@ -24,6 +24,7 @@ import org.junit.Test;
 import com.janoz.tvapilib.model.Fanart;
 import com.janoz.tvapilib.model.impl.Episode;
 import com.janoz.tvapilib.model.impl.Show;
+import com.janoz.tvapilib.thetvdb.impl.support.UrlSupplier;
 
 public class TheTVDBTest {
 

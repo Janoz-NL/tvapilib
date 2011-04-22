@@ -16,7 +16,7 @@ import com.janoz.tvapilib.model.IEpisode;
 import com.janoz.tvapilib.model.ISeason;
 import com.janoz.tvapilib.model.IShow;
 import com.janoz.tvapilib.support.AbstractSaxParser;
-import com.janoz.tvapilib.thetvdb.impl.UrlSupplier;
+import com.janoz.tvapilib.thetvdb.impl.support.UrlSupplier;
 
 public class BaseEpisodeParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>, Ep extends IEpisode<Sh,Se,Ep>> extends AbstractSaxParser {
 

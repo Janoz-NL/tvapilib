@@ -18,7 +18,7 @@ import java.util.Map;
 import org.xml.sax.Attributes;
 
 import com.janoz.tvapilib.support.AbstractSaxParser;
-import com.janoz.tvapilib.thetvdb.impl.MirrorType;
+import com.janoz.tvapilib.thetvdb.impl.support.MirrorType;
 
 public class MirrorParser extends AbstractSaxParser{
 
