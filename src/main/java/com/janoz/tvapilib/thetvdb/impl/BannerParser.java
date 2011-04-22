@@ -20,11 +20,11 @@ import com.janoz.tvapilib.model.IShow;
 
 public class BannerParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>, Ep extends IEpisode<Sh,Se,Ep>> {
 
+	private final UrlSupplier urlSupplier;
 	private Fanart fanart = null;
-	private UrlSupplier urlSupplier;
-	private String bannerType1;
-	private String bannerType2;
-	private Integer season;
+	private String bannerType1 = null;
+	private String bannerType2 = null;
+	private Integer season = null;
 	
 	private String language;
 	
