@@ -8,7 +8,7 @@
  * Contributors:
  *     Gijs de Vries aka Janoz - initial API and implementation
  ******************************************************************************/
-package com.janoz.tvapilib.tvrage.impl.parser;
+package com.janoz.tvapilib.thetvdb.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,46 +21,49 @@ import com.janoz.tvapilib.model.IShow;
 import com.janoz.tvapilib.model.ModelFactory;
 import com.janoz.tvapilib.support.AbstractSaxParser;
 
-public class BaseSearchResultParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>, Ep extends IEpisode<Sh,Se,Ep>>  extends AbstractSaxParser {
+public class BaseShowParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>, Ep extends IEpisode<Sh,Se,Ep>> extends AbstractSaxParser {
 
-	private static final String SHOW = "show";
-	private static final String RESULTS = "results";
-	
 	private boolean inShow = false;
 	private final ModelFactory<Sh,Se,Ep> modelFactory;
-	private final ShowParser<Sh,Se,Ep> showParser;
+	private ShowParser<Sh,Se,Ep> showParser = new ShowParser<Sh,Se,Ep>();
 	private List<Sh> results = new ArrayList<Sh>();
 	
-	public BaseSearchResultParser(ModelFactory<Sh,Se,Ep> modelFactory) {
+	public BaseShowParser(ModelFactory<Sh,Se,Ep> modelFactory) {
 		this.modelFactory = modelFactory;
-		this.showParser = new ShowParser<Sh,Se,Ep>();
 	}
 	
 	@Override
 	public void handleTagStart(Attributes attributes) {
-		if (!inShow && stackEquals(RESULTS,SHOW)) {
-			inShow = true;
+		if (!inShow && stackEquals("data","series")) {
 			Sh show = modelFactory.newShow();
 			results.add(show);
 			showParser.reset(show);
+			inShow = true;
 		}
 	}
 
 	@Override
 	public void handleContent(String content) {
 		if (inShow) {
-			showParser.handleContent(this.getStackTail(2), content);
+			showParser.handleContent(getStackTail(2), content);
+		}
+	}
+	
+	@Override
+	public void handleTagEnd() {
+		if (inShow && stackEquals("data","series")) {
+			inShow = false;
 		}
 	}
 
-	@Override
-	public void handleTagEnd() {
-		if (inShow && stackEquals(RESULTS,SHOW)) {
-			inShow = false;
-		}
+	public Sh getResult() {
+		return results.size() > 0? results.get(0) : null;
 	}
 
 	public List<Sh> getResults() {
 		return results;
 	}
+
+	
+
 }

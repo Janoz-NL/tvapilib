@@ -8,7 +8,7 @@
  * Contributors:
  *     Gijs de Vries aka Janoz - initial API and implementation
  ******************************************************************************/
-package com.janoz.tvapilib.thetvdb.impl.parsers;
+package com.janoz.tvapilib.thetvdb.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,7 +18,6 @@ import java.util.Map;
 import org.xml.sax.Attributes;
 
 import com.janoz.tvapilib.support.AbstractSaxParser;
-import com.janoz.tvapilib.thetvdb.impl.support.MirrorType;
 
 public class MirrorParser extends AbstractSaxParser{
 

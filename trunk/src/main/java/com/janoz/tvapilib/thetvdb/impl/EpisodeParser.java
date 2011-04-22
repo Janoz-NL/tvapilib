@@ -8,7 +8,7 @@
  * Contributors:
  *     Gijs de Vries aka Janoz - initial API and implementation
  ******************************************************************************/
-package com.janoz.tvapilib.thetvdb.impl.parsers;
+package com.janoz.tvapilib.thetvdb.impl;
 
 
 import java.sql.Date;
@@ -24,7 +24,6 @@ import com.janoz.tvapilib.model.IEpisode;
 import com.janoz.tvapilib.model.ISeason;
 import com.janoz.tvapilib.model.IShow;
 import com.janoz.tvapilib.support.TvApiException;
-import com.janoz.tvapilib.thetvdb.impl.support.UrlSupplier;
 
 public class EpisodeParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>, Ep extends IEpisode<Sh,Se,Ep>> {
 	

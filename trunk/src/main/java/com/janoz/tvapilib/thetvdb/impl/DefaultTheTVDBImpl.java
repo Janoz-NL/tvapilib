@@ -14,7 +14,6 @@ import com.janoz.tvapilib.model.impl.DefaultModelFactory;
 import com.janoz.tvapilib.model.impl.Episode;
 import com.janoz.tvapilib.model.impl.Season;
 import com.janoz.tvapilib.model.impl.Show;
-import com.janoz.tvapilib.thetvdb.impl.support.UrlSupplier;
 
 public class DefaultTheTVDBImpl extends TheTVDBImpl<Show, Season, Episode> {
 

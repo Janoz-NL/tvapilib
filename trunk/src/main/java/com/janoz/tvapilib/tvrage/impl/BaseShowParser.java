@@ -8,7 +8,7 @@
  * Contributors:
  *     Gijs de Vries aka Janoz - initial API and implementation
  ******************************************************************************/
-package com.janoz.tvapilib.tvrage.impl.parser;
+package com.janoz.tvapilib.tvrage.impl;
 
 import org.xml.sax.Attributes;
 
