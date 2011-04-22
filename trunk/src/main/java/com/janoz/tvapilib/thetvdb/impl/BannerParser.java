@@ -75,11 +75,6 @@ public class BannerParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,E
 		if (language==null || "en".equals(language)) {
 			//Only English for now
 			switch (fanart.getType()) {
-			case BANNER_BLANK:
-			case BANNER_GRAPHICAL:
-			case BANNER_TEXT:
-				show.addBanner(fanart);
-				break;
 			case FANART:
 				show.addFanart(fanart);
 				break;
@@ -87,21 +82,29 @@ public class BannerParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,E
 				show.addPoster(fanart);
 				break;
 			case SEASON_BANNER:
-				if (season == null || season == 0) {
+				if (isAllSeason()) {
 					show.addAllSeasonBanner(fanart);
 				} else {
 					show.getSeason(season).addBanner(fanart);
 				}
 				break;
 			case SEASON_POSTER:
-				if (season == null || season == 0) {
+				if (isAllSeason()) {
 					show.addAllSeasonPoster(fanart);
 				} else {
 					show.getSeason(season).addPoster(fanart);
 				}
 				break;
+			default: //otherwise assume banner
+				show.addBanner(fanart);
+				break;
+
 			}
 		}
 	}
+
+	private boolean isAllSeason() {
+	    return season == null || season == 0;
+    }
 
 }
