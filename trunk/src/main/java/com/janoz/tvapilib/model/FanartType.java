@@ -21,8 +21,8 @@ public enum FanartType {
 	LOGO  ("notATvDbType", "notATvDbType"),
 	UNKNOWN (null,null);
 	
-	private String bannerType1;
-	private String bannerType2;
+	private final String bannerType1;
+	private final String bannerType2;
 	
 	FanartType(String bannerType1, String bannerType2) {
 		this.bannerType1 = bannerType1;
