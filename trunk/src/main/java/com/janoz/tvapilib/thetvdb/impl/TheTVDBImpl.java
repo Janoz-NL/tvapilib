@@ -22,6 +22,7 @@ import com.janoz.tvapilib.thetvdb.impl.parsers.BannersParser;
 import com.janoz.tvapilib.thetvdb.impl.parsers.BaseEpisodeParser;
 import com.janoz.tvapilib.thetvdb.impl.parsers.BaseShowParser;
 import com.janoz.tvapilib.thetvdb.impl.parsers.FullShowParser;
+import com.janoz.tvapilib.thetvdb.impl.support.UrlSupplier;
 
 /**
  * @author Gijs de Vries aka Janoz

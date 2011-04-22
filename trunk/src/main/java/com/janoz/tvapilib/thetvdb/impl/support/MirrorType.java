@@ -8,7 +8,7 @@
  * Contributors:
  *     Gijs de Vries aka Janoz - initial API and implementation
  ******************************************************************************/
-package com.janoz.tvapilib.thetvdb.impl;
+package com.janoz.tvapilib.thetvdb.impl.support;
 
 public enum MirrorType {
 	XML(1), BANNER(2), ZIP(4);

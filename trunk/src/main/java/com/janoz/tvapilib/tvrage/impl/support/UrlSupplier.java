@@ -8,7 +8,7 @@
  * Contributors:
  *     Gijs de Vries aka Janoz - initial API and implementation
  ******************************************************************************/
-package com.janoz.tvapilib.tvrage.impl;
+package com.janoz.tvapilib.tvrage.impl.support;
 
 public class UrlSupplier {
 
