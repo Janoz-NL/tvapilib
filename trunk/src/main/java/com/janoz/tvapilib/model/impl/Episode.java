@@ -20,11 +20,12 @@ import com.janoz.tvapilib.model.IEpisode;
  */
 public class Episode implements Comparable<Episode>, IEpisode<Show,Season,Episode> {
 
-	private int theTvDbId;
+	private Integer theTvDbId;
 	private Season season = null;
 	private int episode;
 	private String title;
 	private Date aired = null;
+	private String tvRageUrl;
 	private String description;
 	private String thumbUrl;
 
@@ -71,6 +72,16 @@ public class Episode implements Comparable<Episode>, IEpisode<Show,Season,Episod
 	@Override
 	public void setAired(Date aired) {
 		this.aired = (aired == null) ? null : (Date)aired.clone();
+	}
+
+	
+	public String getTvRageUrl() {
+		return tvRageUrl;
+	}
+
+	@Override
+	public void setTvRageUrl(String tvRageUrl) {
+		this.tvRageUrl = tvRageUrl;
 	}
 
 	public String getDescription() {

@@ -13,7 +13,6 @@ package com.janoz.tvapilib.bierdopje.impl;
 import java.util.List;
 
 import com.janoz.tvapilib.bierdopje.Bierdopje;
-import com.janoz.tvapilib.bierdopje.impl.parser.ResponseParser;
 import com.janoz.tvapilib.model.IEpisode;
 import com.janoz.tvapilib.model.ISeason;
 import com.janoz.tvapilib.model.IShow;

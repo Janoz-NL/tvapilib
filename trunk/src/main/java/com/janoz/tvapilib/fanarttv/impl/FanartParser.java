@@ -8,7 +8,7 @@
  * Contributors:
  *     Gijs de Vries aka Janoz - initial API and implementation
  ******************************************************************************/
-package com.janoz.tvapilib.fanarttv.impl.parsers;
+package com.janoz.tvapilib.fanarttv.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,15 +19,25 @@ import com.janoz.tvapilib.model.Fanart;
 import com.janoz.tvapilib.model.FanartType;
 import com.janoz.tvapilib.support.AbstractSaxParser;
 
-public class LogoParser extends AbstractSaxParser {
+public class FanartParser extends AbstractSaxParser {
 
 	private List<Fanart> result = new ArrayList<Fanart>();
 
 	@Override
 	public void handleTagStart(Attributes attributes) {
-		if (stackEquals("logos","logo")) {
+		if (stackEquals("fanart","clearlogos","clearlogo")) {
 			Fanart fanart = new Fanart();
-			fanart.setType(FanartType.LOGO);
+			fanart.setType(FanartType.CLEARLOGO);
+			fanart.setUrl(attributes.getValue("", "url"));
+			result.add(fanart);
+		} else if (stackEquals("fanart","cleararts","clearart")) {
+			Fanart fanart = new Fanart();
+			fanart.setType(FanartType.CLEARART);
+			fanart.setUrl(attributes.getValue("", "url"));
+			result.add(fanart);
+		} else if (stackEquals("fanart","tvthumbs","tvthumb")) {
+			Fanart fanart = new Fanart();
+			fanart.setType(FanartType.THUMB);
 			fanart.setUrl(attributes.getValue("", "url"));
 			result.add(fanart);
 		}

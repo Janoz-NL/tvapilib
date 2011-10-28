@@ -11,14 +11,17 @@
 package com.janoz.tvapilib.model;
 
 public enum FanartType {
-	FANART ("fanart",null),
+	BACKDROP ("fanart",null),
 	POSTER ("poster", null),
 	BANNER_TEXT ("series", "text"), 
 	BANNER_GRAPHICAL ("series", "graphical"),
 	BANNER_BLANK ("series", "blank"),
 	SEASON_POSTER ("season", "season"),
 	SEASON_BANNER ("season", "seasonwide"),
-	LOGO  ("notATvDbType", "notATvDbType"),
+	CLEARLOGO  ("notATvDbType", "notATvDbType"),
+	CLEARART  ("notATvDbType", "notATvDbType"),
+	THUMB  ("notATvDbType", "notATvDbType"),
+	
 	UNKNOWN (null,null);
 	
 	private final String bannerType1;

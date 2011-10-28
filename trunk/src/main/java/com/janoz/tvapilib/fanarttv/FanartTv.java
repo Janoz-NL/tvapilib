@@ -35,11 +35,11 @@ public interface FanartTv<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,E
 	 * @param show The show to add the logo to.
 	 * 
 	 */
-	void addClearLogos(Sh show);
+	void addFanart(Sh show);
 	
 	/**
 	 * @param theTvDbId TheTVDB ID of the show 
 	 * @return A list of clearlogos.
 	 */
-	List<Fanart> getClearLogos(int theTvDbId);
+	List<Fanart> getFanart(int theTvDbId);
 }

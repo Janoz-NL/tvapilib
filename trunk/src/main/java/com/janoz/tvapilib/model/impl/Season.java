@@ -62,17 +62,19 @@ public class Season implements Comparable<Season>,ISeason<Show,Season,Episode> {
 	}
 	
 	@Override
-	public void addPoster(Fanart fanart){
-		posters.add(fanart);
+	public void addFanart(Fanart fanart){
+		switch (fanart.getType()) {
+		case SEASON_BANNER:
+			banners.add(fanart);
+			break;
+		case SEASON_POSTER:
+			posters.add(fanart);
+			break;
+		}
 	}
 	
 	public List<Fanart> getPosters() {
 		return Collections.unmodifiableList(posters);
-	}
-	
-	@Override
-	public void addBanner(Fanart fanart){
-		banners.add(fanart);
 	}
 	
 	public List<Fanart> getBanners() {

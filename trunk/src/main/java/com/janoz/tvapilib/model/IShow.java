@@ -14,19 +14,14 @@ public interface IShow<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>,
 
 	Se getSeason(int season);
 	
-	int getTvRageId();
-	int getTheTvDbId();
+	Integer getTvRageId();
+	Integer getTheTvDbId();
 
-	void setTvRageId(int tvRageId);
-	void setTheTvDbId(int showId);
+	void setTvRageId(Integer tvRageId);
+	void setTheTvDbId(Integer showId);
 	void setDescription(String description);
 	void setTitle(String title);
 
-	void addLogo(Fanart logo);
-	void addAllSeasonPoster(Fanart poster);
-	void addAllSeasonBanner(Fanart banner);
-	void addBanner(Fanart banner);
-	void addPoster(Fanart poster);
 	void addFanart(Fanart fanart);
 	
 }

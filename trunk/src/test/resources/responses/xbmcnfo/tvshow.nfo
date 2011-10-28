@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<tvshow>
+  <episodeguide>http://www.thetvdb.com/api/6E82FED600783400/series/153021/all/en.zip</episodeguide>
+  <title>The Walking Dead</title>
+  <year>
+  </year>
+  <rating>8.8</rating>
+  <plot>In the aftermath of a zombie apocalypse, a small group of survivors travel across the country in search of a new home away from the hordes. Rick Grimes, a police officer in the old world, leads the group. As their situation grows more and more grim, the group's desperation to survive pushes them to do almost anything to stay alive.</plot>
+  <runtime>
+  </runtime>
+  <mpaa>TV-MA</mpaa>
+  <genre>Drama</genre>
+  <premiered>
+  </premiered>
+  <studio>AMC</studio>
+  <id>153021</id>
+  <tvdbid>153021</tvdbid>
+  <sortorder>default</sortorder>
+  <language>
+  </language>
+  <episodeactorsource>tvdb</episodeactorsource>
+  <tvshowactorsource>tvdb</tvshowactorsource>
+  <locked>0</locked>
+  <actor>
+    <name>Andrew Lincoln</name>
+    <role>Rick Grimes</role>
+    <thumb>http://thetvdb.com/banners/actors/210851.jpg</thumb>
+  </actor>
+  <actor>
+    <name>Sarah Wayne Callies</name>
+    <role>Lori Grimes</role>
+    <thumb>http://thetvdb.com/banners/actors/187961.jpg</thumb>
+  </actor>
+  <actor>
+    <name>Jon Bernthal</name>
+    <role>Shane Walsh</role>
+    <thumb>http://thetvdb.com/banners/actors/187971.jpg</thumb>
+  </actor>
+  <actor>
+    <name>Steven Yeun</name>
+    <role>Glenn</role>
+    <thumb>http://thetvdb.com/banners/actors/206981.jpg</thumb>
+  </actor>
+  <actor>
+    <name>Emma Bell</name>
+    <role>Amy</role>
+    <thumb>http://thetvdb.com/banners/actors/206971.jpg</thumb>
+  </actor>
+  <actor>
+    <name>Chandler Riggs</name>
+    <role>Carl Grimes</role>
+    <thumb>http://thetvdb.com/banners/actors/206961.jpg</thumb>
+  </actor>
+  <actor>
+    <name>Laurie Holden</name>
+    <role>Andrea</role>
+    <thumb>http://thetvdb.com/banners/actors/187991.jpg</thumb>
+  </actor>
+  <actor>
+    <name>Jeffrey DeMunn</name>
+    <role>Dale</role>
+    <thumb>http://thetvdb.com/banners/actors/187981.jpg</thumb>
+  </actor>
+</tvshow>
