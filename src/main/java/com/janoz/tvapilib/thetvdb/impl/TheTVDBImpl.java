@@ -78,7 +78,7 @@ public class TheTVDBImpl<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep
 	@Override
 	public Ep getEpisode(int theTvDbId, int season, int episode) {
 		Sh show = modelFactory.newShow();
-		show.setTheTvDbId(Integer.valueOf(theTvDbId));
+		show.setTheTvDbId(theTvDbId);
 		return getEpisode(show, season, episode);
 	}
 

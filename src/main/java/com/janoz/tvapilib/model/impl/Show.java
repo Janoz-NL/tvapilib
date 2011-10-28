@@ -25,6 +25,7 @@ import com.janoz.tvapilib.model.IShow;
  */
 public class Show implements IShow<Show,Season,Episode> {
 
+	private String imdbId;
 	private Integer tvRageId;
 	private Integer theTvDbId;
 	private String title;
@@ -51,6 +52,16 @@ public class Show implements IShow<Show,Season,Episode> {
 	private List<Fanart> thumbs = new ArrayList<Fanart>();
 	private List<Fanart> allSeasonPosters = new ArrayList<Fanart>();
 	private List<Fanart> allSeasonBanners = new ArrayList<Fanart>();
+
+	@Override
+    public String getImdbId() {
+    	return imdbId;
+    }
+	
+	@Override
+    public void setImdbId(String imdbId) {
+    	this.imdbId = imdbId;
+    }
 
 	@Override
 	public Integer getTvRageId() {

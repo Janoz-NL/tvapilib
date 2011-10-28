@@ -16,9 +16,11 @@ public interface IShow<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>,
 	
 	Integer getTvRageId();
 	Integer getTheTvDbId();
+	String getImdbId();
 
 	void setTvRageId(Integer tvRageId);
 	void setTheTvDbId(Integer showId);
+	void setImdbId(String showId);
 	void setDescription(String description);
 	void setTitle(String title);
 

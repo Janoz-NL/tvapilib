@@ -60,7 +60,7 @@ public class TheTVDBTest {
 				"http://aDomain/ep_1_3.jpg");
 		replay(urlSupplierMock);
 		Show show = new Show();
-		show.setTheTvDbId(Integer.valueOf(164301));
+		show.setTheTvDbId(164301);
 		Episode episode = subject.getEpisode(show, 1, 3);
 		verify(urlSupplierMock);
 		assertEpisode164301_1_3(show, episode);
@@ -117,7 +117,7 @@ public class TheTVDBTest {
 		
 		replay(urlSupplierMock);
 		Show show = new Show();
-		show.setTheTvDbId(Integer.valueOf(164301));
+		show.setTheTvDbId(164301);
 		subject.fillFanart(show);
 		verify(urlSupplierMock);
 		
