@@ -38,19 +38,25 @@ public class FanartTvTest {
 	
 	@Test
 	public void addLogoTest() throws Exception {
-		expect(subject.getUrl(eq(164301))).andReturn(
-				this.getClass().getClassLoader().getResource("responses/fanart.tv/164301.xml").toString());
+		expect(subject.getUrl(eq(153021))).andReturn(
+				this.getClass().getClassLoader().getResource("responses/fanart.tv/153021.xml").toString());
 		replay(subject);
 		Show show = new Show();
-		show.setTheTvDbId(164301);
-		subject.addClearLogos(show);
+		show.setTheTvDbId(153021);
+		subject.addFanart(show);
 		verify(subject);
-		Fanart f = show.getLogos().get(0);
-		assertEquals("http://www.lockstockmods.net/logos/164301/clearart/Nikita-164301.png",f.getUrl());
-		assertEquals(FanartType.LOGO, f.getType());
-		f = show.getLogos().get(1);
-		assertEquals("http://www.lockstockmods.net/logos/164301/clearart/Nikita-164301-2.png",f.getUrl());
-		assertEquals(FanartType.LOGO, f.getType());
+		Fanart f = show.getClearlogos().get(0);
+		assertEquals("http://fanart.tv/fanart/153021/clearlogo/TheWalkingDead-153021.png",f.getUrl());
+		assertEquals(FanartType.CLEARLOGO, f.getType());
+		assertEquals(4, show.getClearlogos().size());
+		f = show.getCleararts().get(0);
+		assertEquals("http://fanart.tv/fanart/153021/clearart/T_153021 (2).png",f.getUrl());
+		assertEquals(FanartType.CLEARART, f.getType());
+		assertEquals(5, show.getCleararts().size());
+		f = show.getThumbs().get(0);
+		assertEquals("http://fanart.tv/fanart/153021/tvthumb/T_153021.jpg",f.getUrl());
+		assertEquals(FanartType.THUMB, f.getType());
+		assertEquals(4, show.getThumbs().size());
 	}
 
 	@Test
@@ -60,9 +66,11 @@ public class FanartTvTest {
 		replay(subject);
 		Show show = new Show();
 		show.setTheTvDbId(1);
-		subject.addClearLogos(show);
+		subject.addFanart(show);
 		verify(subject);
-		assertTrue("ShouldBeUntouched",show.getLogos().isEmpty());
+		assertTrue("ShouldBeUntouched",show.getClearlogos().isEmpty());
+		assertTrue("ShouldBeUntouched",show.getCleararts().isEmpty());
+		assertTrue("ShouldBeUntouched",show.getThumbs().isEmpty());
 	}
 
 }

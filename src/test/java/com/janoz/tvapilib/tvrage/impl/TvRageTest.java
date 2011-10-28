@@ -172,7 +172,7 @@ public class TvRageTest {
 	
 	private void assertBuffy(Show show) {
 		assertEquals("Buffy the Vampire Slayer", show.getTitle());
-		assertEquals(2930,show.getTvRageId());
+		assertEquals(Integer.valueOf(2930),show.getTvRageId());
 	}
 	
 	private void assertAllBuffyEpisodes(Show show) {
@@ -198,6 +198,7 @@ public class TvRageTest {
 		assertEquals(new GregorianCalendar(1997,Calendar.MARCH,10).getTime(), episode.getAired());
 		assertEquals(1,episode.getEpisode());
 		assertEquals(1,episode.getSeason().getSeason());
+		assertEquals("http://www.tvrage.com/Buffy_The_Vampire_Slayer/episodes/28077",episode.getTvRageUrl());
 		assertBuffy(episode.getSeason().getShow());
 	}
 	
@@ -206,6 +207,7 @@ public class TvRageTest {
 		assertEquals(new GregorianCalendar(1997,Calendar.JUNE,2).getTime(), episode.getAired());
 		assertEquals(12,episode.getEpisode());
 		assertEquals(1,episode.getSeason().getSeason());
+		assertEquals("http://www.tvrage.com/Buffy_The_Vampire_Slayer/episodes/28088",episode.getTvRageUrl());
 		assertBuffy(episode.getSeason().getShow());
 	}
 	
@@ -214,6 +216,7 @@ public class TvRageTest {
 		assertEquals(new GregorianCalendar(1997,Calendar.OCTOBER,6).getTime(), episode.getAired());
 		assertEquals(4,episode.getEpisode());
 		assertEquals(2,episode.getSeason().getSeason());
+		assertEquals("http://www.tvrage.com/Buffy_The_Vampire_Slayer/episodes/28092",episode.getTvRageUrl());
 		assertBuffy(episode.getSeason().getShow());
 	}
 	
@@ -222,6 +225,7 @@ public class TvRageTest {
 		assertEquals(new GregorianCalendar(2003,Calendar.MAY,20).getTime(), episode.getAired());
 		assertEquals(22,episode.getEpisode());
 		assertEquals(7,episode.getSeason().getSeason());
+		assertEquals("http://www.tvrage.com/Buffy_The_Vampire_Slayer/episodes/28220",episode.getTvRageUrl());
 		assertBuffy(episode.getSeason().getShow());
 	}
 	

@@ -31,7 +31,7 @@ public class EpisodeParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,
 	private String title = null;
 	private String thumbUrl = null;
 	private Date airDate = null;
-
+	private String url = null;
 	
 	public void reset(Sh show) {
 		reset(show,null);
@@ -48,7 +48,7 @@ public class EpisodeParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,
 		this.title = null;
 		this.thumbUrl = null;
 		this.airDate = null;
-		
+		this.url = null;		
 	}
 	
 	public void handleContent(List<String> stack, String content){
@@ -59,6 +59,11 @@ public class EpisodeParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,
 				title = content;
 			} else if ("airdate".equals(stack.get(0))) {
 				airDate = parseDate(content);
+			} else if ("url".equals(stack.get(0))) {
+				url = content;
+			} else if ("link".equals(stack.get(0))) {
+				//since we're within episode the show link will not conflict
+				url = content;
 			} else if ("number".equals(stack.get(0))) {
 				episodeString = content;
 			} else if ("screencap".equals(stack.get(0))) {
@@ -84,6 +89,9 @@ public class EpisodeParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,
 		}
 		if (airDate != null) {
 			result.setAired(airDate);
+		}
+		if (url != null) {
+			result.setTvRageUrl(url);
 		}		
 		return result;
 	}

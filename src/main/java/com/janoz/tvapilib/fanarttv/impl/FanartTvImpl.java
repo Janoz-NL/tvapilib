@@ -13,7 +13,6 @@ package com.janoz.tvapilib.fanarttv.impl;
 import java.util.List;
 
 import com.janoz.tvapilib.fanarttv.FanartTv;
-import com.janoz.tvapilib.fanarttv.impl.parsers.LogoParser;
 import com.janoz.tvapilib.model.Fanart;
 import com.janoz.tvapilib.model.IEpisode;
 import com.janoz.tvapilib.model.ISeason;
@@ -31,15 +30,15 @@ import com.janoz.tvapilib.support.XmlParsingObject;
 public class FanartTvImpl<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>, Ep extends IEpisode<Sh,Se,Ep>> extends XmlParsingObject implements FanartTv<Sh,Se,Ep> {
 
 	@Override
-	public void addClearLogos(Sh show) {
-		for(Fanart logo:getClearLogos(show.getTheTvDbId())){
-			show.addLogo(logo);
+	public void addFanart(Sh show) {
+		for(Fanart fanart:getFanart(show.getTheTvDbId())){
+			show.addFanart(fanart);
 		}
 	}
 
 	@Override
-	public List<Fanart> getClearLogos(int theTvDbId) {
-		LogoParser parser = new LogoParser();
+	public List<Fanart> getFanart(int theTvDbId) {
+		FanartParser parser = new FanartParser();
 		parse(parser, openStream(getUrl(theTvDbId)));
 		return parser.getResult();
 	}
@@ -48,7 +47,7 @@ public class FanartTvImpl<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,E
 	 * Package accessible so it can be mocked for test purposes.
 	 */
 	String getUrl(int theTvDbId) {
-		return "http://fanart.tv/api/getart.php?type=clearlogo&id="+theTvDbId;
+		return "http://fanart.tv/api/fanart.php?id="+theTvDbId;
 	}
 
 }

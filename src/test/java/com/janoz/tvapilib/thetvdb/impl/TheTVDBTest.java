@@ -121,7 +121,7 @@ public class TheTVDBTest {
 		subject.fillFanart(show);
 		verify(urlSupplierMock);
 		
-		assertContains(show.getFanarts(),587461,535361,495351,495371);
+		assertContains(show.getBackdrops(),587461,535361,495351,495371);
 		assertContains(show.getPosters(),541941,541951,495381);
 		assertContains(show.getBanners(),550631,541931,598121,550801,490141,482301,585071);
 		assertEquals(0,show.getAllSeasonBanners().size());
@@ -154,7 +154,7 @@ public class TheTVDBTest {
 	
 	private void assertEpisode164301_1_3(Show show, Episode episode) {
 		if (show == null) {
-			assertEquals(164301,episode.getSeason().getShow().getTheTvDbId());
+			assertEquals(Integer.valueOf(164301),episode.getSeason().getShow().getTheTvDbId());
 		} else {
 			assertSame(show,episode.getSeason().getShow());
 		}
@@ -168,7 +168,7 @@ public class TheTVDBTest {
 	}
 	
 	private void assertShow164301(Show show) {
-		assertEquals(164301,show.getTheTvDbId());
+		assertEquals(Integer.valueOf(164301),show.getTheTvDbId());
 		assertEquals("Nikita",show.getTitle());
 		assertEquals("A very long description about Nikita and division.",show.getDescription());
 	}

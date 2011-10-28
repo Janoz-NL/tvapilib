@@ -8,7 +8,7 @@
  * Contributors:
  *     Gijs de Vries aka Janoz - initial API and implementation
  ******************************************************************************/
-package com.janoz.tvapilib.bierdopje.impl.parser;
+package com.janoz.tvapilib.bierdopje.impl;
 
 import java.util.List;
 

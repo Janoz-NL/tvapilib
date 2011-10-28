@@ -74,35 +74,14 @@ public class BannerParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,E
 		fanart.setType(FanartType.getTvDbType(bannerType1, bannerType2));
 		if (language==null || "en".equals(language)) {
 			//Only English for now
-			switch (fanart.getType()) {
-			case FANART:
+			if (isAllSeason()) {
 				show.addFanart(fanart);
-				break;
-			case POSTER:
-				show.addPoster(fanart);
-				break;
-			case SEASON_BANNER:
-				if (isAllSeason()) {
-					show.addAllSeasonBanner(fanart);
-				} else {
-					show.getSeason(season).addBanner(fanart);
-				}
-				break;
-			case SEASON_POSTER:
-				if (isAllSeason()) {
-					show.addAllSeasonPoster(fanart);
-				} else {
-					show.getSeason(season).addPoster(fanart);
-				}
-				break;
-			default: //otherwise assume banner
-				show.addBanner(fanart);
-				break;
-
+			} else {
+				show.getSeason(season).addFanart(fanart);
 			}
 		}
 	}
-
+	
 	private boolean isAllSeason() {
 	    return season == null || season == 0;
     }

@@ -25,8 +25,8 @@ import com.janoz.tvapilib.model.IShow;
  */
 public class Show implements IShow<Show,Season,Episode> {
 
-	private int tvRageId;
-	private int theTvDbId;
+	private Integer tvRageId;
+	private Integer theTvDbId;
 	private String title;
 	private String description;;
 	//private List<Actor> actors;
@@ -43,30 +43,32 @@ public class Show implements IShow<Show,Season,Episode> {
 	private SortedSet<Season> seasons = new TreeSet<Season>();
 	
 	
-	private List<Fanart> fanarts = new ArrayList<Fanart>();
+	private List<Fanart> backdrops = new ArrayList<Fanart>();
 	private List<Fanart> posters = new ArrayList<Fanart>();
 	private List<Fanart> banners = new ArrayList<Fanart>();
-	private List<Fanart> logos = new ArrayList<Fanart>();
+	private List<Fanart> clearlogos = new ArrayList<Fanart>();
+	private List<Fanart> cleararts = new ArrayList<Fanart>();
+	private List<Fanart> thumbs = new ArrayList<Fanart>();
 	private List<Fanart> allSeasonPosters = new ArrayList<Fanart>();
 	private List<Fanart> allSeasonBanners = new ArrayList<Fanart>();
 
 	@Override
-	public int getTvRageId() {
+	public Integer getTvRageId() {
 		return tvRageId;
 	}
 
 	@Override
-	public void setTvRageId(int tvRageId) {
+	public void setTvRageId(Integer tvRageId) {
 		this.tvRageId = tvRageId;
 	}
 
 	@Override
-	public int getTheTvDbId() {
+	public Integer getTheTvDbId() {
 		return theTvDbId;
 	}
 
 	@Override
-	public void setTheTvDbId(int showId) {
+	public void setTheTvDbId(Integer showId) {
 		this.theTvDbId = showId;
 	}
 
@@ -132,60 +134,68 @@ public class Show implements IShow<Show,Season,Episode> {
 		return Collections.unmodifiableSortedSet(seasons);
 	}
 
-	public List<Fanart> getFanarts() {
-		return Collections.unmodifiableList(fanarts);
-	}
-
 	@Override
 	public void addFanart(Fanart fanart) {
-		this.fanarts.add(fanart);
+		switch (fanart.getType()) {
+		case BACKDROP:
+			backdrops.add(fanart);
+			break;
+		case POSTER:
+			posters.add(fanart);
+			break;
+		case BANNER_BLANK:
+		case BANNER_GRAPHICAL:
+		case BANNER_TEXT:
+			banners.add(fanart);
+			break;
+		case CLEARART:
+			cleararts.add(fanart);
+			break;
+		case CLEARLOGO:
+			clearlogos.add(fanart);
+			break;
+		case THUMB:
+			thumbs.add(fanart);
+			break;
+		case SEASON_POSTER:
+			allSeasonPosters.add(fanart);
+			break;
+		case SEASON_BANNER:
+			allSeasonBanners.add(fanart);
+			break;
+		case UNKNOWN:
+			//do nothing
+		}
+	}
+	public List<Fanart> getBackdrops() {
+		return Collections.unmodifiableList(backdrops);
+	}
+
+	public List<Fanart> getClearlogos() {
+		return Collections.unmodifiableList(clearlogos);
+	}
+
+	public List<Fanart> getCleararts() {
+		return Collections.unmodifiableList(cleararts);
+	}
+
+	public List<Fanart> getThumbs() {
+		return Collections.unmodifiableList(thumbs);
 	}
 
 	public List<Fanart> getPosters() {
 		return Collections.unmodifiableList(posters);
 	}
 
-	@Override
-	public void addPoster(Fanart poster) {
-		this.posters.add(poster);
-	}
-
 	public List<Fanart> getBanners() {
 		return Collections.unmodifiableList(banners);
-	}
-
-	@Override
-	public void addBanner(Fanart banner) {
-		this.banners.add(banner);
-	}
-
-	public List<Fanart> getLogos() {
-		return Collections.unmodifiableList(logos);
-	}
-
-	@Override
-	public void addLogo(Fanart logo) {
-		this.logos.add(logo);
 	}
 
 	public List<Fanart> getAllSeasonPosters() {
 		return Collections.unmodifiableList(allSeasonPosters);
 	}
 
-	@Override
-	public void addAllSeasonPoster(Fanart allSeasonPoster) {
-		this.allSeasonPosters.add(allSeasonPoster);
-	}
-
 	public List<Fanart> getAllSeasonBanners() {
 		return Collections.unmodifiableList(allSeasonBanners);
 	}
-
-	@Override
-	public void addAllSeasonBanner(Fanart allSeasonBanner) {
-		this.allSeasonBanners.add(allSeasonBanner);
-	}
-	
-	
-	
 }
