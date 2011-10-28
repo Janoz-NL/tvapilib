@@ -23,26 +23,26 @@ public abstract class AbstractSaxParser extends DefaultHandler {
 	private StringBuilder collectedContent = new StringBuilder();
 
 	@Override
-	public void startDocument() throws SAXException {
+	public final void startDocument() throws SAXException {
 		stack = new LinkedList<String>();
 	}
 
 	@Override
-	public void startElement(String uri, String localName, String qName,
+	public final void startElement(String uri, String localName, String qName,
 			Attributes attributes) throws SAXException {
 		stack.add(localName.toLowerCase());
 		handleTagStart(attributes);
 	}
 	
 	@Override
-	public void characters(char[] ch, int start, int length)
+	public final void characters(char[] ch, int start, int length)
 			throws SAXException {
 		collectedContent.append(ch,start,length);
 	}
 
 
 	@Override
-	public void endElement(String uri, String localName, String qName)
+	public final void endElement(String uri, String localName, String qName)
 			throws SAXException {
 		String content = collectedContent.toString().trim(); 
 		if (content.length() > 0) {
@@ -56,7 +56,7 @@ public abstract class AbstractSaxParser extends DefaultHandler {
 
 	}
 	@Override
-	public void endDocument() throws SAXException {
+	public final void endDocument() throws SAXException {
 		if (!stack.isEmpty()) {
 			throw new SAXException("Unexpected end of document.");
 		}
@@ -68,7 +68,7 @@ public abstract class AbstractSaxParser extends DefaultHandler {
 	public abstract void handleContent(String content);
 	public abstract void handleTagEnd();
 	
-	protected boolean stackEquals(String... nodeNames) {
+	protected final boolean stackEquals(String... nodeNames) {
 		if (nodeNames.length != stack.size()) {
 			return false;
 		}
@@ -82,7 +82,7 @@ public abstract class AbstractSaxParser extends DefaultHandler {
 		return true;
 	}
 	
-	protected boolean stackStartsWith(String... nodeNames) {
+	protected final boolean stackStartsWith(String... nodeNames) {
 		if (nodeNames.length > stack.size()) {
 			return false;
 		}
@@ -99,15 +99,15 @@ public abstract class AbstractSaxParser extends DefaultHandler {
 		return true;
 	}
 
-	protected List<String> getStackTail(int offset) {
+	protected final List<String> getStackTail(int offset) {
 		return stack.subList(offset, stack.size());
 	}
 	
-	protected String getNodeName() {
+	protected final String getNodeName() {
 		return stack.getLast();
 	}
 	
-	protected boolean isStackSize(int i) {
+	protected final boolean isStackSize(int i) {
 		return i == stack.size();
 	}
 }
