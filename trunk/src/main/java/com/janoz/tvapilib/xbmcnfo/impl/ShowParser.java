@@ -22,7 +22,6 @@ public class ShowParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>
 
 	private static final String ROOTNODE = "tvshow";
 	private final Sh show;
-	private String imdbId = null;
 	private Integer id = null;
 	
 	public ShowParser(ModelFactory<Sh,Se,Ep> modelFactory) {
@@ -46,6 +45,8 @@ public class ShowParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>
 			}
 		} else if (stackEquals(ROOTNODE,"title")) {
 			show.setTitle(content);
+		} else if (stackEquals(ROOTNODE,"plot")) {
+			show.setDescription(content);
 		}
 	}
 
