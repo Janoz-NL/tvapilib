@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2011 Gijs de Vries aka Janoz.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *     Gijs de Vries aka Janoz - initial API and implementation
+ ******************************************************************************/
 package com.janoz.tvapilib.xbmcnfo.impl;
 
 import org.xml.sax.Attributes;
@@ -30,7 +40,7 @@ public class ShowParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>
 			show.setTheTvDbId(Integer.valueOf(content));
 		} else if (stackEquals(ROOTNODE,"id")) {
 			if (content.startsWith("tt")) {
-				imdbId = content;
+				show.setImdbId(content);
 			} else {
 				id = Integer.valueOf(content);
 			}
