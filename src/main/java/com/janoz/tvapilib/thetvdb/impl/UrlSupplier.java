@@ -10,10 +10,13 @@
  ******************************************************************************/
 package com.janoz.tvapilib.thetvdb.impl;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import com.janoz.tvapilib.support.TvApiException;
 import com.janoz.tvapilib.support.XmlParsingObject;
 
 
@@ -23,6 +26,7 @@ import com.janoz.tvapilib.support.XmlParsingObject;
  */
 public class UrlSupplier extends XmlParsingObject {
 
+	private static String UTF8 = "UTF8";
 	private static Random rand = new Random();
 
 	private String apiKey;
@@ -42,7 +46,11 @@ public class UrlSupplier extends XmlParsingObject {
 	 * @return Search URL (this method does not require the apikey).
 	 */
 	public String getShowSearchUrl(String name) {
-		return  "http://www.thetvdb.com/api/GetSeries.php?seriesname="+ name;
+		try {
+			return  "http://www.thetvdb.com/api/GetSeries.php?seriesname="+ URLEncoder.encode(name,UTF8);
+		} catch (UnsupportedEncodingException e) {
+			throw new TvApiException("UTF-8 not supported (??)",e);
+		}
 	}
 	/**
 	 * @param theTvDbId TheTVDB show ID.
