@@ -10,8 +10,14 @@
  ******************************************************************************/
 package com.janoz.tvapilib.tvrage.impl;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
+import com.janoz.tvapilib.support.TvApiException;
+
 public class UrlSupplier {
 
+	private static String UTF8 = "UTF8";
 	private static final String SHOW_SEARCH = "search.php";
 	private static final String SHOW_INFO = "showinfo.php";
 	private static final String EPISODE_LIST = "episode_list.php";
@@ -25,8 +31,12 @@ public class UrlSupplier {
 	
 	public String getShowSearchUrl(String name){
 		boolean usePublic = apiKey == null;
-		return getServicesUrlBuilder(SHOW_SEARCH, usePublic)
-				.append("show=").append(name).toString();
+		try {
+			return getServicesUrlBuilder(SHOW_SEARCH, usePublic)
+					.append("show=").append(URLEncoder.encode(name,UTF8)).toString();
+		} catch (UnsupportedEncodingException e) {
+			throw new TvApiException("UTF-8 not supported (??)",e);
+		}
 	}
 
 	public String getShowInfoUrl(int tvRageId){

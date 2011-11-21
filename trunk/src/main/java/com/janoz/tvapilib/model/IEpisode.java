@@ -20,9 +20,12 @@ public interface IEpisode<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,E
 
 	void setTheTvDbId(int theTvDbId);
 	void setTitle(String title);
+	String getTitle();
 	void setAired(Date aired);
+	Date getAired();
 	void setTvRageUrl(String url);
 	void setDescription(String description);
+	String getDescription();
 
 	void setThumbUrl(String thumbUrl);
 

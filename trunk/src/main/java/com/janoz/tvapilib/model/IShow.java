@@ -15,15 +15,21 @@ public interface IShow<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>,
 	Se getSeason(int season);
 	
 	Integer getTvRageId();
-	Integer getTheTvDbId();
-	String getImdbId();
-
 	void setTvRageId(Integer tvRageId);
+	Integer getTheTvDbId();
 	void setTheTvDbId(Integer showId);
+	String getImdbId();
 	void setImdbId(String showId);
-	void setDescription(String description);
+	String getTitle();
 	void setTitle(String title);
+	String getDescription();	
+	void setDescription(String description);
+	String getNetwork();
+	void setNetwork(String network);
+	String getContentRating();
+	void setContentRating(String contentRating);
 
 	void addFanart(Fanart fanart);
-	
+
+
 }

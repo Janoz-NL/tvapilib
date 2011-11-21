@@ -28,8 +28,12 @@ public class ShowParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>
 		if (stack.size()==1) {
 			if ("id".equals(stack.get(0))) {
 				show.setTheTvDbId(Integer.valueOf(content));
-//			} else if ("seriesid".equals(stack.get(0))) {
-//				show.setTheTvDbId(Integer.valueOf(content));
+			} else if ("imdb_id".equals(stack.get(0))) {
+				show.setImdbId(content);
+			} else if ("network".equals(stack.get(0))) {
+				show.setNetwork(content);
+			} else if ("contentrating".equals(stack.get(0))) {
+				show.setContentRating(content);
 			} else if ("seriesname".equals(stack.get(0))) {
 				show.setTitle(content);
 			} else if ("overview".equals(stack.get(0))) {

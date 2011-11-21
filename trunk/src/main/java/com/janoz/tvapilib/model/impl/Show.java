@@ -32,12 +32,11 @@ public class Show implements IShow<Show,Season,Episode> {
 	private String description;;
 	//private List<Actor> actors;
 	//private Set<Genre> genres
-	//private String imdbId;
 	//private Language language
 	//private Double rating;
 	//private int ratingCount;
-	//private String network;
-	//private ContentRating contentRating
+	private String network;
+	private String contentRating;
 	//private ShowStatus status;
 	//private int runtime;
 	
@@ -83,6 +82,7 @@ public class Show implements IShow<Show,Season,Episode> {
 		this.theTvDbId = showId;
 	}
 
+	@Override
 	public String getTitle() {
 		return title;
 	}
@@ -91,7 +91,8 @@ public class Show implements IShow<Show,Season,Episode> {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
+	
+	@Override
 	public String getDescription() {
 		return description;
 	}
@@ -99,6 +100,26 @@ public class Show implements IShow<Show,Season,Episode> {
 	@Override
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	@Override
+	public String getNetwork() {
+		return network;
+	}
+
+	@Override
+	public void setNetwork(String network) {
+		this.network = network;
+	}
+	
+	@Override
+	public String getContentRating() {
+		return contentRating;
+	}
+
+	@Override
+	public void setContentRating(String contentRating) {
+		this.contentRating = contentRating;
 	}
 
 	@Override

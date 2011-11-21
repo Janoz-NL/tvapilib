@@ -58,8 +58,14 @@ public class Season implements Comparable<Season>,ISeason<Show,Season,Episode> {
 		} else {
 			episodes.add(newEp);
 			return newEp;
-		}
+		} 
 	}
+	
+	public SortedSet<Episode> getEpisodes() {
+		return Collections.unmodifiableSortedSet(episodes);
+	}
+
+	
 	
 	@Override
 	public void addFanart(Fanart fanart){

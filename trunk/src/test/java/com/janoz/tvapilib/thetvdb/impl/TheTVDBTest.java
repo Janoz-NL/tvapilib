@@ -49,6 +49,7 @@ public class TheTVDBTest {
 		List<Show> shows = subject.searchShows("nikita");
 		verify(urlSupplierMock);
 		assertShow164301(shows.get(0));
+		
 		assertEquals("La Femme Nikita",shows.get(1).getTitle());
 		assertEquals(2,shows.size());
 	}
@@ -86,6 +87,10 @@ public class TheTVDBTest {
 		Show show = subject.getShow(164301);
 		verify(urlSupplierMock);
 		assertShow164301(show);
+		assertShow164301Extra(show);
+
+		
+		
 	}
 	
 	@Test
@@ -104,6 +109,8 @@ public class TheTVDBTest {
 		Show show = subject.getShowWithEpisodes(164301);
 		verify(urlSupplierMock);
 		assertShow164301(show);
+		assertShow164301Extra(show);
+
 		assertEpisode164301_1_3(show, show.getSeason(1).getEpisode(3));
 		assertTrue(show.getSeason(1).hasEpisode(9));
 		assertFalse(show.getSeason(1).hasEpisode(10));
@@ -169,8 +176,12 @@ public class TheTVDBTest {
 	
 	private void assertShow164301(Show show) {
 		assertEquals(Integer.valueOf(164301),show.getTheTvDbId());
+		assertEquals("tt1592154", show.getImdbId());
 		assertEquals("Nikita",show.getTitle());
 		assertEquals("A very long description about Nikita and division.",show.getDescription());
+	}
+	private void assertShow164301Extra(Show show) {
+		assertEquals("The CW", show.getNetwork());
 	}
 	
 	

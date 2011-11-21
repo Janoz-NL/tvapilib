@@ -10,12 +10,15 @@
  ******************************************************************************/
 package com.janoz.tvapilib.model;
 
+import java.util.SortedSet;
+
+import com.janoz.tvapilib.model.impl.Episode;
+
 public interface ISeason<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>, Ep extends IEpisode<Sh,Se,Ep>> {
 
-	Ep getEpisode(int episode);
 	Sh getShow();
-	
 	int getSeason();
+	Ep getEpisode(int episode);
 	
 	//Art methods
 	void addFanart(Fanart fanart);

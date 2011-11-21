@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Data>
 <Series>
-<seriesid>164301</seriesid>
+<seriesid>164301000</seriesid>
 <language>en</language>
 <SeriesName>Nikita</SeriesName>
 <banner>graphical/164301-g6.jpg</banner>
@@ -11,7 +11,7 @@
 <id>164301</id>
 </Series>
 <Series>
-<seriesid>78527</seriesid>
+<seriesid>78527000</seriesid>
 <language>en</language>
 <SeriesName>La Femme Nikita</SeriesName>
 <banner>graphical/78527-g2.jpg</banner>

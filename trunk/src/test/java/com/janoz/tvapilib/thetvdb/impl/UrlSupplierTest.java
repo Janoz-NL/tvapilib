@@ -86,6 +86,12 @@ public class UrlSupplierTest {
 		assertEquals("http://www.thetvdb.com/api/GetSeries.php?seriesname=SomeShowName",subject.getShowSearchUrl("SomeShowName"));
 	}
 	
+
+	@Test
+	public void testShowSearchUrlEscaping() throws Exception{
+		assertEquals("http://www.thetvdb.com/api/GetSeries.php?seriesname=Some+Show+Name%21+%26+with+50%25",subject.getShowSearchUrl("Some Show Name! & with 50%"));
+	}
+
 	@Test
 	public void testGetEpisodeUrl() throws Exception{
 		initWithMirrorConfig("responses/thetvdb/singlemirrors.xml");
