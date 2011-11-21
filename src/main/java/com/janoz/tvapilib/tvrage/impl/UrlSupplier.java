@@ -17,7 +17,7 @@ import com.janoz.tvapilib.support.TvApiException;
 
 public class UrlSupplier {
 
-	private static String UTF8 = "UTF8";
+	private static final String UTF8 = "UTF8";
 	private static final String SHOW_SEARCH = "search.php";
 	private static final String SHOW_INFO = "showinfo.php";
 	private static final String EPISODE_LIST = "episode_list.php";

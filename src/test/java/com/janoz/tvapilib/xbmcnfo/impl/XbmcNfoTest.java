@@ -16,7 +16,6 @@ import java.io.File;
 import java.net.URISyntaxException;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.janoz.tvapilib.model.impl.Show;

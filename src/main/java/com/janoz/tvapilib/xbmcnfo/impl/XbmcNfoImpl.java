@@ -44,7 +44,9 @@ public class XbmcNfoImpl<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep
 
 	@Override
     public void saveShow(Sh show, File nfoFile) throws IOException {
-		nfoFile.createNewFile();
+		if (!nfoFile.createNewFile()) {
+			throw new IOException("Unable to create file '" + nfoFile + "'.");
+		}
 		OutputStreamWriter osw = createUtf8FileWriter(nfoFile);
 		osw.write("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<tvshow>\n");
 		writeTag(osw,"id",show.getTheTvDbId());
@@ -59,7 +61,9 @@ public class XbmcNfoImpl<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep
 	
 	@Override
     public void saveEpisode(Ep episode, File nfoFile) throws IOException {
-		nfoFile.createNewFile();
+		if (!nfoFile.createNewFile()) {
+			throw new IOException("Unable to create file '" + nfoFile + "'.");
+		}
 		OutputStreamWriter osw = createUtf8FileWriter(nfoFile);
 /*
  <episodedetails>
@@ -87,28 +91,31 @@ public class XbmcNfoImpl<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep
 	}
 	
 	private String encode(String input) {
-		return input.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll("<", "&gt;");
+		return input.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 	}
 	
 	private void writeTag(Writer w, String tag, Date value) throws IOException {
-		if (value == null) return;
-		writeTag(w, tag,new SimpleDateFormat("yyyy-MM-dd").format(value));
+		if (value == null) {
+			writeTag(w, tag,new SimpleDateFormat("yyyy-MM-dd").format(value));
+		}
 	}
 
 	private void writeTag(Writer w, String tag, Integer value) throws IOException {
-		if (value == null) return;
-		writeTag(w, tag,value.toString());
+		if (value != null) {
+			writeTag(w, tag,value.toString());
+		}
 	}
 	
 	private void writeTag(Writer w, String tag, String value) throws IOException {
-		if (value == null) return;
-		w.write("\t<");
-		w.write(tag);
-		w.write(">");
-		w.write(encode(value.toString()));
-		w.write("</");
-		w.write(tag);
-		w.write(">\n");
+		if (value != null) {
+			w.write("\t<");
+			w.write(tag);
+			w.write(">");
+			w.write(encode(value));
+			w.write("</");
+			w.write(tag);
+			w.write(">\n");
+		}
 	}
 	
 	@Override
