@@ -26,7 +26,7 @@ import com.janoz.tvapilib.support.XmlParsingObject;
  */
 public class UrlSupplier extends XmlParsingObject {
 
-	private static String UTF8 = "UTF8";
+	private static final String UTF8 = "UTF8";
 	private static Random rand = new Random();
 
 	private String apiKey;

@@ -56,6 +56,7 @@ public class Episode implements Comparable<Episode>, IEpisode<Show,Season,Episod
 		this.season = season;
 	}
 
+	@Override
 	public String getTitle() {
 		return title;
 	}
@@ -65,6 +66,7 @@ public class Episode implements Comparable<Episode>, IEpisode<Show,Season,Episod
 		this.title = title;
 	}
 
+	@Override
 	public Date getAired() {
 		return (aired == null) ? null : (Date)aired.clone();
 	}
@@ -84,6 +86,7 @@ public class Episode implements Comparable<Episode>, IEpisode<Show,Season,Episod
 		this.tvRageUrl = tvRageUrl;
 	}
 
+	@Override
 	public String getDescription() {
 		return description;
 	}
