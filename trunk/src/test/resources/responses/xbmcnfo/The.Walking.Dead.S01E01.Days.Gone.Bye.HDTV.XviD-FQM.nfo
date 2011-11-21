@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<episodedetails>
+  <fileinfo>
+    <streamdetails>
+      <video>
+        <width>624</width>
+        <height>352</height>
+        <aspect>1.773</aspect>
+        <codec>xvid</codec>
+        <duration>66</duration>
+        <scantype>Progressive</scantype>
+      </video>
+    </streamdetails>
+  </fileinfo>
+  <title>Days Gone Bye</title>
+  <season>1</season>
+  <episode>1</episode>
+  <aired>2010-10-31</aired>
+  <plot>Rick searches for his family after emerging from a coma into a world terrorized by the walking dead. Morgan and Duane, whom he meets along the way, help teach Rick the new rules for survival.</plot>
+  <director>Frank Darabont</director>
+  <credits>Frank Darabont (Writer)</credits>
+  <rating>8.2</rating>
+  <actor>
+    <name>Andrew Lincoln</name>
+    <role>Rick Grimes</role>
+    <thumb>http://thetvdb.com/banners/actors/210851.jpg</thumb>
+  </actor>
+  <actor>
+    <name>Sarah Wayne Callies</name>
+    <role>Lori Grimes</role>
+    <thumb>http://thetvdb.com/banners/actors/187961.jpg</thumb>
+  </actor>
+  <actor>
+    <name>Jon Bernthal</name>
+    <role>Shane Walsh</role>
+    <thumb>http://thetvdb.com/banners/actors/187971.jpg</thumb>
+  </actor>
+  <actor>
+    <name>Steven Yeun</name>
+    <role>Glenn</role>
+    <thumb>http://thetvdb.com/banners/actors/206981.jpg</thumb>
+  </actor>
+  <actor>
+    <name>Emma Bell</name>
+    <role>Amy</role>
+    <thumb>http://thetvdb.com/banners/actors/206971.jpg</thumb>
+  </actor>
+  <actor>
+    <name>Chandler Riggs</name>
+    <role>Carl Grimes</role>
+    <thumb>http://thetvdb.com/banners/actors/206961.jpg</thumb>
+  </actor>
+  <actor>
+    <name>Laurie Holden</name>
+    <role>Andrea</role>
+    <thumb>http://thetvdb.com/banners/actors/187991.jpg</thumb>
+  </actor>
+  <actor>
+    <name>Jeffrey DeMunn</name>
+    <role>Dale</role>
+    <thumb>http://thetvdb.com/banners/actors/187981.jpg</thumb>
+  </actor>
+  <missing>False</missing>
+  <showid>153021</showid>
+</episodedetails>
