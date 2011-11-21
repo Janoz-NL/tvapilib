@@ -95,7 +95,7 @@ public class XbmcNfoImpl<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep
 	}
 	
 	private void writeTag(Writer w, String tag, Date value) throws IOException {
-		if (value == null) {
+		if (value != null) {
 			writeTag(w, tag,new SimpleDateFormat("yyyy-MM-dd").format(value));
 		}
 	}
