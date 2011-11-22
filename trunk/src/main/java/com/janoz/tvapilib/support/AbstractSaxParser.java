@@ -12,6 +12,7 @@ package com.janoz.tvapilib.support;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -30,7 +31,7 @@ public abstract class AbstractSaxParser extends DefaultHandler {
 	@Override
 	public final void startElement(String uri, String localName, String qName,
 			Attributes attributes) throws SAXException {
-		stack.add(localName.toLowerCase());
+		stack.add(localName.toLowerCase(Locale.ENGLISH));
 		handleTagStart(attributes);
 	}
 	
