@@ -28,6 +28,7 @@ public class Episode implements Comparable<Episode>, IEpisode<Show,Season,Episod
 	private String tvRageUrl;
 	private String description;
 	private String thumbUrl;
+	private Double rating;
 
 	public int getTheTvDbId() {
 		return theTvDbId;
@@ -104,8 +105,16 @@ public class Episode implements Comparable<Episode>, IEpisode<Show,Season,Episod
 	public void setThumbUrl(String thumbUrl) {
 		this.thumbUrl = thumbUrl;
 	}
-
 	
+	public Double getRating() {
+		return rating;
+	}
+
+	@Override
+	public void setRating(Double rating) {
+		this.rating = rating;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

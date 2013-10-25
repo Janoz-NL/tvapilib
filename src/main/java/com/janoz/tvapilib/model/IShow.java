@@ -28,8 +28,9 @@ public interface IShow<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>,
 	void setNetwork(String network);
 	String getContentRating();
 	void setContentRating(String contentRating);
-
+	void setRating(Double rating);
 	void addFanart(Fanart fanart);
+	void addGenre(String genre);
 
 
 }

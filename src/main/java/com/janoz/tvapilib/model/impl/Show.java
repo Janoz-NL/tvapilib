@@ -12,7 +12,9 @@ package com.janoz.tvapilib.model.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -31,9 +33,9 @@ public class Show implements IShow<Show,Season,Episode> {
 	private String title;
 	private String description;;
 	//private List<Actor> actors;
-	//private Set<Genre> genres
+	private Set<String> genres = new HashSet<String>();
 	//private Language language
-	//private Double rating;
+	private Double rating;
 	//private int ratingCount;
 	private String network;
 	private String contentRating;
@@ -51,6 +53,8 @@ public class Show implements IShow<Show,Season,Episode> {
 	private List<Fanart> thumbs = new ArrayList<Fanart>();
 	private List<Fanart> allSeasonPosters = new ArrayList<Fanart>();
 	private List<Fanart> allSeasonBanners = new ArrayList<Fanart>();
+	
+
 
 	@Override
     public String getImdbId() {
@@ -101,6 +105,15 @@ public class Show implements IShow<Show,Season,Episode> {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
+	public Double getRating() {
+		return rating;
+	}
+
+	@Override
+	public void setRating(Double rating) {
+		this.rating = rating;
+	}
 
 	@Override
 	public String getNetwork() {
@@ -133,6 +146,15 @@ public class Show implements IShow<Show,Season,Episode> {
 			seasons.add(result);
 		}
 		return result;
+	}
+	
+	@Override
+	public void addGenre(String genre) {
+		genres.add(genre);
+	}
+	
+	public Set<String> getGenres() {
+		return genres;
 	}
 
 	@Override
