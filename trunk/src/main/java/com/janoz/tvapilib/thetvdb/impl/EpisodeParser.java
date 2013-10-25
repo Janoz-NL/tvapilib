@@ -41,6 +41,7 @@ public class EpisodeParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,
 	private String description = null;
 	private String thumbUrl = null;
 	private Date airDate = null;
+	private Double rating = null;
 	
 	public EpisodeParser(UrlSupplier urlSupplier) {
 		this.urlSupplier = urlSupplier;
@@ -55,6 +56,7 @@ public class EpisodeParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,
 		this.description = null;
 		this.thumbUrl = null;
 		this.airDate = null;
+		this.rating = null;
 	}
 	
 	public void handleContent(List<String> stack, String content){
@@ -74,6 +76,8 @@ public class EpisodeParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,
 				thumbUrl = urlSupplier.getImageUrl(content);
 			} else if ("firstaired".equals(stack.get(0))) {
 				airDate = parseDate(content);
+			} else if ("rating".equals(stack.get(0))) {
+				rating = Double.valueOf(content);
 			}
 		}
 	}
@@ -102,6 +106,9 @@ public class EpisodeParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,
 		}
 		if (airDate != null) {
 			result.setAired(airDate);
+		}
+		if (rating != null) {
+			result.setRating(rating);
 		}
 		return result;
 	}

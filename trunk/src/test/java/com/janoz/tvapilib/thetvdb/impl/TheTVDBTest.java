@@ -48,7 +48,7 @@ public class TheTVDBTest {
 
 		List<Show> shows = subject.searchShows("nikita");
 		verify(urlSupplierMock);
-		assertShow164301(shows.get(0));
+		assertShow164301(shows.get(0), false);
 		
 		assertEquals("La Femme Nikita",shows.get(1).getTitle());
 		assertEquals(2,shows.size());
@@ -86,7 +86,7 @@ public class TheTVDBTest {
 
 		Show show = subject.getShow(164301);
 		verify(urlSupplierMock);
-		assertShow164301(show);
+		assertShow164301(show, true);
 		assertShow164301Extra(show);
 
 		
@@ -108,7 +108,7 @@ public class TheTVDBTest {
 		
 		Show show = subject.getShowWithEpisodes(164301);
 		verify(urlSupplierMock);
-		assertShow164301(show);
+		assertShow164301(show, true);
 		assertShow164301Extra(show);
 
 		assertEpisode164301_1_3(show, show.getSeason(1).getEpisode(3));
@@ -172,13 +172,20 @@ public class TheTVDBTest {
 		assertEquals(new GregorianCalendar(2010,Calendar.SEPTEMBER,23).getTime(),episode.getAired());
 		assertEquals("A very long description about Jill..",episode.getDescription());
 		assertEquals("http://aDomain/ep_1_3.jpg",episode.getThumbUrl());
+		assertEquals(Double.valueOf(7.8),episode.getRating());
 	}
 	
-	private void assertShow164301(Show show) {
+	private void assertShow164301(Show show, boolean testExtra) {
 		assertEquals(Integer.valueOf(164301),show.getTheTvDbId());
 		assertEquals("tt1592154", show.getImdbId());
 		assertEquals("Nikita",show.getTitle());
 		assertEquals("A very long description about Nikita and division.",show.getDescription());
+		if (testExtra) {
+			assertEquals(Double.valueOf(9.0),show.getRating());
+			assertTrue(show.getGenres().contains("Action"));
+			assertTrue(show.getGenres().contains("Adventure"));
+			assertTrue(show.getGenres().contains("Drama"));
+		}
 	}
 	private void assertShow164301Extra(Show show) {
 		assertEquals("The CW", show.getNetwork());

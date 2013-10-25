@@ -38,6 +38,13 @@ public class ShowParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>
 				show.setTitle(content);
 			} else if ("overview".equals(stack.get(0))) {
 				show.setDescription(content);
+			} else if ("rating".equals(stack.get(0))) {
+				show.setRating(Double.valueOf(content));
+			} else if ("genre".equals(stack.get(0))) {
+				for (String genre : content.split("\\|")) {
+					if (genre.length() > 0)
+						show.addGenre(genre);
+				}
 			}
 		}
 	}
