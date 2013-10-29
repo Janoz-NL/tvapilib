@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Data>
+  <Series>
+    <id>164301</id>
+    <Actors>|Maggie Q|Shane West|Lyndsy Fonseca|Aaron Stanford|Melinda Clarke|Xander Berkeley|Ashton Holmes|Tiffany Hines|</Actors>
+    <Airs_DayOfWeek>Thursday</Airs_DayOfWeek>
+    <Airs_Time>9:00 PM</Airs_Time>
+    <ContentRating>TV-14</ContentRating>
+    <FirstAired>2010-09-09</FirstAired>
+    <Genre>|Action|Adventure|Drama|</Genre>
+    <IMDB_ID>tt1592154</IMDB_ID>
+    <Language>en</Language>
+    <Network>The CW</Network>
+    <NetworkID></NetworkID>
+    <Overview>A very long description about Nikita and division.</Overview>
+    <Rating>9.0</Rating>
+    <RatingCount>10</RatingCount>
+    <Runtime>60</Runtime>
+    <SeriesID>164301000</SeriesID>
+    <SeriesName>Nikita</SeriesName>
+    <Status>Continuing</Status>
+    <added>2010-05-20 12:28:55</added>
+    <addedBy>235</addedBy>
+    <banner>graphical/164301-g4.jpg</banner>
+    <fanart>fanart/original/164301-5.jpg</fanart>
+    <lastupdated>1285704535</lastupdated>
+    <poster>posters/164301-2.jpg</poster>
+    <zap2it_id></zap2it_id>
+  </Series>
+</Data>

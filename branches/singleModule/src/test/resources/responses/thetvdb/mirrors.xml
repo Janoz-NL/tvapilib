@@ -1,0 +1,7 @@
+<Mirrors> 
+  <Mirror> 
+    <id>1</id> 
+    <mirrorpath>http://thetvdb.com</mirrorpath> 
+    <typemask>7</typemask> 
+  </Mirror> 
+</Mirrors> 

@@ -1,0 +1,37 @@
+<Mirrors> 
+  <Mirror> 
+    <id>1</id> 
+    <mirrorpath>http://all.com</mirrorpath> 
+    <typemask>7</typemask> 
+  </Mirror> 
+  <Mirror> 
+    <id>2</id> 
+    <mirrorpath>http://zipbanner.com</mirrorpath> 
+    <typemask>6</typemask> 
+  </Mirror> 
+  <Mirror> 
+    <id>3</id> 
+    <mirrorpath>http://zipxml.com</mirrorpath> 
+    <typemask>5</typemask> 
+  </Mirror> 
+  <Mirror> 
+    <id>4</id> 
+    <mirrorpath>http://zip.com</mirrorpath> 
+    <typemask>4</typemask> 
+  </Mirror> 
+  <Mirror> 
+    <id>5</id> 
+    <mirrorpath>http://bannerxml.com</mirrorpath> 
+    <typemask>3</typemask> 
+  </Mirror> 
+  <Mirror> 
+    <id>6</id> 
+    <mirrorpath>http://banner.com</mirrorpath> 
+    <typemask>2</typemask> 
+  </Mirror> 
+  <Mirror> 
+    <id>7</id> 
+    <mirrorpath>http://xml.com</mirrorpath> 
+    <typemask>1</typemask> 
+  </Mirror>
+</Mirrors> 
