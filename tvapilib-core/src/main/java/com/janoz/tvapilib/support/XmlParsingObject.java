@@ -33,6 +33,8 @@ public abstract class XmlParsingObject {
 	protected void parse(AbstractSaxParser parser,InputStream inputStream) {
 		try {
 			InputSource input = new InputSource(inputStream);
+			input.setPublicId("");
+			input.setSystemId("");
 			XMLReader reader = XMLReaderFactory.createXMLReader(); 
 			reader.setContentHandler(parser);
 			reader.parse(input);
@@ -52,9 +54,5 @@ public abstract class XmlParsingObject {
 			LOG.info("Unable to open XML data.",e);
 			throw new TvApiException("Unable to open XML data.",e);
 		}
-	}
-	
-	protected InputStream openZippedStream(String url) {
-		return new ZipInputStream(openStream(url));
 	}
 }
