@@ -16,6 +16,16 @@ import org.junit.Test;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXParseException;
 
+/*******************************************************************************
+ * Copyright (c) 2010 Gijs de Vries aka Janoz.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *     Gijs de Vries aka Janoz - initial API and implementation
+ ******************************************************************************/
 public class XmlParsingObjectTest {
 
 	private AbstractSaxParser parserMock;
@@ -84,6 +94,15 @@ public class XmlParsingObjectTest {
 		}
 	}
 	
+	@Test
+	public void testFailedStream() {
+	    try {
+	        subject.openStream("http://127.0.0.1:70/bestaatZekerNiet");
+	        fail();
+	    } catch (TvApiException tae) {
+	        assertEquals("Unable to open XML data.", tae.getMessage());
+	    }
+	}
 	
 	private String getResource(String filename) {
 		return this.getClass().getClassLoader().getResource("testxml/"+filename).toString();

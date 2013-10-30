@@ -13,7 +13,6 @@ package com.janoz.tvapilib.support;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.zip.ZipInputStream;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
