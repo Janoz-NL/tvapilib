@@ -41,15 +41,21 @@ public class ShowParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep>
 			} else if ("rating".equals(stack.get(0))) {
 				show.setRating(Double.valueOf(content));
 			} else if ("genre".equals(stack.get(0))) {
-				for (String genre : content.split("\\|")) {
-					if (genre.length() > 0)
-						show.addGenre(genre);
-				}
+				setGenre(content);
 			}
 		}
 	}
+
+    private void setGenre(String content) {
+        for (String genre : content.split("\\|")) {
+        	if (genre.length() > 0){
+        		show.addGenre(genre);
+        	}
+        }
+    }
 	
 	public Sh getShow() {
 		return show;
 	}
+
 }
