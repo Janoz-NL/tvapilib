@@ -15,62 +15,69 @@ import static org.easymock.EasyMock.eq;
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.verify;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.janoz.tvapilib.fanarttv.impl.DefaultFanartTvImpl;
 import com.janoz.tvapilib.model.Fanart;
 import com.janoz.tvapilib.model.FanartType;
 import com.janoz.tvapilib.model.impl.Show;
+import com.janoz.tvapilib.support.TvApiException;
 public class FanartTvTest {
-	
-	DefaultFanartTvImpl subject;
-	
-	@Before
-	public void setup() {
-		subject = createMockBuilder(DefaultFanartTvImpl.class)
-			.addMockedMethod("getUrl").withConstructor().createMock();
-		
-	}
-	
-	@Test
-	public void addLogoTest() throws Exception {
-		expect(subject.getUrl(eq(153021))).andReturn(
-				this.getClass().getClassLoader().getResource("responses/fanart.tv/153021.xml").toString());
-		replay(subject);
-		Show show = new Show();
-		show.setTheTvDbId(153021);
-		subject.addFanart(show);
-		verify(subject);
-		Fanart f = show.getClearlogos().get(0);
-		assertEquals("http://fanart.tv/fanart/153021/clearlogo/TheWalkingDead-153021.png",f.getUrl());
-		assertEquals(FanartType.CLEARLOGO, f.getType());
-		assertEquals(4, show.getClearlogos().size());
-		f = show.getCleararts().get(0);
-		assertEquals("http://fanart.tv/fanart/153021/clearart/T_153021 (2).png",f.getUrl());
-		assertEquals(FanartType.CLEARART, f.getType());
-		assertEquals(5, show.getCleararts().size());
-		f = show.getThumbs().get(0);
-		assertEquals("http://fanart.tv/fanart/153021/tvthumb/T_153021.jpg",f.getUrl());
-		assertEquals(FanartType.THUMB, f.getType());
-		assertEquals(4, show.getThumbs().size());
-	}
 
-	@Test
-	public void addLogoUnknownTest() throws Exception {
-		expect(subject.getUrl(eq(1))).andReturn(
-				this.getClass().getClassLoader().getResource("responses/fanart.tv/1.xml").toString());
-		replay(subject);
-		Show show = new Show();
-		show.setTheTvDbId(1);
-		subject.addFanart(show);
-		verify(subject);
-		assertTrue("ShouldBeUntouched",show.getClearlogos().isEmpty());
-		assertTrue("ShouldBeUntouched",show.getCleararts().isEmpty());
-		assertTrue("ShouldBeUntouched",show.getThumbs().isEmpty());
-	}
+    DefaultFanartTvImpl subject;
+
+    @Before
+    public void setup() {
+        subject = createMockBuilder(DefaultFanartTvImpl.class)
+                .addMockedMethod("getUrl").withConstructor("**apikey**").createMock();
+
+    }
+
+    @Test
+    public void addArtTest() throws Exception {
+        expect(subject.getUrl(eq(164301))).andReturn(
+                this.getClass().getClassLoader().getResource("responses/fanart.tv/nikita.json").toString());
+        replay(subject);
+        Show show = new Show();
+        show.setTheTvDbId(164301);
+        subject.addFanart(show);
+        verify(subject);
+        assertEquals(3, show.getBackdrops().size());
+        assertEquals(1, show.getBanners().size());
+        assertEquals(4, show.getCleararts().size());
+        assertEquals(8, show.getClearlogos().size());
+        assertEquals(2, show.getThumbs().size());
+        
+    }
+
+    @Test
+    public void addCoruptResponseArtTest() throws Exception {
+        expect(subject.getUrl(eq(-1))).andReturn(
+                this.getClass().getClassLoader().getResource("responses/fanart.tv/nikita.json").toString());
+        replay(subject);
+        Show show = new Show();
+        show.setTheTvDbId(-1);
+        try {
+            subject.addFanart(show);
+            fail();
+        } catch (TvApiException tae) {
+            verify(subject);
+            assertEquals("Unexpected result. Wrong TVDB id.", tae.getMessage());
+        }
+    }
+    @Test
+    public void addNoArtTest() throws Exception {
+        expect(subject.getUrl(eq(153021))).andReturn(
+                this.getClass().getClassLoader().getResource("responses/fanart.tv/null.json").toString());
+        replay(subject);
+        Show show = new Show();
+        show.setTheTvDbId(153021);
+        subject.addFanart(show);
+        verify(subject);
+    }
 
 }

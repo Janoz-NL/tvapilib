@@ -36,10 +36,5 @@ public interface FanartTv<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,E
 	 * 
 	 */
 	void addFanart(Sh show);
-	
-	/**
-	 * @param theTvDbId TheTVDB ID of the show 
-	 * @return A list of clearlogos.
-	 */
-	List<Fanart> getFanart(int theTvDbId);
+
 }
