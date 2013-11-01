@@ -16,5 +16,9 @@ import com.janoz.tvapilib.model.impl.Show;
 
 public class DefaultFanartTvImpl extends FanartTvImpl<Show, Season, Episode> {
 
-	//Intentionally left blank
+    public DefaultFanartTvImpl(String apiKey) {
+        super(apiKey);
+    }
+
+    
 }
