@@ -25,8 +25,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 import com.janoz.tvapilib.fanarttv.FanartTv;
-import com.janoz.tvapilib.model.Fanart;
-import com.janoz.tvapilib.model.FanartType;
+import com.janoz.tvapilib.model.Art;
 import com.janoz.tvapilib.model.IEpisode;
 import com.janoz.tvapilib.model.ISeason;
 import com.janoz.tvapilib.model.IShow;
@@ -74,42 +73,43 @@ public class FanartTvImpl<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,E
 	}
 
 	private void parsArtArray(Sh show, String key, List<JSONObject> artArray) {
-	    System.out.println(key);
 	    for (JSONObject jsonArt : artArray) {
 	        if (!"en".equals(jsonArt.get("lang"))) continue;
 	        //only english for now
-	        Fanart fanart = artConstructor(key);
-	        if (fanart == null) continue;
-	        fanart.setId(Integer.parseInt((String)jsonArt.get("id")));
-	        fanart.setRatingCount(Integer.parseInt((String)jsonArt.get("likes")));
-	        if (jsonArt.containsKey("season") && !"all".equals(jsonArt.get("season"))) {
-	            fanart.setSeason(Integer.parseInt((String)jsonArt.get("season")));
+	        Art art = artConstructor(key);
+	        if (art == null) continue;
+	        art.setId(Integer.parseInt((String)jsonArt.get("id")));
+	        art.setRatingCount(Integer.parseInt((String)jsonArt.get("likes")));
+	        art.setUrl((String)jsonArt.get("url"));
+	        art.setThumbUrl(art.getUrl() + "/preview");
+	        if (jsonArt.containsKey("season")) {
+	        	String strSeason = (String)jsonArt.get("season");
+	        	int season = "all".equals(strSeason)?-1:Integer.parseInt(strSeason);
+	        	show.getSeason(season).addArt(art);
+	        } else {
+	            show.addArt(art);
 	        }
-	        fanart.setUrl((String)jsonArt.get("url"));
-	        fanart.setThumbUrl(fanart.getUrl() + "/preview");
-	        show.addFanart(fanart);
-            }
+        }
 	}
 	
-	private Fanart artConstructor(String key) {
-	    Fanart result = new Fanart();
+	private Art artConstructor(String key) {
+	    Art result = new Art();
 	    if ("clearart".equals(key)){
-	        result.setType(FanartType.CLEARART);
+	        result.setType(Art.Type.CLEARART);
 	    } else if ("clearlogo".equals(key)){
-                result.setType(FanartType.CLEARLOGO);
+                result.setType(Art.Type.CLEARLOGO);
             } else if ("showbackground".equals(key)){
-                result.setType(FanartType.BACKDROP);
+                result.setType(Art.Type.BACKDROP);
             } else if ("tvbanner".equals(key)){
-                result.setType(FanartType.BANNER_GRAPHICAL);
+                result.setType(Art.Type.BANNER);
             } else if ("hdtvlogo".equals(key)){
-                result.setType(FanartType.CLEARLOGO);
+                result.setType(Art.Type.CLEARLOGO);
             } else if ("tvthumb".equals(key)){
-                result.setType(FanartType.THUMB);
+                result.setType(Art.Type.THUMB);
             } else if ("hdclearart".equals(key)){
-                result.setType(FanartType.CLEARART);
+                result.setType(Art.Type.CLEARART);
             } else if ("seasonthumb".equals(key)){
-                return null; //not supported
-                //result.setType(FanartType.THUMB);
+                result.setType(Art.Type.THUMB);
             } else {
                 return null;
             }

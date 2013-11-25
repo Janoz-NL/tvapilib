@@ -21,9 +21,6 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.janoz.tvapilib.fanarttv.impl.DefaultFanartTvImpl;
-import com.janoz.tvapilib.model.Fanart;
-import com.janoz.tvapilib.model.FanartType;
 import com.janoz.tvapilib.model.impl.Show;
 import com.janoz.tvapilib.support.TvApiException;
 public class FanartTvTest {
@@ -46,11 +43,15 @@ public class FanartTvTest {
         show.setTheTvDbId(164301);
         subject.addFanart(show);
         verify(subject);
-        assertEquals(3, show.getBackdrops().size());
-        assertEquals(1, show.getBanners().size());
-        assertEquals(4, show.getCleararts().size());
-        assertEquals(8, show.getClearlogos().size());
-        assertEquals(2, show.getThumbs().size());
+        assertEquals(1, show.getSeason(5).getArts().size());
+        assertEquals(0, show.getSeason(4).getArts().size());
+        assertEquals(3, show.getSeason(3).getArts().size());
+        assertEquals(3, show.getSeason(2).getArts().size());
+        assertEquals(3, show.getSeason(1).getArts().size());
+        assertEquals(1, show.getSeason(0).getArts().size());
+        assertEquals(4, show.getSeason(-1).getArts().size());
+        
+        assertEquals(15, show.getArts().size());
         
     }
 

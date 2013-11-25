@@ -20,6 +20,8 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.janoz.tvapilib.model.Art;
+import com.janoz.tvapilib.model.Art.Type;
 import com.janoz.tvapilib.model.IEpisode;
 import com.janoz.tvapilib.model.ISeason;
 import com.janoz.tvapilib.model.IShow;
@@ -39,7 +41,7 @@ public class EpisodeParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,
 	private Integer theTvDbId = null;
 	private String title = null;
 	private String description = null;
-	private String thumbUrl = null;
+	private Art art = null;
 	private Date airDate = null;
 	private Double rating = null;
 	
@@ -54,7 +56,7 @@ public class EpisodeParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,
 		this.theTvDbId = null;
 		this.title = null;
 		this.description = null;
-		this.thumbUrl = null;
+		this.art = null;
 		this.airDate = null;
 		this.rating = null;
 	}
@@ -73,7 +75,10 @@ public class EpisodeParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,
 			} else if ("overview".equals(stack.get(0))) {
 				description = content;
 			} else if ("filename".equals(stack.get(0))) {
-				thumbUrl = urlSupplier.getImageUrl(content);
+				art = new Art();
+				art.setHd(false);
+				art.setUrl(urlSupplier.getImageUrl(content));
+				art.setType(Type.THUMB);
 			} else if ("firstaired".equals(stack.get(0))) {
 				airDate = parseDate(content);
 			} else if ("rating".equals(stack.get(0))) {
@@ -101,15 +106,13 @@ public class EpisodeParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,
 		if (description != null) {
 			result.setDescription(description);
 		}
-		if (thumbUrl != null) {
-			result.setThumbUrl(thumbUrl);
-		}
 		if (airDate != null) {
 			result.setAired(airDate);
 		}
 		if (rating != null) {
 			result.setRating(rating);
 		}
+		result.addArt(art);
 		return result;
 	}
 

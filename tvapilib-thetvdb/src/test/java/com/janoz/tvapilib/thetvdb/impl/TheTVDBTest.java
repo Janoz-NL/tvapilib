@@ -10,18 +10,29 @@
  ******************************************************************************/
 package com.janoz.tvapilib.thetvdb.impl;
 
-import static org.easymock.EasyMock.*;
-import static org.junit.Assert.*;
+import static org.easymock.EasyMock.anyObject;
+import static org.easymock.EasyMock.createMock;
+import static org.easymock.EasyMock.eq;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.getCurrentArguments;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.verify;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.Constructor;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Set;
 
+import org.easymock.IAnswer;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.janoz.tvapilib.model.Fanart;
+import com.janoz.tvapilib.model.Art;
 import com.janoz.tvapilib.model.impl.Episode;
 import com.janoz.tvapilib.model.impl.Show;
 
@@ -120,7 +131,15 @@ public class TheTVDBTest {
 	@Test
 	public void testBanners() {
 		expect(urlSupplierMock.getBannerUrl(164301)).andReturn(getResource("164301_banners.xml"));
-		expect(urlSupplierMock.getImageUrl((String)anyObject())).andReturn("http://anUrl/").anyTimes();
+		expect(urlSupplierMock.getImageUrl((String)anyObject())).andAnswer(new IAnswer<String>() {
+			        @Override
+			        public String answer() throws Throwable {
+			            return "http://anUrl/" + (String)getCurrentArguments()[0]; 
+			        }
+			    }
+			).anyTimes();
+		
+		
 		
 		replay(urlSupplierMock);
 		Show show = new Show();
@@ -128,18 +147,16 @@ public class TheTVDBTest {
 		subject.fillFanart(show);
 		verify(urlSupplierMock);
 		
-		assertContains(show.getBackdrops(),587461,535361,495351,495371);
-		assertContains(show.getPosters(),541941,541951,495381);
-		assertContains(show.getBanners(),550631,541931,598121,550801,490141,482301,585071);
-		assertEquals(0,show.getAllSeasonBanners().size());
-		assertEquals(0,show.getAllSeasonPosters().size());
-		assertEquals(0,show.getSeason(1).getBanners().size());
-		assertContains(show.getSeason(1).getPosters(),600161);
+		assertContains(show.getArts(),
+				587461,535361,495351,495371,541941,541951,495381,
+				550631,541931,598121,550801,490141,482301,585071);
+		assertEquals(0,show.getSeason(0).getArts().size());
+		assertContains(show.getSeason(1).getArts(),600161);
 	}
 
-	private void assertContains(List<Fanart> fanartList, int... ids) {
-		assertEquals(ids.length, fanartList.size());
-		for (Fanart f : fanartList) {
+	private void assertContains(Set<Art> artSet, int... ids) {
+		assertEquals(ids.length, artSet.size());
+		for (Art f : artSet) {
 			assertTrue("id " + f.getId() + " not found.",inArray(ids,f.getId()));
 		}
 	}
@@ -171,7 +188,7 @@ public class TheTVDBTest {
 		assertEquals("Kill Jill",episode.getTitle());
 		assertEquals(new GregorianCalendar(2010,Calendar.SEPTEMBER,23).getTime(),episode.getAired());
 		assertEquals("A very long description about Jill..",episode.getDescription());
-		assertEquals("http://aDomain/ep_1_3.jpg",episode.getThumbUrl());
+		assertEquals("http://aDomain/ep_1_3.jpg",episode.getArts().iterator().next().getUrl());
 		assertEquals(Double.valueOf(7.8),episode.getRating());
 	}
 	
