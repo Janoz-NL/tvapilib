@@ -22,6 +22,7 @@
 
 
 	<modules>
+		<module>tvapilib-model</module>
 		<module>tvapilib-core</module>
 		<module>tvapilib-thetvdb</module>
 		<module>tvapilib-fanarttv</module>
