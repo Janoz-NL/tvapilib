@@ -15,6 +15,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import com.janoz.tvapilib.model.Art;
+import com.janoz.tvapilib.model.Art.Type;
 import com.janoz.tvapilib.model.IEpisode;
 import com.janoz.tvapilib.model.ISeason;
 import com.janoz.tvapilib.model.IShow;
@@ -29,7 +31,7 @@ public class EpisodeParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,
 	private Integer episode = null;
 	private String episodeString = null;
 	private String title = null;
-	private String thumbUrl = null;
+	private Art art = null;
 	private Date airDate = null;
 	private String url = null;
 	
@@ -46,7 +48,7 @@ public class EpisodeParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,
 		this.episode = null;
 		this.episodeString = null;
 		this.title = null;
-		this.thumbUrl = null;
+		this.art = null;
 		this.airDate = null;
 		this.url = null;		
 	}
@@ -67,7 +69,10 @@ public class EpisodeParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,
 			} else if ("number".equals(stack.get(0))) {
 				episodeString = content;
 			} else if ("screencap".equals(stack.get(0))) {
-				thumbUrl = content;
+				art = new Art();
+				art.setHd(false);
+				art.setUrl(content);
+				art.setType(Type.THUMB);
 			}
 		}
 	}
@@ -84,15 +89,13 @@ public class EpisodeParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,
 		if (title != null) {
 			result.setTitle(title);
 		}
-		if (thumbUrl != null) {
-			result.setThumbUrl(thumbUrl);
-		}
 		if (airDate != null) {
 			result.setAired(airDate);
 		}
 		if (url != null) {
 			result.setTvRageUrl(url);
 		}		
+		result.addArt(art);
 		return result;
 	}
 	

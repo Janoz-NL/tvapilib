@@ -12,7 +12,6 @@ package com.janoz.tvapilib.fanarttv;
 
 import java.util.List;
 
-import com.janoz.tvapilib.model.Fanart;
 import com.janoz.tvapilib.model.IEpisode;
 import com.janoz.tvapilib.model.ISeason;
 import com.janoz.tvapilib.model.IShow;

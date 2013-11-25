@@ -25,9 +25,6 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.janoz.tvapilib.thetvdb.impl.MirrorType;
-import com.janoz.tvapilib.thetvdb.impl.UrlSupplier;
-
 
 public class UrlSupplierTest {
 
