@@ -27,7 +27,6 @@ public interface IEpisode<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,E
 	void setDescription(String description);
 	String getDescription();
 	void setRating(Double rating);
-
-	void setThumbUrl(String thumbUrl);
+	void addArt(Art art);
 
 }
