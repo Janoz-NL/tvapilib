@@ -11,7 +11,10 @@
 package com.janoz.tvapilib.model.impl;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import com.janoz.tvapilib.model.Art;
 import com.janoz.tvapilib.model.IEpisode;
 
 /**
@@ -27,8 +30,8 @@ public class Episode implements Comparable<Episode>, IEpisode<Show,Season,Episod
 	private Date aired = null;
 	private String tvRageUrl;
 	private String description;
-	private String thumbUrl;
 	private Double rating;
+	private Set<Art> arts = new HashSet<Art>();
 
 	public int getTheTvDbId() {
 		return theTvDbId;
@@ -97,15 +100,15 @@ public class Episode implements Comparable<Episode>, IEpisode<Show,Season,Episod
 		this.description = description;
 	}
 
-	public String getThumbUrl() {
-		return thumbUrl;
-	}
-
 	@Override
-	public void setThumbUrl(String thumbUrl) {
-		this.thumbUrl = thumbUrl;
+	public void addArt(Art art) {
+		arts.add(art);
 	}
 	
+	public Set<Art> getArts() {
+		return arts;
+	}
+
 	public Double getRating() {
 		return rating;
 	}

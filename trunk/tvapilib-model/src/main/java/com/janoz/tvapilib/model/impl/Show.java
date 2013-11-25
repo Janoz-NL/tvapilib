@@ -10,15 +10,13 @@
  ******************************************************************************/
 package com.janoz.tvapilib.model.impl;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import com.janoz.tvapilib.model.Fanart;
+import com.janoz.tvapilib.model.Art;
 import com.janoz.tvapilib.model.IShow;
 
 /**
@@ -42,20 +40,10 @@ public class Show implements IShow<Show,Season,Episode> {
 	//private ShowStatus status;
 	//private int runtime;
 	
+	private Set<Art> arts = new HashSet<Art>();
+
 	private SortedSet<Season> seasons = new TreeSet<Season>();
 	
-	
-	private List<Fanart> backdrops = new ArrayList<Fanart>();
-	private List<Fanart> posters = new ArrayList<Fanart>();
-	private List<Fanart> banners = new ArrayList<Fanart>();
-	private List<Fanart> clearlogos = new ArrayList<Fanart>();
-	private List<Fanart> cleararts = new ArrayList<Fanart>();
-	private List<Fanart> thumbs = new ArrayList<Fanart>();
-	private List<Fanart> allSeasonPosters = new ArrayList<Fanart>();
-	private List<Fanart> allSeasonBanners = new ArrayList<Fanart>();
-	
-
-
 	@Override
     public String getImdbId() {
     	return imdbId;
@@ -189,67 +177,11 @@ public class Show implements IShow<Show,Season,Episode> {
 	}
 
 	@Override
-	public void addFanart(Fanart fanart) {
-		switch (fanart.getType()) {
-		case BACKDROP:
-			backdrops.add(fanart);
-			break;
-		case POSTER:
-			posters.add(fanart);
-			break;
-		case BANNER_BLANK:
-		case BANNER_GRAPHICAL:
-		case BANNER_TEXT:
-			banners.add(fanart);
-			break;
-		case CLEARART:
-			cleararts.add(fanart);
-			break;
-		case CLEARLOGO:
-			clearlogos.add(fanart);
-			break;
-		case THUMB:
-			thumbs.add(fanart);
-			break;
-		case SEASON_POSTER:
-			allSeasonPosters.add(fanart);
-			break;
-		case SEASON_BANNER:
-			allSeasonBanners.add(fanart);
-			break;
-		case UNKNOWN:
-			//do nothing
-		}
-	}
-	public List<Fanart> getBackdrops() {
-		return Collections.unmodifiableList(backdrops);
+	public void addArt(Art art) {
+		arts.add(art);
 	}
 
-	public List<Fanart> getClearlogos() {
-		return Collections.unmodifiableList(clearlogos);
-	}
-
-	public List<Fanart> getCleararts() {
-		return Collections.unmodifiableList(cleararts);
-	}
-
-	public List<Fanart> getThumbs() {
-		return Collections.unmodifiableList(thumbs);
-	}
-
-	public List<Fanart> getPosters() {
-		return Collections.unmodifiableList(posters);
-	}
-
-	public List<Fanart> getBanners() {
-		return Collections.unmodifiableList(banners);
-	}
-
-	public List<Fanart> getAllSeasonPosters() {
-		return Collections.unmodifiableList(allSeasonPosters);
-	}
-
-	public List<Fanart> getAllSeasonBanners() {
-		return Collections.unmodifiableList(allSeasonBanners);
+	public Set<Art> getArts() {
+		return arts;
 	}
 }

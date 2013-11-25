@@ -10,13 +10,13 @@
  ******************************************************************************/
 package com.janoz.tvapilib.model.impl;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import com.janoz.tvapilib.model.Fanart;
+import com.janoz.tvapilib.model.Art;
 import com.janoz.tvapilib.model.ISeason;
 
 public class Season implements Comparable<Season>,ISeason<Show,Season,Episode> {
@@ -24,8 +24,7 @@ public class Season implements Comparable<Season>,ISeason<Show,Season,Episode> {
 	private int season;
 	private Show show = null;
 	private SortedSet<Episode> episodes = new TreeSet<Episode>();
-	private List<Fanart> posters = new ArrayList<Fanart>();
-	private List<Fanart> banners = new ArrayList<Fanart>();
+	private Set<Art> arts = new HashSet<Art>();
 
 	
 	
@@ -64,34 +63,19 @@ public class Season implements Comparable<Season>,ISeason<Show,Season,Episode> {
 	public SortedSet<Episode> getEpisodes() {
 		return Collections.unmodifiableSortedSet(episodes);
 	}
-
-	
 	
 	@Override
-	public void addFanart(Fanart fanart){
-		switch (fanart.getType()) {
-		case SEASON_BANNER:
-			banners.add(fanart);
-			break;
-		case SEASON_POSTER:
-			posters.add(fanart);
-			break;
-		}
+	public void addArt(Art art){
+		arts.add(art);
 	}
 	
-	public List<Fanart> getPosters() {
-		return Collections.unmodifiableList(posters);
+	public Set<Art> getArts() {
+		return arts;
 	}
-	
-	public List<Fanart> getBanners() {
-		return Collections.unmodifiableList(banners);
-	}
-	
+
 	public int getNrOfEpisodes() {
 		return episodes.size();
 	}
-
-
 
 	@Override
 	public int compareTo(Season other) {

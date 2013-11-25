@@ -22,6 +22,11 @@
 		</plugins>
 	</build>
 	<dependencies>
+	  	<dependency>
+	   		<groupId>com.janoz.tvapilib</groupId>
+	  		<artifactId>tvapilib-model</artifactId>
+	  		<version>0.0.1-SNAPSHOT</version>
+	  	</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

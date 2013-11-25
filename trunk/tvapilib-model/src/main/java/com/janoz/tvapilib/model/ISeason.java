@@ -15,7 +15,5 @@ public interface ISeason<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep
 	Sh getShow();
 	int getSeason();
 	Ep getEpisode(int episode);
-	
-	//Art methods
-	void addFanart(Fanart fanart);
+	void addArt(Art art);
 }
