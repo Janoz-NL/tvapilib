@@ -55,7 +55,7 @@ public class TheTVDBImpl<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep
 	public Sh getFullShow(int theTvDbId) {
 		// TODO reimplement this using the zip file
 		Sh show = getShowWithEpisodes(theTvDbId);
-		fillFanart(show);
+		addFanart(show);
 		return show;
 	}
 
@@ -92,7 +92,7 @@ public class TheTVDBImpl<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep
 	}
 	
 	@Override
-	public void fillFanart(Sh show) {
+	public void addFanart(Sh show) {
 		String url = urlSupplier.getBannerUrl(show.getTheTvDbId());
 		BannersParser<Sh,Se,Ep> parser = new BannersParser<Sh,Se,Ep>(urlSupplier,show);
 		parse(parser,openStream(url));

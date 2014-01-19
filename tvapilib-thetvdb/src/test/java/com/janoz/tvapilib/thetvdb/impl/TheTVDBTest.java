@@ -144,7 +144,7 @@ public class TheTVDBTest {
 		replay(urlSupplierMock);
 		Show show = new Show();
 		show.setTheTvDbId(164301);
-		subject.fillFanart(show);
+		subject.addFanart(show);
 		verify(urlSupplierMock);
 		
 		assertContains(show.getArts(),
