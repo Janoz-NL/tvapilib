@@ -103,10 +103,12 @@ public class FanartTvImpl<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,E
             } else if ("tvbanner".equals(key)){
                 result.setType(Art.Type.BANNER);
             } else if ("hdtvlogo".equals(key)){
+            	result.setHd(true);
                 result.setType(Art.Type.CLEARLOGO);
             } else if ("tvthumb".equals(key)){
                 result.setType(Art.Type.THUMB);
             } else if ("hdclearart".equals(key)){
+            	result.setHd(true);
                 result.setType(Art.Type.CLEARART);
             } else if ("seasonthumb".equals(key)){
                 result.setType(Art.Type.THUMB);
@@ -120,7 +122,7 @@ public class FanartTvImpl<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,E
 	 * Package accessible so it can be mocked for test purposes.
 	 */
 	String getUrl(int theTvDbId) {
-		return "http://api.fanart.tv/webservice/series/"+apiKey+"/"+theTvDbId;
+		return "http://api.fanart.tv/webservice/series/"+apiKey+"/"+theTvDbId +"/";
 	}
 	
 	       private InputStream openStream(String url) {
