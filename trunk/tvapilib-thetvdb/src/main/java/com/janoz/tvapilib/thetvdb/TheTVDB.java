@@ -76,6 +76,6 @@ public interface TheTVDB<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,Ep
 	 * 
 	 * @param show Show to add all fanart to.
 	 */
-	void fillFanart(Sh show);
+	void addFanart(Sh show);
 
 }
