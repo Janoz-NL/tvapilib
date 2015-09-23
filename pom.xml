@@ -1,33 +1,71 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.janoz.tvapilib</groupId>
-	<name>TvApiLib</name>
-	<version>0.0.1-SNAPSHOT</version>
-	<artifactId>tvapilib</artifactId>
-	<packaging>pom</packaging>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.janoz.tvapilib</groupId>
+    <name>TvApiLib</name>
+    <version>0.0.1-SNAPSHOT</version>
+    <artifactId>tvapilib</artifactId>
+    <packaging>pom</packaging>
 
 
-	<description>Java library for accessing TvShow? information from various sources.</description>
-	<url>http://tvapilib.googlecode.com</url>
+    <description>Java library for accessing TvShow? information from various sources.</description>
+    <url>http://tvapilib.googlecode.com</url>
 
 
-	<properties>
-		<javaVersion>1.6</javaVersion>
-		<junitVersion>4.8.1</junitVersion>
-		<easymockVersion>3.0</easymockVersion>
-		<loggingVersion>1.1.1</loggingVersion>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
+    <properties>
+        <javaVersion>1.6</javaVersion>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
 
-	<modules>
-		<module>tvapilib-model</module>
-		<module>tvapilib-core</module>
-		<module>tvapilib-thetvdb</module>
-		<module>tvapilib-fanarttv</module>
-		<module>tvapilib-tvrage</module>
-		<module>tvapilib-bierdopje</module>
-		<module>tvapilib-xbmcnfo</module>
-	</modules>
+    <modules>
+        <module>tvapilib-model</module>
+        <module>tvapilib-core</module>
+        <module>tvapilib-thetvdb</module>
+        <module>tvapilib-fanarttv</module>
+        <module>tvapilib-tvrage</module>
+    </modules>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>2.3.2</version>
+                    <configuration>
+                        <source>${javaVersion}</source>
+                        <target>${javaVersion}</target>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+    <dependencyManagement>
+
+        <dependencies>
+            <dependency>
+                <groupId>com.googlecode.json-simple</groupId>
+                <artifactId>json-simple</artifactId>
+                <version>1.1.1</version>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.8.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.easymock</groupId>
+                <artifactId>easymock</artifactId>
+                <version>3.0</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+                <version>1.1.1</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
 </project>
