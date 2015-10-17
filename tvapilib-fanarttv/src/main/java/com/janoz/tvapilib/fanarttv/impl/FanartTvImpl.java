@@ -20,7 +20,6 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
@@ -30,7 +29,6 @@ import com.janoz.tvapilib.model.IEpisode;
 import com.janoz.tvapilib.model.ISeason;
 import com.janoz.tvapilib.model.IShow;
 import com.janoz.tvapilib.support.TvApiException;
-import com.janoz.tvapilib.support.XmlParsingObject;
 
 /**
  * @author Gijs de Vries aka Janoz
@@ -84,7 +82,7 @@ public class FanartTvImpl<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,E
 	        art.setThumbUrl(art.getUrl() + "/preview");
 	        if (jsonArt.containsKey("season")) {
 	        	String strSeason = (String)jsonArt.get("season");
-	        	int season = "all".equals(strSeason)?-1:Integer.parseInt(strSeason);
+                int season = "all".equals(strSeason)?-1:"".equals(strSeason)?0:Integer.parseInt(strSeason);
 	        	show.getSeason(season).addArt(art);
 	        } else {
 	            show.addArt(art);
