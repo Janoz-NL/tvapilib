@@ -65,20 +65,31 @@ public class TheTVDBTest {
 		assertEquals(2,shows.size());
 	}
 
-	@Test
-	public void testEpisodeByShow() throws Exception {
-		expect(urlSupplierMock.getBaseEpisodeUrl(eq(164301), eq(1), eq(3))).andReturn(getResource("164301_1_3.xml"));
-		expect(urlSupplierMock.getImageUrl(eq("episodes/164301/2738381.jpg"))).andReturn(
-				"http://aDomain/ep_1_3.jpg");
-		replay(urlSupplierMock);
-		Show show = new Show();
-		show.setTheTvDbId(164301);
-		Episode episode = subject.getEpisode(show, 1, 3);
-		verify(urlSupplierMock);
-		assertEpisode164301_1_3(show, episode);
-	}
+    @Test
+    public void testEpisodeByShow() throws Exception {
+        expect(urlSupplierMock.getBaseEpisodeUrl(eq(164301), eq(1), eq(3))).andReturn(getResource("164301_1_3.xml"));
+        expect(urlSupplierMock.getImageUrl(eq("episodes/164301/2738381.jpg"))).andReturn(
+                "http://aDomain/ep_1_3.jpg");
+        replay(urlSupplierMock);
+        Show show = new Show();
+        show.setTheTvDbId(164301);
+        Episode episode = subject.getEpisode(show, 1, 3);
+        verify(urlSupplierMock);
+        assertEpisode164301_1_3(show, episode);
+    }
 
-	@Test
+    @Test
+    public void testEpisodeByShowNoThumb() throws Exception {
+        expect(urlSupplierMock.getBaseEpisodeUrl(eq(164301), eq(1), eq(3))).andReturn(getResource("164301_1_3_NoThumb.xml"));
+        replay(urlSupplierMock);
+        Show show = new Show();
+        show.setTheTvDbId(164301);
+        Episode episode = subject.getEpisode(show, 1, 3);
+        verify(urlSupplierMock);
+        assertTrue(episode.getArts().isEmpty());
+    }
+
+    @Test
 	public void testEpisodeByShowId() throws Exception {
 		expect(urlSupplierMock.getBaseEpisodeUrl(eq(164301), eq(1), eq(3))).andReturn(getResource("164301_1_3.xml"));
 		expect(urlSupplierMock.getImageUrl(eq("episodes/164301/2738381.jpg"))).andReturn(
