@@ -112,7 +112,9 @@ public class EpisodeParser<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,
 		if (rating != null) {
 			result.setRating(rating);
 		}
-		result.addArt(art);
+		if (art != null) {
+			result.addArt(art);
+		}
 		return result;
 	}
 

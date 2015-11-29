@@ -64,7 +64,7 @@ public class TheTVDBTest {
 		assertEquals("La Femme Nikita",shows.get(1).getTitle());
 		assertEquals(2,shows.size());
 	}
-	
+
 	@Test
 	public void testEpisodeByShow() throws Exception {
 		expect(urlSupplierMock.getBaseEpisodeUrl(eq(164301), eq(1), eq(3))).andReturn(getResource("164301_1_3.xml"));
@@ -153,6 +153,20 @@ public class TheTVDBTest {
 		assertEquals(0,show.getSeason(0).getArts().size());
 		assertContains(show.getSeason(1).getArts(),600161);
 	}
+
+	@Test
+	public void testEpisodeWithoutThumb() throws Exception {
+		expect(urlSupplierMock.getBaseEpisodeUrl(eq(164301), eq(1), eq(3))).andReturn(getResource("164301_1_3_nothumb.xml"));
+		replay(urlSupplierMock);
+		Show show = new Show();
+		show.setTheTvDbId(164301);
+		Episode episode = subject.getEpisode(show, 1, 3);
+		verify(urlSupplierMock);
+		assertEquals(0,episode.getArts().size());
+	}
+
+
+
 
 	private void assertContains(Set<Art> artSet, int... ids) {
 		assertEquals(ids.length, artSet.size());
