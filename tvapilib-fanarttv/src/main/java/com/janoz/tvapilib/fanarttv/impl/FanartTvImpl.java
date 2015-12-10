@@ -15,7 +15,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.logging.Log;
@@ -52,21 +54,18 @@ public class FanartTvImpl<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,E
 	public void addFanart(Sh show) {
 	    int theTvDbId = show.getTheTvDbId();
 	    Reader r = new InputStreamReader(openStream(getUrl(theTvDbId)));
-	    JSONObject result = (JSONObject)JSONValue.parse(r);
-	    if (result == null) {
-	        return;
-	    }
-	    JSONObject showArt = (JSONObject)result.values().iterator().next();
+	    JSONObject showArt = (JSONObject)JSONValue.parse(r);
 	    //validate
 	    String receivedTvDbId = (String)showArt.get("thetvdb_id");
 	    if (!receivedTvDbId.equals(""+theTvDbId)) {
 	        throw new TvApiException("Unexpected result. Wrong TVDB id.");
 	    }
-	    
+
 	    for(String key:(Set<String>)showArt.keySet()) {
-	        if ("thetvdb_id".equals(key)) continue;
-	        List<JSONObject> artArray = (List<JSONObject>)showArt.get(key);
-	        parsArtArray(show, key, artArray);
+            if (artMapping.containsKey(key)) {
+                List<JSONObject> artArray = (List<JSONObject>) showArt.get(key);
+                parsArtArray(show, key, artArray);
+            }
 	    }
 	}
 
@@ -75,7 +74,6 @@ public class FanartTvImpl<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,E
 	        if (!"en".equals(jsonArt.get("lang"))) continue;
 	        //only english for now
 	        Art art = artConstructor(key);
-	        if (art == null) continue;
 	        art.setId(Integer.parseInt((String)jsonArt.get("id")));
 	        art.setRatingCount(Integer.parseInt((String)jsonArt.get("likes")));
 	        art.setUrl((String)jsonArt.get("url"));
@@ -91,45 +89,43 @@ public class FanartTvImpl<Sh extends IShow<Sh,Se,Ep>, Se extends ISeason<Sh,Se,E
 	}
 	
 	private Art artConstructor(String key) {
-	    Art result = new Art();
-	    if ("clearart".equals(key)){
-	        result.setType(Art.Type.CLEARART);
-	    } else if ("clearlogo".equals(key)){
-                result.setType(Art.Type.CLEARLOGO);
-            } else if ("showbackground".equals(key)){
-                result.setType(Art.Type.BACKDROP);
-            } else if ("tvbanner".equals(key)){
-                result.setType(Art.Type.BANNER);
-            } else if ("hdtvlogo".equals(key)){
-            	result.setHd(true);
-                result.setType(Art.Type.CLEARLOGO);
-            } else if ("tvthumb".equals(key)){
-                result.setType(Art.Type.THUMB);
-            } else if ("hdclearart".equals(key)){
-            	result.setHd(true);
-                result.setType(Art.Type.CLEARART);
-            } else if ("seasonthumb".equals(key)){
-                result.setType(Art.Type.THUMB);
-            } else {
-                return null;
-            }
-	    return result;
+        if (artMapping.containsKey(key)) {
+            Art result = new Art();
+            result.setHd(key.startsWith("hd"));
+            result.setType(artMapping.get(key));
+            return result;
+        }
+        return null;
 	}
+
+    private static Map<String, Art.Type> artMapping;
+    static {
+        artMapping = new HashMap<String, Art.Type>();
+        artMapping.put("clearart",Art.Type.CLEARART);
+        artMapping.put("clearlogo",Art.Type.CLEARLOGO);
+        artMapping.put("showbackground",Art.Type.BACKDROP);
+        artMapping.put("tvbanner",Art.Type.BANNER);
+        artMapping.put("hdtvlogo",Art.Type.CLEARLOGO);
+        artMapping.put("tvthumb",Art.Type.THUMB);
+        artMapping.put("hdclearart",Art.Type.CLEARART);
+        artMapping.put("seasonthumb",Art.Type.THUMB);
+    }
+
 
 	/*
 	 * Package accessible so it can be mocked for test purposes.
 	 */
 	String getUrl(int theTvDbId) {
-		return "http://api.fanart.tv/webservice/series/"+apiKey+"/"+theTvDbId +"/";
+		return "http://webservice.fanart.tv/v3/tv/"+theTvDbId+"?api_key="+apiKey;
 	}
 	
-	       private InputStream openStream(String url) {
-	                try {
-	                        return new URL(url).openStream();
-	                } catch (IOException e) {
-	                        LOG.info("Unable to open JSON data.",e);
-	                        throw new TvApiException("Unable to open JSON data.",e);
-	                }
-	        }
+   private InputStream openStream(String url) {
+            try {
+                    return new URL(url).openStream();
+            } catch (IOException e) {
+                    LOG.info("Unable to open JSON data.",e);
+                    throw new TvApiException("Unable to open JSON data.",e);
+            }
+    }
 
 }
